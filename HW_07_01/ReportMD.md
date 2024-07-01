@@ -70,5 +70,8 @@ int main(void) {
 }
 
 ```
+## Test Case #1
+![Task1_TestCase_1](./Imgs/task1_testcase_1.png)
 
-![alt text](/Imgs/image.png)
+## Test Case #2
+![alt text](./Imgs/tesk1_testcase_2.png)
