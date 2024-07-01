@@ -7,9 +7,11 @@ int main(void) {
 	int i;
 
 	// 형식 출력하기
-	printf("n값을 입력하시오. ");
+	printf("n 입력 : ");
 	scanf_s("%d", &num);
 
+	printf("계산 과정 : ");
+	// 피보나치 기본 수 표시
 	printf("%d %d %d ", leftNum, nowNum, rightNum);
 
 	// 피보나치 수열 구하기
@@ -18,9 +20,11 @@ int main(void) {
 		nowNum = rightNum;
 		rightNum = nowNum + leftNum;
 
-		printf("%d ", rightNum);
+		printf("%d ", rightNum); // 계산 과정 출력하기
 
 	}
+
+	printf("\nn번째 피보나치 값 : %d ", rightNum);
 
 
 	return 0;
