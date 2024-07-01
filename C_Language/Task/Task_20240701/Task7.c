@@ -92,6 +92,7 @@ int main(void) {
 			if (cntNum1 < num1 + num2 - 1) {
 				tempNum1 = tempNum1 * cntNum1;
 				cntNum1++;
+				printf("%d\n", tempNum1);
 			}else if (cntNum1 >= num1 + num2 - 1) {
 				break;
 			}
@@ -108,7 +109,7 @@ int main(void) {
 		}
 		break;
 	}
-	printf("%d %d\n", tempNum1, tempNum3);
+	/*printf("%d %d\n", tempNum1, tempNum3);*/
 	result4 = tempNum1 / tempNum3;
 
 
