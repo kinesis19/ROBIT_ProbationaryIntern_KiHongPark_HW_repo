@@ -2,15 +2,15 @@
 
 int main() {
 
-	int min, max;
+	int input;
+	printf("양수를 입력하세요.\n");
+	scanf_s("%d", &input);
 
-	int x = 10, y = 20;
+	if (input % 2 == 0) {
+		printf("입력한 수 %d는 짝수입니다.\n", input);
+	}else{
+		printf("입력한 수 %d는 홀수입니다.\n", input);
+	}
 
-	max = (x > y) ? x : y;
-	min = (x > y) ? y : x;
-
-	printf("두 수 %d과 %d 중에 큰 수는 %d이다.\n", x, y, max);
-	printf("두 수 %d과 %d 중에 작은 수는 %d이다.\n", x, y, min);
-	
 	return 0;
 }
