@@ -18,7 +18,11 @@ int main() {
 			printf(" ");
 		}
 		for (j = 0; j < star; j++) {
-			printf("*");
+			if ((0 < j && j < star - 1) && i != number - 1) {
+				printf(" ");
+			}else{
+				printf("*");
+			}
 		}
 		for (k = 0; k < number - star; k++) {
 			printf(" ");
