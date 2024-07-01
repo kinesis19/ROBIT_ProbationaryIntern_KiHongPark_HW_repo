@@ -85,15 +85,14 @@ int main(void) {
 	result3 = tempNum1 / (tempNum2 * tempNum3);
 
 	// 중복조합 구하는 알고리즘
-	tempNum1 = 1, tempNum2 = 1, tempNum3 = 1, cntNum1 = 1, cntNum2 = 1, cntNum3 = 1; // 초기화
+	tempNum1 = 1, tempNum2 = 1, tempNum3 = 1, cntNum1 = 0, cntNum2 = 1, cntNum3 = 1; // 초기화
 	while (1) {
 		// (n + r - 1) 구하기
 		while (1) {
-			if (cntNum1 < num1 + num2 - 1) {
-				tempNum1 = tempNum1 * cntNum1;
+			if (cntNum1 < num2) {
+				tempNum1 = tempNum1 * ((num1 + num2 - 1) - cntNum1);
 				cntNum1++;
-				printf("%d\n", tempNum1);
-			}else if (cntNum1 >= num1 + num2 - 1) {
+			}else if (cntNum1 >= num2) {
 				break;
 			}
 		}
@@ -109,7 +108,6 @@ int main(void) {
 		}
 		break;
 	}
-	/*printf("%d %d\n", tempNum1, tempNum3);*/
 	result4 = tempNum1 / tempNum3;
 
 
