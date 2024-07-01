@@ -3,30 +3,27 @@
 int main() {
 
 	// 변수 선언하기
-	int number, i, j, paddingLeftRight, paddingMiddle, 
-		cnt = 0;
+	int number, i, j,k, cnt;
 	
 	// 형식 출력하기
 	printf("값을 입력하세요. ");
 	scanf_s("%d", &number);
 
-	// Padding 설정하기
-	paddingLeftRight = number - 1;
-	paddingMiddle = 0;
+	int tempNum = number;
+	int star = 1;
 
+	// 트리 구현하는 알고리즘
 	for (i = 0; i < number; i++) {
-		for (j = 0; j <= paddingLeftRight; j++) {
+		for (k = 0; k < ((number * 2) - star) / 2; k++) {
 			printf(" ");
 		}
-		for () {
+		for (j = 0; j < star; j++) {
 			printf("*");
 		}
-		for (j = 0; j < paddingMiddle; j++) {
+		for (k = 0; k < number - star; k++) {
 			printf(" ");
 		}
-
-		paddingLeftRight -= 1;
-		paddingMiddle++;
+		star = star + 2;
 		printf("\n");
 	}
 
