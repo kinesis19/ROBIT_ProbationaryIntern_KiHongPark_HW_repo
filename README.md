@@ -1,4 +1,5 @@
-# Robit_InternShip
-
-## 설명
-> Robit InternShip에 대한 repo입니다.
+# ROBIT_Intern_KiHongPark_HW_repo
+## Name
+#### Ki Hong Park
+## Department
+#### DIVISION OF ROBOTICS
