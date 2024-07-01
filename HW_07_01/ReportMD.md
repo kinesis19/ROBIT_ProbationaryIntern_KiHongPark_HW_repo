@@ -335,6 +335,7 @@ int main() {
 
 ## Test Case #2
 ![Task6_TestCase_2](./Imgs/task6_testcase_2.png)
+![alt text](image.png)
 
 # 과제 7
 > [과제 설명]<br>
