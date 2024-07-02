@@ -57,15 +57,14 @@ void DrawingStar_Type1(int sizeGuide) {
 void DrawingStar_Type2(int sizeGuide) {
 
 	int i, j;
-	for (i = sizeGuide - 1; i >=0; i--) {
-		for(j = sizeGuide - 1; j >= i; j--) {
-			if (j <= sizeGuide) {
-				printf("*");
+	for (i = 0; i < sizeGuide; i++) {
+		for (j = 0; j < sizeGuide - 2; j++) {
+			if (j < sizeGuide - 3 - i || j <= i- 3) {
+				printf(" ");
 			}else {
-				printf("a");
+				printf("*");
 			}
 		}
-
 		printf("\n");
 	}
 }
@@ -81,7 +80,7 @@ void DrawingStar_Type3(int sizeGuide) {
 }
 
 // 종류4 출력하는 알고리즘
-void DrawingStar_Type3(int sizeGuide) {
+void DrawingStar_Type4(int sizeGuide) {
 
 	int i, j;
 	for (i = sizeGuide - 1; i >= 0; i--) {
