@@ -3,8 +3,8 @@
 
 void DrawingStar_Type1(int sizeGuide);
 void DrawingStar_Type2(int sizeGuide);
-//void DrawingStar_Type3(int sizeGuide);
-//void DrawingStar_Type4(int sizeGuide);
+void DrawingStar_Type3(int sizeGuide);
+void DrawingStar_Type4(int sizeGuide);
 
 int main() {
 
@@ -23,12 +23,12 @@ int main() {
 	case 2:
 		DrawingStar_Type2(size);
 		break;
-	/*case 3:
+	case 3:
 		DrawingStar_Type3(size);
 		break;
 	case 4:
 		DrawingStar_Type4(size);
-		break;*/
+		break;
 	default:
 		break;
 	}
@@ -57,12 +57,12 @@ void DrawingStar_Type1(int sizeGuide) {
 void DrawingStar_Type2(int sizeGuide) {
 
 	int i, j;
-	for (i = 0; i < sizeGuide; i++) {
-		for (j = sizeGuide - 1; j >= i; j--) {
-			if (j <= i) {
+	for (i = sizeGuide - 1; i >=0; i--) {
+		for(j = sizeGuide - 1; j >= i; j--) {
+			if (j <= sizeGuide) {
 				printf("*");
-			}else{
-				printf(" ");
+			}else {
+				printf("a");
 			}
 		}
 
@@ -70,3 +70,22 @@ void DrawingStar_Type2(int sizeGuide) {
 	}
 }
 
+// 종류3 출력하는 알고리즘
+void DrawingStar_Type3(int sizeGuide) {
+
+	int i, j;
+	for (i = sizeGuide - 1; i >= 0; i--) {
+
+		printf("\n");
+	}
+}
+
+// 종류4 출력하는 알고리즘
+void DrawingStar_Type3(int sizeGuide) {
+
+	int i, j;
+	for (i = sizeGuide - 1; i >= 0; i--) {
+
+		printf("\n");
+	}
+}
