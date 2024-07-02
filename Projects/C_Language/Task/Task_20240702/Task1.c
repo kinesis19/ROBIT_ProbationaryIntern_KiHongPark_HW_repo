@@ -75,7 +75,6 @@ void DrawingStar_Type3(int sizeGuide) {
 	int i, j;
 	for (i = 0; i < sizeGuide; i++) {
 		for (j = 0; j < sizeGuide; j++) {
-			// || (i > sizeGuide - 3 && j < i + 1)
 			if ((i <= j && j < sizeGuide - i) || i >= j && (sizeGuide - (i + 1) <= j)) {
 				printf("*");
 			}else {
@@ -90,8 +89,14 @@ void DrawingStar_Type3(int sizeGuide) {
 void DrawingStar_Type4(int sizeGuide) {
 
 	int i, j;
-	for (i = sizeGuide - 1; i >= 0; i--) {
-
+	for (i = 0; i < sizeGuide; i++) {
+		for (j = 0; j < sizeGuide; j++) {
+			if ((j >= i && j <= (sizeGuide - 1) / 2) || i > ((sizeGuide - 1) / 2) && ((j >= (sizeGuide - 1) /2) && j <= i)) {
+				printf("*");
+			}else{
+				printf(" ");
+			}
+		}
 		printf("\n");
 	}
 }
