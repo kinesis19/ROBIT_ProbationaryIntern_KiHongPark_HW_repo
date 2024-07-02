@@ -2,7 +2,7 @@
 #include <stdio.h>
 
 void DrawingStar_Type1(int sizeGuide);
-//void DrawingStar_Type2(int sizeGuide);
+void DrawingStar_Type2(int sizeGuide);
 //void DrawingStar_Type3(int sizeGuide);
 //void DrawingStar_Type4(int sizeGuide);
 
@@ -20,10 +20,10 @@ int main() {
 	case 1:
 		DrawingStar_Type1(size);
 		break;
-	/*case 2:
+	case 2:
 		DrawingStar_Type2(size);
 		break;
-	case 3:
+	/*case 3:
 		DrawingStar_Type3(size);
 		break;
 	case 4:
@@ -44,8 +44,6 @@ void DrawingStar_Type1(int sizeGuide) {
 		for (j = 0; j <=i; j++) {
 			if (j <= i && j < sizeGuide - i) {
 				printf("*");
-			}else if(j < sizeGuide - i){
-				printf("*");
 			}else{
 				printf(" ");
 			}
@@ -53,3 +51,22 @@ void DrawingStar_Type1(int sizeGuide) {
 		printf("\n");
 	}
 }
+
+
+// 종류2 출력하는 알고리즘
+void DrawingStar_Type2(int sizeGuide) {
+
+	int i, j;
+	for (i = 0; i < sizeGuide; i++) {
+		for (j = sizeGuide - 1; j >= i; j--) {
+			if (j <= i) {
+				printf("*");
+			}else{
+				printf(" ");
+			}
+		}
+
+		printf("\n");
+	}
+}
+
