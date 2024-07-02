@@ -26,22 +26,16 @@ int main() {
 			// 찾는 문자열의 요소 하나와 입력 받은 문자열의 모든 요소를 비교하기
 			if (inputString[j] == searchString[i]) {
 				rememberStrPosition[searchIndex] = j;
-				printf("%c %c %d\n", inputString[j], searchString[i], rememberStrPosition[searchIndex]);\
-					searchIndex++;
+				printf("%c %c %d\n", inputString[j], searchString[i], rememberStrPosition[searchIndex]);
+				searchIndex++;
 			}
-		}
-
-		//  한 글자 분석
-		//if (inputString[i] == searchString[searchIndex]) {
-		//	/*printf("%c", inputString[i]);*/
-		//	rememberStrPosition[searchIndex] = i;
-		//	/*searchIndex++;*/
-		//	printf("Debug\n");
-		//}else if(searchString[searchIndex] == '\0'){
-		//	break;
-		//}
-
-		 
+			/*printf("%c\n\n", inputString[rememberStrPosition[j] + 1]);*/
+			printf("%c\n\n", searchString[i + 1]);
+			if (inputString[rememberStrPosition[j] + 1] == searchString[i + 1]) {
+				printf("asdasd");
+				printf("%c %c %d\n", inputString[j], searchString[i], rememberStrPosition[searchIndex]);
+			}
+		}		 
 	}
 
 	printf("%s의 위치 : ", searchString);
