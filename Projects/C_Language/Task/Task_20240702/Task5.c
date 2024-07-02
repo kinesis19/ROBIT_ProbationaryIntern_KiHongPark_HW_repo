@@ -17,30 +17,43 @@ int main() {
 	scanf("%s", &searchString);
 
 	for (i = 0; i < 100; i++) {
-		// (예외처리) 띄어쓰기 및 문자열 끝나는 지점 파악 
-		// -> But, 문제에 관련 안내는 없었으므로 해당 기능은 주석 처리 함.
-		/*if (inputString[i] == '\0') {
-			break;
-		}*/
+		for (j = 0; j < 100; j++) {
+			// 입력 받은 문자열이 끝날 때
+			if (inputString[j] == '\0') {
+				break;
+			}
+
+			// 찾는 문자열의 요소 하나와 입력 받은 문자열의 모든 요소를 비교하기
+			if (inputString[j] == searchString[i]) {
+				rememberStrPosition[searchIndex] = j;
+				printf("%c %c %d\n", inputString[j], searchString[i], rememberStrPosition[searchIndex]);\
+					searchIndex++;
+			}
+		}
 
 		//  한 글자 분석
-		if (inputString[i] == searchString[searchIndex]) {
-			/*printf("%c", inputString[i]);*/
-			// 출력은 1부터 이므로, 출력을 원할하게 하기 위해 i + 1으로 구성함.
-			rememberStrPosition[searchIndex] = i + 1;
-			searchIndex++;
-		}else if(searchString[searchIndex] == '\0'){
-			break;
-		}
+		//if (inputString[i] == searchString[searchIndex]) {
+		//	/*printf("%c", inputString[i]);*/
+		//	rememberStrPosition[searchIndex] = i;
+		//	/*searchIndex++;*/
+		//	printf("Debug\n");
+		//}else if(searchString[searchIndex] == '\0'){
+		//	break;
+		//}
+
+		 
 	}
 
 	printf("%s의 위치 : ", searchString);
-	for (i = 0; i < 100; i++) {
-		if (rememberStrPosition[i] == 0) {
-			break;
-		}
-		printf("%d", rememberStrPosition[i]);
+	i = 0;
+	while (inputString[i] != '\0') {
+		printf("%d ", rememberStrPosition[i]);
+		i++;
 	}
+
+	/*for (i = 0; i < 100; i++) {
+		printf("%d ", rememberStrPosition[i]);
+	}*/
 
 	return 0;
 }
