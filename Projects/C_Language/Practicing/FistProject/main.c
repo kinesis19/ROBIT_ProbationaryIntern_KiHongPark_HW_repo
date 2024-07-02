@@ -1,16 +1,22 @@
+#define _CRT_SECURE_NO_WARNINGS
 #include <stdio.h>
 
 int main() {
 
-	int input;
-	printf("양수를 입력하세요.\n");
-	scanf_s("%d", &input);
+	int i = 0;
+	int key = 0;
+	int list[8] = { 1, 2, 3, 4, 5, 6, 7, 8 };
 
-	if (input % 2 == 0) {
-		printf("입력한 수 %d는 짝수입니다.\n", input);
-	}else{
-		printf("입력한 수 %d는 홀수입니다.\n", input);
+	printf("탐색할 값을 적으시오 : ");
+	scanf("%d", &key);
+
+	for (i = 0; i < 8; i++) {
+		if (list[i] == key) {
+			printf("Find! list[%d]\n", i);
+			break;
+		}
 	}
+	printf("end\n");
 
 	return 0;
 }
