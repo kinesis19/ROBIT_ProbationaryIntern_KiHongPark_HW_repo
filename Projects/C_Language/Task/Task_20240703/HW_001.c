@@ -30,7 +30,6 @@ int main() {
 			// 제곱 ㄴㄴ수가 아니라면
 			if (i % tempSquareNum == 0) {
 				isSquare = 0;
-				printf("aaaa\n\n");
 				break;
 			}else{
 				isSquare = 1;
