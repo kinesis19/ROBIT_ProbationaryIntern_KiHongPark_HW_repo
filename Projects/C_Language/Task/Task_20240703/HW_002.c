@@ -8,7 +8,7 @@ int main() {
 	int inputNum = 0, numAry[20] = { 0, }; // numAry : 요소를 저장하는 집합(배열)
 	char operator[10] = { 0, }; // add, remove 등의 단어 저장 배열
 	int i, j, aryIndex = 0;
-	int isOkayAdd = 1, isOkayRemove = 0, isOkayCheck = 0; // boolean 연산자는 안 배운 내용이므로 int로 boolean 역할을 대체함.
+	int isOkayAdd = 1, isOkayRemove = 0, isOkayCheck = 0, isOkayToggle = 0; // boolean 연산자는 안 배운 내용이므로 int로 boolean 역할을 대체함.
 
 	// 형식 출력하기
 	printf("연산을 선택하세요. (1 <= x <= 20");
@@ -104,6 +104,36 @@ int main() {
 			printf("}\n\n");
 
 		}else if (!strcmp(operator, "toggle")) {
+			int removeIdx = 0;
+			// 입력된 숫자가 집합에 포함되어 있는지 검토하기
+			for (i = 0; i < 20; i++) {
+				if (numAry[i] == inputNum) {
+					removeIdx = i;
+					isOkayToggle = 1;
+					break;
+				}else {
+					isOkayToggle = 0;
+				}
+			}
+			// 만약 집합에 해당 숫자가 있을 때,
+			if (isOkayToggle == 1) {
+				// 요소 제거하기.
+				numAry[removeIdx] = 0;
+				aryIndex--;
+				// 제거된 요소 뒤에 있는 요소들도 앞으로 이동 시키기.
+				for (j = removeIdx; j < 20; j++) {
+					numAry[j] = numAry[j + 1];
+				}
+			}else{ // 만약 집합에 해당 숫자가 없을 때,
+				numAry[aryIndex] = inputNum;
+				aryIndex++;
+			}
+
+			printf("집합 : { ");
+			for (j = 0; j < aryIndex; j++) {
+				printf("%d, ", numAry[j]);
+			}
+			printf("}\n\n");
 
 		}else if (!strcmp(operator, "all")) {
 
