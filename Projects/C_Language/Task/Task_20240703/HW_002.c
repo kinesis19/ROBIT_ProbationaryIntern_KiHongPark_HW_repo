@@ -135,9 +135,41 @@ int main() {
 			}
 			printf("}\n\n");
 
-		}else if (!strcmp(operator, "all")) {
+		}else if (!strcmp(operator, "all") && inputNum == 0) {
+			// 과제에 제시된 입력 형식 "all 0"이 되어야만 제시된 집합으로 변경되도록 구현함.
 
-		}else if (!strcmp(operator, "empty")) {
+			for (j = 0; j < 20; j++) {
+				numAry[j] = j + 1;
+			}
+
+			printf("집합 : { ");
+			for (j = 0; j < 20; j++) {
+				printf("%d, ", numAry[j]);
+			}
+			printf("}\n\n");
+
+		}else if (!strcmp(operator, "empty") && inputNum == 0) {
+			// 과제에 제시된 입력 형식 "empty 0"이 되어야만 제시된 집합으로 변경되도록 구현함.
+			
+			/*
+			* 요소는 0로 지정하여 공집합 처리를 함.
+			* 0으로 지정한 이유 : 입력된 숫자의 범위는 1이상 ~ 20이하임.
+			* 집합 검산 식에서 0인 요소가 있으면 공집합임을 인식하게 하여, 
+			* 공집합 출력을 하도록 구현함.
+			*/
+
+			for (j = 0; j < 20; j++) {
+				numAry[j] = 0;
+			}
+
+			printf("집합 : { ");
+			for (j = 0; j < aryIndex; j++) {
+				// 공집합이라면
+				if (numAry[j] == 0) {
+					break;
+				}
+			}
+			printf(" }\n\n");
 
 		}
 	}
