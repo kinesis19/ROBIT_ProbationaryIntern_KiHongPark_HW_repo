@@ -169,7 +169,7 @@ int main() {
 				}
 			}
 			printf(" }\n\n");
-
+			aryIndex = 0;
 		}
 	}
 
