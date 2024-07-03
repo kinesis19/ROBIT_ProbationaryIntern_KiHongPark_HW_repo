@@ -8,15 +8,15 @@ int main() {
 	int inputNum = 0, numAry[20] = { 0, }; // numAry : 요소를 저장하는 집합(배열)
 	char operator[10] = { 0, }; // add, remove 등의 단어 저장 배열
 	int i, j, aryIndex = 0;
-	int isOkayAdd = 1, isOkayRemove = 0; // boolean 연산자는 안 배운 내용이므로 int로 boolean 역할을 대체함.
+	int isOkayAdd = 1, isOkayRemove = 0, isOkayCheck = 0; // boolean 연산자는 안 배운 내용이므로 int로 boolean 역할을 대체함.
 
 	// 형식 출력하기
 	printf("연산을 선택하세요. (1 <= x <= 20");
-	printf("\nadd X\nremove X\ncheck X\ntoggle X\nall 0\nempty 0\n");
+	printf("\nadd X\nremove X\ncheck X\ntoggle X\nall 0\nempty 0\n\n");
 
 	while (1) {
 		
-		printf("\ninput : ");
+		printf("input : ");
 		scanf("%s %d", &operator, &inputNum);
 
 		// 예외처리 (inputNum 관련 수정 필요)
@@ -84,6 +84,24 @@ int main() {
 			isOkayRemove = 0;
 			
 		}else if (!strcmp(operator, "check")) {
+			// 입력된 숫자가 집합에 포함되어 있는지 검토하기
+			for (i = 0; i < 20; i++) {
+				if (numAry[i] == inputNum) {
+					isOkayCheck = 1;
+					break;
+				}else{
+					isOkayCheck = 0;
+				}
+			}
+			// 만약, 집합 내에 해당 숫자가 없으면 0을 출력하기.
+			// 배운 개념 중 하나인 *3항 연산자* 사용해 보기.
+			printf("%d ", isOkayCheck == 1 ? 1 : 0);
+
+			printf("집합 : { ");
+			for (j = 0; j < aryIndex; j++) {
+				printf("%d, ", numAry[j]);
+			}
+			printf("}\n\n");
 
 		}else if (!strcmp(operator, "toggle")) {
 
@@ -92,8 +110,6 @@ int main() {
 		}else if (!strcmp(operator, "empty")) {
 
 		}
-
-
 	}
 
 
