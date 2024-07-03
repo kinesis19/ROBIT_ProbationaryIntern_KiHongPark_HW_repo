@@ -10,9 +10,9 @@ int main() {
 	int i, j, isSquare = 0;
 
 	// 형식 출력하기.
-	printf("%min : ");
+	printf("min : ");
 	scanf("%d", &min);
-	printf("%max : ");
+	printf("max : ");
 	scanf("%d", &max);
 
 	// 제곱 ㄴㄴ수 구하기
