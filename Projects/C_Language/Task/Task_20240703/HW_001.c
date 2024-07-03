@@ -46,7 +46,7 @@ int main() {
 
 
 
-	printf("%제곱 ㄴㄴ수 : %d개\n", squareCnt);
+	printf("제곱 ㄴㄴ수 : %d개\n", squareCnt);
 
 
 	// 제곱 ㄴㄴ수가 담긴 배열을 출력하기
