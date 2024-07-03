@@ -3,27 +3,27 @@
 
 int main() {
 
-	// º¯¼ö ¼±¾ðÇÏ±â
+	// ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï±ï¿½
 	char inputString[100] = " ";
 	char searchString[100] = " ";
 	int rememberStrPosition[100] = { 0, };
 	int i, j, searchIndex = 0;
 
-	// Çü½Ä Ãâ·ÂÇÏ±â
-	printf("ÃÖ´ë 99°³ ¹®ÀÚ ÀÔ·Â <inputStr> : ");
+	// ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ï±ï¿½
+	printf("ï¿½Ö´ï¿½ 99ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ô·ï¿½ <inputStr> : ");
 	scanf("%s", &inputString);
 
-	printf("Ã£´Â ¹®ÀÚ¿­ <subStr> : ");
+	printf("Ã£ï¿½ï¿½ ï¿½ï¿½ï¿½Ú¿ï¿½ <subStr> : ");
 	scanf("%s", &searchString);
 
 	for (i = 0; i < 100; i++) {
 		for (j = 0; j < 100; j++) {
-			// ÀÔ·Â ¹ÞÀº ¹®ÀÚ¿­ÀÌ ³¡³¯ ¶§
+			// ï¿½Ô·ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ú¿ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½
 			if (inputString[j] == '\0') {
 				break;
 			}
 
-			// Ã£´Â ¹®ÀÚ¿­ÀÇ ¿ä¼Ò ÇÏ³ª¿Í ÀÔ·Â ¹ÞÀº ¹®ÀÚ¿­ÀÇ ¸ðµç ¿ä¼Ò¸¦ ºñ±³ÇÏ±â
+			// Ã£ï¿½ï¿½ ï¿½ï¿½ï¿½Ú¿ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½Ï³ï¿½ï¿½ï¿½ ï¿½Ô·ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ú¿ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½Ò¸ï¿½ ï¿½ï¿½ï¿½Ï±ï¿½
 			if (inputString[j] == searchString[i]) {
 				rememberStrPosition[searchIndex] = j;
 				/*printf("%c %c %d\n", inputString[j], searchString[i], rememberStrPosition[searchIndex]);*/
@@ -38,10 +38,10 @@ int main() {
 		}		 
 	}
 
-	printf("%sÀÇ À§Ä¡ : ", searchString);
+	printf("%sï¿½ï¿½ ï¿½ï¿½Ä¡ : ", searchString);
 	i = 0;
 	while (inputString[i] != '\0') {
-		printf("%d¹øÂ° ", rememberStrPosition[i]);
+		printf("%dï¿½ï¿½Â° ", rememberStrPosition[i]);
 		i++;
 	}
 
