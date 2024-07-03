@@ -29,8 +29,8 @@ int main() {
 				printf("%c %c %d\n", inputString[j], searchString[i], rememberStrPosition[searchIndex]);
 				searchIndex++;
 			}
-			/*printf("%c\n\n", inputString[rememberStrPosition[j] + 1]);*/
-			printf("%c\n\n", searchString[i + 1]);
+			printf("%c\n", inputString[rememberStrPosition[j] + 1]);
+			/*printf("%c\n\n", searchString[i + 1]);*/
 			if (inputString[rememberStrPosition[j] + 1] == searchString[i + 1]) {
 				printf("asdasd");
 				printf("%c %c %d\n", inputString[j], searchString[i], rememberStrPosition[searchIndex]);
