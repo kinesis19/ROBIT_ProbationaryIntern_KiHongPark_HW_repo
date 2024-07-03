@@ -45,7 +45,7 @@ int main() {
 				for (j = 0; j <= aryIndex; j++) {
 					printf("%d, ", numAry[j]);
 				}
-				printf("}\n\n");
+				printf(" }\n\n");
 				aryIndex++;
 			}
 			isOkayAdd = 1;
@@ -78,7 +78,7 @@ int main() {
 			for (j = 0; j < aryIndex; j++) {
 				printf("%d, ", numAry[j]);
 			}
-			printf("}\n\n");
+			printf(" }\n\n");
 			isOkayRemove = 0;
 			
 		}else if (!strcmp(operator, "check")) {
@@ -99,7 +99,7 @@ int main() {
 			for (j = 0; j < aryIndex; j++) {
 				printf("%d, ", numAry[j]);
 			}
-			printf("}\n\n");
+			printf(" }\n\n");
 
 		}else if (!strcmp(operator, "toggle")) {
 			int removeIdx = 0;
@@ -131,7 +131,7 @@ int main() {
 			for (j = 0; j < aryIndex; j++) {
 				printf("%d, ", numAry[j]);
 			}
-			printf("}\n\n");
+			printf(" }\n\n");
 
 		}else if (!strcmp(operator, "all") && inputNum == 0) {
 			// 과제에 제시된 입력 형식 "all 0"이 되어야만 제시된 집합으로 변경되도록 구현함.
@@ -144,7 +144,7 @@ int main() {
 			for (j = 0; j < 20; j++) {
 				printf("%d, ", numAry[j]);
 			}
-			printf("}\n\n");
+			printf(" }\n\n");
 			aryIndex = 19;
 
 		}else if (!strcmp(operator, "empty") && inputNum == 0) {
