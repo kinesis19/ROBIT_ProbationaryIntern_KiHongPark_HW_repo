@@ -19,19 +19,23 @@ int main() {
 		printf("input : ");
 		scanf("%s %d", &operator, &inputNum);
 
-		// 예외처리 (inputNum 관련 수정 필요)
-		/*if (!strcmp(operator, "stop")) {
+		/* (예외처리)
+		* 과제에는 언제까지 반복하는지, 언제 탈출하는지에 대한 설명이 안 되어 있음.
+		* 무한 루프를 방지하기 위해 반복문 탈출에 대한 예외처리는 임의로 구현함.
+		* 단, 과제에 제시된 출력 형식을 준수하기 위해 형식 출력에서는 stop 관련 문구를 추가하지 않음.
+		* 물론, Ctrl + C 단축키를 통해 무한 루프를 탈출할 수 있음.
+		*/ 
+
+		if (!strcmp(operator, "stop") && inputNum == 0) {
 			printf("Stopped!");
 			break;
-		}*/
+		}
 
 		// 계산 연산자 비교하기
 		if (!strcmp(operator, "add")) {
 			for (i = 0; i < 20; i++) {
 				if (numAry[i] == inputNum) {
 					isOkayAdd = 0;
-					// 예외처리 (문구 추가는 커스텀)
-					/*printf("추가할 수 없습니다.\n");*/
 					break;
 				}
 			}
@@ -68,12 +72,6 @@ int main() {
 				for (j = removeIdx; j < 20; j++) {
 					numAry[j] = numAry[j + 1];
 				}
-			}else{
-				/* 예외처리(문구 추가는 커스텀)
-				* 과제에 예외처리 관련 문구 커스텀은 언급 되어 있지 않으며,
-				* 출력 형식을 준수하기 위해 해당 문구는 주석처리 함.
-				*/
-				/*printf("해당 숫자는 집합의 요소가 아니므로, 삭제할 수 없습니다.\n");*/
 			}
 			// 디버깅 (요소 출력하기 - 정리 후)
 			printf("집합 : { ");
