@@ -147,6 +147,7 @@ int main() {
 				printf("%d, ", numAry[j]);
 			}
 			printf("}\n\n");
+			aryIndex = 19;
 
 		}else if (!strcmp(operator, "empty") && inputNum == 0) {
 			// 과제에 제시된 입력 형식 "empty 0"이 되어야만 제시된 집합으로 변경되도록 구현함.
