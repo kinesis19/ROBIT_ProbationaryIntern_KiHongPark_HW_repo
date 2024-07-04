@@ -8,7 +8,7 @@ int main() {
 
 	// 변수 선언하기.
 	int inputNum;
-	int i;
+	int i, j;
 
 	// 형식 출력하기.
 	printf("입력 : ");
@@ -17,24 +17,49 @@ int main() {
 	/* 학생 이름 배열, 성적 배열
 	* 이름의 길이는 안내되어 있지 않으므로, 임의로 지정함.
 	*/
-	char* chAry = (char*)calloc(inputNum, sizeof(char) * 20); // 이름 저장 배열
+	char* chAry = (char*)calloc(inputNum, sizeof(char) * 100); // 이름 저장 배열
 	int* pAry1 = (int*)calloc(inputNum, sizeof(int)); // 성적 1 저장 배열
 	int* pAry2 = (int*)calloc(inputNum, sizeof(int)); // 성적 2 저장 배열
 	int* pAry3 = (int*)calloc(inputNum, sizeof(int)); // 성적 3 저장 배열
 	double* pArySort = (double*)calloc(inputNum, sizeof(double)); // 성적 정렬 배열
+	int* nameCntAry = (int*)calloc(inputNum, sizeof(int)); // 이름의 시작 index를 알기 위한 배열
 
-	
+
+	int tempIdx = 0;
 	for (i = 0; i < inputNum; i++) {
+		nameCntAry[i] = tempIdx;
 		printf("       ");
-		scanf("%s %d %d %d", &chAry[i], &pAry1[i], &pAry2[i], &pAry3[i]);
+		if (chAry[tempIdx] == NULL) {
+			scanf("%s %d %d %d", &chAry[tempIdx], &pAry1[i], &pAry2[i], &pAry3[i]);
+			/*printf("%s", &chAry[i]);*/
+			printf("%d\n", tempIdx);
+			while (1){
+				if (chAry[tempIdx] == NULL) {
+					break;
+				}else{
+					tempIdx++;
+				}
+			}
+		}
+	}
+
+	for (i = 0; i < inputNum; i++) {
+		printf("%d ", nameCntAry[i]);
 	}
 
 	// Debugging: 이름 저장 잘 되었는지
-	/*for (i = 0; i < inputNum; i++) {
-		printf("       ");
-		printf("%s", &chAry[i]);
-	}*/
 
+	for (i = 0; i < inputNum; i++) {
+
+		printf("%s", &chAry[nameCntAry[i]]);
+		/*for (j = 0; j < inputNums; j++) {
+			printf("       ");
+			printf("%s", &chAry[j]);
+		}*/
+		printf("\n");
+	}
+
+	printf("\n\n");
 
 	// 배열에 할당하기.
 	for (i = 0; i < inputNum; i++) {
@@ -46,7 +71,7 @@ int main() {
 	// 배열 정렬하기.
 	for (i = 0; i < inputNum; i++) {
 		// 성적 정렬하기
-		for (int j = 0; j < inputNum; j++) {
+		for (j = 0; j < inputNum; j++) {
 			if (j + 1 < inputNum && pArySort[j] < pArySort[j + 1]) {
 				double tempNum;
 				tempNum = pArySort[j];
