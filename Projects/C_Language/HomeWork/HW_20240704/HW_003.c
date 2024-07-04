@@ -22,9 +22,10 @@ int main() {
 	int* pAry2 = (int*)calloc(inputNum, sizeof(int)); // 성적 2 저장 배열
 	int* pAry3 = (int*)calloc(inputNum, sizeof(int)); // 성적 3 저장 배열
 	double* pArySort = (double*)calloc(inputNum, sizeof(double)); // 성적 정렬 배열
-	int* nameCntAry = (int*)calloc(inputNum + 1, sizeof(int)); // 이름의 시작 index를 알기 위한 배열
+	int* nameCntAry = (int*)calloc(inputNum, sizeof(int)); // 이름의 시작 index를 알기 위한 배열
+	int* nameStartCntAry = (int*)calloc(inputNum, sizeof(int)); // 이름의 시작 index를 알기 위한 배열 (출력용)
 
-	nameCntAry[0] = 0;
+	/*nameCntAry[0] = 0;*/
 	int tempIdx = 0;
 	for (i = 0; i < inputNum; i++) {
 		printf("       ");
@@ -33,7 +34,8 @@ int main() {
 
 			while (1){
 				if (chAry[tempIdx] == NULL) {
-					nameCntAry[i+1] = tempIdx;
+					nameCntAry[i] = tempIdx;
+					nameStartCntAry[i] = nameCntAry[i];
 					break;
 				}else{
 					tempIdx++;
@@ -54,25 +56,62 @@ int main() {
 		// 성적 정렬하기
 		for (j = 0; j < inputNum; j++) {
 			if (j + 1 < inputNum && pArySort[j] < pArySort[j + 1]) {
+				// 성적 변경하기.
 				double tempNum;
 				tempNum = pArySort[j];
 				pArySort[j] = pArySort[j + 1];
 				pArySort[j + 1] = tempNum;
+
+
+				// 이름 변경하기.
+				int tempChar;
+				tempChar = nameStartCntAry[j];
+				nameStartCntAry[j] = nameStartCntAry[j + 1];
+				nameStartCntAry[j + 1] = tempChar;
+
 			}
 		}
 
 	}
+	nameStartCntAry[j] = 0;
 
-	for (i = 0; i < 6; i++) {
+
+	// Debugging
+	/*for (i = 0; i < 5; i++) {
+		printf("\n%lf", pArySort[i]);
+	}
+	printf("\n");
+	*/
+	for (i = 0; i < 5; i++) {
 		printf("%d ", nameCntAry[i]);
 	}
+	printf("\n");
+	for (i = 0; i < 5; i++) {
+		printf("%d ", nameStartCntAry[i]);
+	}
+
 	// 정렬된 배열 출력하기
 	int tempCnt = 0;
+	int tempStart = 0;
+	i = 0;
+	tempStart = nameStartCntAry[i + 1];
 	printf("출력 : \n");
 	for (i = 0; i < inputNum; i++) {
 		printf("       ");
 		// 이름 출력하기
-		for (j = tempCnt; j < nameCntAry[i+1]; j++) {
+		for (j = tempStart; j < nameStartCntAry[i]; j++) {
+			printf("%c", chAry[j]);
+		}
+		while (1) {
+			if (tempStart < nameStartCntAry[i]) {
+				tempStart++;
+			}else {
+				break;
+			}
+		}
+		
+		
+		/*for (j = tempCnt; j < nameCntAry[i]; j++) {
 			printf("%c", chAry[j]);
 		}
 		while (1) {
@@ -81,14 +120,16 @@ int main() {
 			}else {
 				break;
 			}
-		}
+		}*/
 		printf(" ");
 		// 출력하기
 		if ((int)(pArySort[i] * 10) % 10 == 0) {
-			printf("%d\n", (int)pArySort[i]);
+			printf("%d", (int)pArySort[i]);
 		}else {
-			printf("%.1lf\n", pArySort[i]);
+			printf("%.1lf", pArySort[i]);
 		}
+		printf(" %d \n", tempStart);
+
 
 	}
 
