@@ -1,22 +1,27 @@
 #define _CRT_SECURE_NO_WARNINGS
+#include <stdlib.h>
 #include <stdio.h>
 
 int main() {
 
-	int i = 0;
-	int key = 0;
-	int list[8] = { 1, 2, 3, 4, 5, 6, 7, 8 };
+	int array[4][3];
+	array[0][0] = 1;
+	array[0][1] = 2;
+	array[0][2] = 3;
+	array[1][0] = 4;
+	array[1][1] = 5;
+	array[1][2] = 6;
+	array[2][0] = 7;
+	array[2][1] = 8;
+	array[2][2] = 9;
+	array[3][0] = 10;
+	array[3][1] = 11;
+	array[3][2] = 12;
 
-	printf("탐색할 값을 적으시오 : ");
-	scanf("%d", &key);
-
-	for (i = 0; i < 8; i++) {
-		if (list[i] == key) {
-			printf("Find! list[%d]\n", i);
-			break;
-		}
-	}
-	printf("end\n");
+	printf("%d %d %d\n", array[0][0], array[0][1], array[0][2]);
+	printf("%d %d %d\n", array[1][0], array[1][1], array[1][2]);
+	printf("%d %d %d\n", array[2][0], array[2][1], array[2][2]);
+	printf("%d %d %d\n", array[3][0], array[3][1], array[3][2]);
 
 	return 0;
 }
