@@ -15,30 +15,34 @@ int main() {
 
 	int htmlArySize = 1;
 	int i;
-	int margin = 0, tempIdx = 0;
+	int margin = 0, tempIdx = 0, tempWordSize = 0;
 	char* htmlAry = (char*)calloc(htmlArySize, sizeof(char) * 100);
 	/*int* htmlStack = (int*)malloc((int)htmlAry);*/
 
 
 	// 형식 입력출력하기
 	scanf("%s", &htmlAry[0]);
-	printf("%s\n", &htmlAry[2]);
+	/*printf("%s\n", &htmlAry[2]);*/
 
 
 	for (i = 0; i < 100; i++) {
-		printf("%c\n", htmlAry[i]);
-		/*printf("%d\n", sizeof(&htmlAry[i]));*/
+		if (htmlAry[i] == '<') {
+
+		}
+		tempWordSize++;
+		printf("%c", htmlAry[i]);
+
+		if (htmlAry[i] == '>') {
+			printf("%d", tempWordSize);
+			tempWordSize = 0;
+			printf("\n");
+			/*break;*/
+		}
+
+
 	}
-
+	
 	/*printf("%d\n", tempIdx);*/
-	/*for (i = 0; i < 10; i++) {
-		printf("%s\n", &htmlAry[i]);
-	}*/
-
-	i = 0;
-
-
-	printf("%d\n", tempIdx);
 	
 
 	free(htmlAry);
