@@ -15,8 +15,9 @@ int main() {
 
 	int htmlArySize = 1;
 	int i;
-	int margin = 0, tempIdx = 0, tempWordSize = 0;
+	int margin = 0, tempIdx = 0, targetIdx = 0, tempWordSize = 0;
 	char* htmlAry = (char*)calloc(htmlArySize, sizeof(char) * 100);
+	char* stackAry = (char*)calloc(htmlArySize, sizeof(char) * 100);
 	/*int* htmlStack = (int*)malloc((int)htmlAry);*/
 
 
@@ -31,23 +32,35 @@ int main() {
 	* 따라서, 입력 값에서 공백(마지막 글자 이후)이면 바로 검출을 중단하게끔 알고리즘을 설계함.
 	*/ 
 
-	for (i = 0; htmlAry[i] != ' '; i++) {
-		j = 0;
-		// '<'로 시작 ~ '>'로 끝날 때,
-		if (htmlAry[i] == '<') {
-			while(htmlAry[j] != '>'){
-				tempWordSize++;
-				printf("%c", htmlAry[j]);
+	while (htmlAry[tempIdx] != ' '){
+		// 1. '<'로 시작 ~ '>'로 끝날 때,
+		if (htmlAry[tempIdx] == '<') {
+			while (1) {
+				if (htmlAry[j] == '>') {
+					tempWordSize++;
+					printf("%c", htmlAry[j]);
+					break;
+				}else if (htmlAry[j] != '>') {
+					tempWordSize++;
+					printf("%c", htmlAry[j]);
+				}
+				tempIdx++;
 				j++;
 			}
+			printf("%d %d\n", tempIdx, j);
 		}
+		tempIdx++;
 		j++;
-		/*if (htmlAry[i] == '>') {
-			printf("%d", tempWordSize);
-			tempWordSize = 0;
-			printf("\n");
-		}*/
 	}
+
+	//for (i = tempIdx; htmlAry[tempIdx] != ' '; i++) {
+	//	
+	//	// 2. '>'로 시작 ~ '<'로 끝날 때,
+
+	//}
+
+	printf("%d\n", tempIdx);
+
 	
 	// 기존 코드 임시 저장
 	/*for (i = 0; i < 100; i++) {
@@ -64,10 +77,7 @@ int main() {
 		}
 	}*/
 
-
-
-
-	/*printf("%d\n", tempIdx);*/
+	
 	
 
 	free(htmlAry);
