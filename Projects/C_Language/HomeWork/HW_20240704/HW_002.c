@@ -4,7 +4,6 @@
 
 int main() {
 	/*변수 생성 및 동적 할당하기
-	* 
 	* htmlArySize는 max 값을 몰라서 임의로 지정한 것임.
 	* 나중에 수정할 필요 있음.
 	*/
@@ -13,11 +12,9 @@ int main() {
 	int tempIdx = 0, targetIdx = 0, tempWordSize = 0;
 	char* htmlAry = (char*)calloc(htmlArySize, sizeof(char) * 100);
 
-
 	// 형식 입력출력하기
 	printf("입력 : ");
 	scanf("%s", &htmlAry[0]);
-	/*printf("%s\n", &htmlAry[2]);*/
 
 	int j = 0, k = 0;
 	int isBreak = 0, tagIdx = 0; 
@@ -37,8 +34,7 @@ int main() {
 					tagCnt++;
 					wordCnt++; // 단어 수에 포함 시키기1
 					break;
-				}
-				else if (htmlAry[j] != '>') {
+				}else if (htmlAry[j] != '>') {
 					tempWordSize++;
 				}
 				tempIdx++;
@@ -46,8 +42,7 @@ int main() {
 				tagIdx++;
 			}
 			/*printf("%d %d", tempIdx, j);*/
-		}
-		else if (htmlAry[tempIdx] != '>' && htmlAry[tempIdx] != '<') {
+		}else if (htmlAry[tempIdx] != '>' && htmlAry[tempIdx] != '<') {
 			// 2. '>'로 시작 ~ '<'로 끝날 때 = '>'와 '<'로 시작하고 끝나지 않을 때
 			while (1) {
 				if (htmlAry[j] == '>' || htmlAry[j] == '<') {
@@ -55,8 +50,7 @@ int main() {
 					isBreak = 1;
 					wordCnt++; // 단어 수에 포함시키기 2
 					break;
-				}
-				else if (htmlAry[j] != '>' && htmlAry[j] != '<') {
+				}else if (htmlAry[j] != '>' && htmlAry[j] != '<') {
 					tempWordSize++;
 					isBreak = 0;
 				}
@@ -114,8 +108,6 @@ int main() {
 				}
 			}
 		}
-
-
 		
 		// 1. '<'로 시작 ~ '>'로 끝날 때,
 		if (htmlAry[tempIdx] == '<') {
