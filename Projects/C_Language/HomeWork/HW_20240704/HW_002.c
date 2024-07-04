@@ -13,10 +13,6 @@ int main() {
 	int margin = 0, tempIdx = 0, targetIdx = 0, tempWordSize = 0;
 	char* htmlAry = (char*)calloc(htmlArySize, sizeof(char) * 100);
 
-	// htmlTagAry : 입력 받은 문자들을 분류하여, 태그별, 단어별로 구분하여 저장하는 배열임.
-	char* htmlTagAry = (char*)calloc(htmlArySize, sizeof(char) * 100);
-	int* htmlStack = (int*)malloc((int)htmlAry);
-
 
 	// 형식 입력출력하기
 	printf("입력 : ");
@@ -24,8 +20,7 @@ int main() {
 	/*printf("%s\n", &htmlAry[2]);*/
 
 	int j = 0, k = 0;
-	int isBreak = 0;
-	int tagIdx = 0; 
+	int isBreak = 0, tagIdx = 0; 
 	int tagCnt = 0; // 태그의 개수 확인용 (태그 개수가 5개다? -> 잘못된 html 코드)
 	int wordCnt = 0; // 단어 개수 확인용. 단어 개수에 따라 margin이 정해짐.
 
@@ -46,7 +41,6 @@ int main() {
 				}
 				else if (htmlAry[j] != '>') {
 					tempWordSize++;
-					htmlTagAry[tagIdx] = htmlAry[j];
 				}
 				tempIdx++;
 				j++;
@@ -88,13 +82,8 @@ int main() {
 
 
 	// 초기화
-	tempIdx = 0, targetIdx = 0, tempWordSize = 0;
-	isBreak = 0;
-	tagIdx = 0;
+	j = 0, tempIdx = 0, targetIdx = 0, tempWordSize = 0, isBreak = 0, tagIdx = 0;
 	tagCnt = 0; // 태그의 개수 확인용 (태그 개수가 5개다? -> 잘못된 html 코드)
-	//wordCnt = 0; // 단어 개수 확인용. 단어 개수에 따라 margin이 정해짐.
-	j = 0;
-	int marginCnt = 0;
 	// 기존 wordCnt는 출력을 위해 비교 변수로 사용됨. wordCnt2는 비교 변수와 비교를 할 때 사용하기 위해 선언함.
 	int wordCnt2 = 0; 
 
@@ -125,7 +114,6 @@ int main() {
 					break;
 				}else if (htmlAry[j] != '>') {
 					tempWordSize++;
-					htmlTagAry[tagIdx] = htmlAry[j];
 					printf("%c", htmlAry[j]);
 				}
 				tempIdx++;
@@ -162,12 +150,6 @@ int main() {
 		tagIdx++;
 	}
 	
-
-	/*printf("%d\n", tempIdx);
-	for (i = 0; htmlTagAry[i] != NULL; i++) {
-		printf("%c", htmlTagAry[i]);
-	}
-	printf("\n%d %d", tagCnt, wordCnt2);*/
 	
 	free(htmlAry);
 
