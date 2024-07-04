@@ -25,13 +25,13 @@ int main() {
 	// 형식 입출력 하기.
 	printf("입력 : ");
 	scanf("%d %d", &num1, &num2);
-	int* pArr;
+
 
 	/* 동적 할당하기.
 	* 이중 포인터 X -> 이중 포인터 개념은 배우지 않았기 때문임.
 	* int type의 2차원 배열 생성 -> 해당 값들을 동적 배열 (포인터 배열)에 할당하기
 	*/
-	pArr = (int*)calloc((num1 * num2), sizeof(int));
+	int* pArr = (int*)calloc((num1 * num2), sizeof(int));
 	
 	// 가운데 숫자 지정을 위한 for문.
 	for (i = 0; i < num1; i++) {
