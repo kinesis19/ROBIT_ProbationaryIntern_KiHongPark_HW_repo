@@ -22,9 +22,9 @@ int main() {
 	int* pAry2 = (int*)calloc(inputNum, sizeof(int)); // 성적 2 저장 배열
 	int* pAry3 = (int*)calloc(inputNum, sizeof(int)); // 성적 3 저장 배열
 	double* pArySort = (double*)calloc(inputNum, sizeof(double)); // 성적 정렬 배열
-	int* nameCntAry = (int*)calloc(inputNum, sizeof(int)); // 이름의 시작 index를 알기 위한 배열
+	int* nameCntAry = (int*)calloc(inputNum + 1, sizeof(int)); // 이름의 시작 index를 알기 위한 배열
 
-
+	nameCntAry[0] = 0;
 	int tempIdx = 0;
 	for (i = 0; i < inputNum; i++) {
 		printf("       ");
@@ -33,7 +33,7 @@ int main() {
 
 			while (1){
 				if (chAry[tempIdx] == NULL) {
-					nameCntAry[i] = tempIdx;
+					nameCntAry[i+1] = tempIdx;
 					break;
 				}else{
 					tempIdx++;
@@ -63,20 +63,22 @@ int main() {
 
 	}
 
-	
+	for (i = 0; i < 6; i++) {
+		printf("%d ", nameCntAry[i]);
+	}
 	// 정렬된 배열 출력하기
 	int tempCnt = 0;
 	printf("출력 : \n");
 	for (i = 0; i < inputNum; i++) {
 		printf("       ");
-		for (j = tempCnt; j < nameCntAry[i]; j++) {
+		// 이름 출력하기
+		for (j = tempCnt; j < nameCntAry[i+1]; j++) {
 			printf("%c", chAry[j]);
 		}
 		while (1) {
 			if (tempCnt < nameCntAry[i]) {
 				tempCnt++;
-			}
-			else {
+			}else {
 				break;
 			}
 		}
