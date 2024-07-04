@@ -17,7 +17,7 @@ int main() {
 	/* 학생 이름 배열, 성적 배열
 	* 이름의 길이는 안내되어 있지 않으므로, 임의로 지정함.
 	*/
-	char* chAry = (char*)calloc(inputNum, sizeof(char)); // 이름 저장 배열
+	char* chAry = (char*)calloc(inputNum, sizeof(char) * 20); // 이름 저장 배열
 	int* pAry1 = (int*)calloc(inputNum, sizeof(int)); // 성적 1 저장 배열
 	int* pAry2 = (int*)calloc(inputNum, sizeof(int)); // 성적 2 저장 배열
 	int* pAry3 = (int*)calloc(inputNum, sizeof(int)); // 성적 3 저장 배열
@@ -29,26 +29,53 @@ int main() {
 		scanf("%s %d %d %d", &chAry[i], &pAry1[i], &pAry2[i], &pAry3[i]);
 	}
 
-	printf("출력 : \n");
+	// Debugging: 이름 저장 잘 되었는지
+	/*for (i = 0; i < inputNum; i++) {
+		printf("       ");
+		printf("%s", &chAry[i]);
+	}*/
 
+
+	// 배열에 할당하기.
 	for (i = 0; i < inputNum; i++) {
 		double examAvg = GettingDecimalPoint(pAry1[i], pAry2[i], pAry3[i]);
-
-		printf("       ");
-
 		// 성적 정렬 배열에 값 할당하기 - 초기 할당
 		pArySort[i] = examAvg;
+	}
+
+	// 배열 정렬하기.
+	for (i = 0; i < inputNum; i++) {
+		// 성적 정렬하기
+		for (int j = 0; j < inputNum; j++) {
+			if (j + 1 < inputNum && pArySort[j] < pArySort[j + 1]) {
+				double tempNum;
+				tempNum = pArySort[j];
+				pArySort[j] = pArySort[j + 1];
+				pArySort[j + 1] = tempNum;
+			}
+		}
+
+	}
+
+	
+	// 정렬된 배열 출력하기
+	printf("출력 : \n");
+	for (i = 0; i < inputNum; i++) {
+		printf("       ");
 
 		// 출력하기
-		if ((int)(examAvg * 10) % 10 == 0) {
+		if ((int)(pArySort[i] * 10) % 10 == 0) {
 			printf("%s %d\n", &chAry[i], (int)pArySort[i]);
-		}else {
+		}
+		else {
 			printf("%s %.1lf\n", &chAry[i], pArySort[i]);
 		}
 
 	}
-	
-	
+
+
+
+
 	/*free(chAry);
 	free(pAry1);	
 	free(pAry2);
