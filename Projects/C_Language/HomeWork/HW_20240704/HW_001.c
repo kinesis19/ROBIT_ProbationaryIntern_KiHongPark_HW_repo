@@ -16,7 +16,8 @@ int main() {
 	* 이중 포인터 X -> 이중 포인터 개념은 배우지 않았기 때문임.
 	* int type의 2차원 배열 생성 -> 해당 값들을 동적 배열 (포인터 배열)에 할당하기
 	*/
-	pArr = (int*)malloc(sizeof(int) * (num1 * num2));
+	/*pArr = (int*)malloc(sizeof(int) * (num1 * num2));*/
+	pArr = (int*)calloc((num1 * num2), sizeof(int));
 
 	/*if (pArr == NULL) {
 		printf("malloc error!");
@@ -30,7 +31,7 @@ int main() {
 			if ((num2 - 1) / 2 == j && (num1 - 1) / 2 == i) {
 				pArr[cnt] = 1;
 			}else{
-				pArr[cnt] = 0;
+				/*pArr[cnt] = 0;*/
 				/*pArr[cnt] = cnt + 1;*/
 			}
 			cnt++;
