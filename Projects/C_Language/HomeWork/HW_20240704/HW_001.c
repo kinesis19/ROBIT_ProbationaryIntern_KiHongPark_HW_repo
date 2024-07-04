@@ -46,48 +46,21 @@ int main() {
 				/* 반복문 탈출하기.
 				* -> 가운데 숫자를 제외한 모든 숫자를 채우기 위해 반복문을 탈출함.
 				*/
-				pArr[cnt] = tempNum; // tempNum = 2
+				pArr[cnt] = tempNum; // cnt = 12, tempNum = 2
 				break;
 			}
 			cnt++;
 		}
 	}
 
-
 	// 가운데 제외 숫자를 지정하는 for문.
 	for (i = 0; i < num1; i++) {
 		for (j = 0; j < num2; j++) {
-
-			// 배열의 i(aryIdx1)값 체크하기.
-			if (aryIdx1 == (num1 - 1)) {
-				isHigh = 0;
-			}else if (aryIdx1 == 0) {
-				isHigh = 1;
-			}
-
-			// 배열의 i(aryIdx1)값 업데이트하기.
-			if (isHigh != 1) {
-				aryIdx1--;
-			}else if(isHigh == 1){
-				aryIdx1++;
-			}
-
-
-			// 배열의 j(aryIdx2)값 체크하기.
-			if (aryIdx2 == (num2 - 1)) {
-				isLeft = 0;
-			}else if (aryIdx2 == 0) {
-				isLeft = 1;
-			}
-
-			// 배열의 j(aryIdx2)값 업데이트하기.
-			if (isLeft != 1) {
-				aryIdx2--;
-			}else if (isLeft == 1) {
-				aryIdx2++;
-			}
+			// 숫자 작성하는 알고리즘.
+			printf("%d %d - %d %d\n", aryIdx1, aryIdx2, isHigh, isLeft);
 
 		}
+		printf("\n");
 	}
 
 	// Debugging: pArr Index
