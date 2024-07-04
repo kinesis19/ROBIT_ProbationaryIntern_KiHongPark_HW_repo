@@ -27,14 +27,13 @@ int main() {
 
 	int tempIdx = 0;
 	for (i = 0; i < inputNum; i++) {
-		nameCntAry[i] = tempIdx;
 		printf("       ");
 		if (chAry[tempIdx] == NULL) {
 			scanf("%s %d %d %d", &chAry[tempIdx], &pAry1[i], &pAry2[i], &pAry3[i]);
-			/*printf("%s", &chAry[i]);*/
-			printf("%d\n", tempIdx);
+
 			while (1){
 				if (chAry[tempIdx] == NULL) {
+					nameCntAry[i] = tempIdx;
 					break;
 				}else{
 					tempIdx++;
@@ -42,24 +41,6 @@ int main() {
 			}
 		}
 	}
-
-	for (i = 0; i < inputNum; i++) {
-		printf("%d ", nameCntAry[i]);
-	}
-
-	// Debugging: 이름 저장 잘 되었는지
-
-	for (i = 0; i < inputNum; i++) {
-
-		printf("%s", &chAry[nameCntAry[i]]);
-		/*for (j = 0; j < inputNums; j++) {
-			printf("       ");
-			printf("%s", &chAry[j]);
-		}*/
-		printf("\n");
-	}
-
-	printf("\n\n");
 
 	// 배열에 할당하기.
 	for (i = 0; i < inputNum; i++) {
@@ -84,28 +65,38 @@ int main() {
 
 	
 	// 정렬된 배열 출력하기
+	int tempCnt = 0;
 	printf("출력 : \n");
 	for (i = 0; i < inputNum; i++) {
 		printf("       ");
-
+		for (j = tempCnt; j < nameCntAry[i]; j++) {
+			printf("%c", chAry[j]);
+		}
+		while (1) {
+			if (tempCnt < nameCntAry[i]) {
+				tempCnt++;
+			}
+			else {
+				break;
+			}
+		}
+		printf(" ");
 		// 출력하기
 		if ((int)(pArySort[i] * 10) % 10 == 0) {
-			printf("%s %d\n", &chAry[i], (int)pArySort[i]);
-		}
-		else {
-			printf("%s %.1lf\n", &chAry[i], pArySort[i]);
+			printf("%d\n", (int)pArySort[i]);
+		}else {
+			printf("%.1lf\n", pArySort[i]);
 		}
 
 	}
 
 
-
-
-	/*free(chAry);
+	free(chAry);
 	free(pAry1);	
 	free(pAry2);
 	free(pAry3);
-	free(pArySort);*/
+	free(pArySort);
+	free(nameCntAry);
 
 	return 0;
 }
