@@ -30,7 +30,8 @@ int main() {
 			if ((num2 - 1) / 2 == j && (num1 - 1) / 2 == i) {
 				pArr[cnt] = 1;
 			}else{
-				pArr[cnt] = cnt + 1;
+				pArr[cnt] = 0;
+				/*pArr[cnt] = cnt + 1;*/
 			}
 			cnt++;
 		}
