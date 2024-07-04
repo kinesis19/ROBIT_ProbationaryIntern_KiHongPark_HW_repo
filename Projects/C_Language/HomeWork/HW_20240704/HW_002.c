@@ -24,8 +24,33 @@ int main() {
 	scanf("%s", &htmlAry[0]);
 	/*printf("%s\n", &htmlAry[2]);*/
 
+	int j = 0;
 
-	for (i = 0; i < 100; i++) {
+	/*
+	* 입력 형식에는 공백이 없음.
+	* 따라서, 입력 값에서 공백(마지막 글자 이후)이면 바로 검출을 중단하게끔 알고리즘을 설계함.
+	*/ 
+
+	for (i = 0; htmlAry[i] != ' '; i++) {
+		j = 0;
+		// '<'로 시작 ~ '>'로 끝날 때,
+		if (htmlAry[i] == '<') {
+			while(htmlAry[j] != '>'){
+				tempWordSize++;
+				printf("%c", htmlAry[j]);
+				j++;
+			}
+		}
+		j++;
+		/*if (htmlAry[i] == '>') {
+			printf("%d", tempWordSize);
+			tempWordSize = 0;
+			printf("\n");
+		}*/
+	}
+	
+	// 기존 코드 임시 저장
+	/*for (i = 0; i < 100; i++) {
 		if (htmlAry[i] == '<') {
 			tempWordSize = 0;
 		}
@@ -36,12 +61,12 @@ int main() {
 			printf("%d", tempWordSize);
 			tempWordSize = 0;
 			printf("\n");
-			/*break;*/
 		}
+	}*/
 
 
-	}
-	
+
+
 	/*printf("%d\n", tempIdx);*/
 	
 
