@@ -12,15 +12,16 @@ int main() {
 
 	// 형식 출력하기.
 	printf("입력 : ");
-	scanf("%d", &inputNum);
+	scanf_s("%d", &inputNum);
 
 	/* 학생 이름 배열, 성적 배열
 	* 이름의 길이는 안내되어 있지 않으므로, 임의로 지정함.
 	*/
-	int* chAry = (int*)calloc(inputNum, sizeof(char));
-	int* pAry1 = (int*)calloc(inputNum, sizeof(int));
-	int* pAry2 = (int*)calloc(inputNum, sizeof(int));
-	int* pAry3 = (int*)calloc(inputNum, sizeof(int));
+	char* chAry = (char*)calloc(inputNum, sizeof(char)); // 이름 저장 배열
+	int* pAry1 = (int*)calloc(inputNum, sizeof(int)); // 성적 1 저장 배열
+	int* pAry2 = (int*)calloc(inputNum, sizeof(int)); // 성적 2 저장 배열
+	int* pAry3 = (int*)calloc(inputNum, sizeof(int)); // 성적 3 저장 배열
+	double* pArySort = (double*)calloc(inputNum, sizeof(double)); // 성적 정렬 배열
 
 	
 	for (i = 0; i < inputNum; i++) {
@@ -29,33 +30,30 @@ int main() {
 	}
 
 	printf("출력 : \n");
-	// Debugging
-	/*for (i = 0; i < inputNum; i++) {
-		printf("       ");
-		printf("%s\n", &chAry[i]);
-		printf("%d %d %d\n", pAry1[i], pAry2[i], pAry3[i]);
-	}*/
-
 
 	for (i = 0; i < inputNum; i++) {
 		double examAvg = GettingDecimalPoint(pAry1[i], pAry2[i], pAry3[i]);
 
 		printf("       ");
-		// 출력 형식에 알맞게 소숫점 한 자리까지만 표시함.
 
+		// 성적 정렬 배열에 값 할당하기 - 초기 할당
+		pArySort[i] = examAvg;
+
+		// 출력하기
 		if ((int)(examAvg * 10) % 10 == 0) {
-			printf("%s %d\n", &chAry[i], (int)examAvg);
+			printf("%s %d\n", &chAry[i], (int)pArySort[i]);
 		}else {
-			printf("%s %.1lf\n", &chAry[i], examAvg);
+			printf("%s %.1lf\n", &chAry[i], pArySort[i]);
 		}
 
 	}
 	
-	/*
-	free(chAry);
-	free(pAry1);
+	
+	/*free(chAry);
+	free(pAry1);	
 	free(pAry2);
-	free(pAry3);*/
+	free(pAry3);
+	free(pArySort);*/
 
 	return 0;
 }
