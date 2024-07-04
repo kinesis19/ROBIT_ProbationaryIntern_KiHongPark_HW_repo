@@ -10,7 +10,7 @@ int main() {
 	*/
 	int htmlArySize = 1;
 	int i;
-	int margin = 0, tempIdx = 0, targetIdx = 0, tempWordSize = 0;
+	int tempIdx = 0, targetIdx = 0, tempWordSize = 0;
 	char* htmlAry = (char*)calloc(htmlArySize, sizeof(char) * 100);
 
 
@@ -22,12 +22,11 @@ int main() {
 	int j = 0, k = 0;
 	int isBreak = 0, tagIdx = 0; 
 	int tagCnt = 0; // 태그의 개수 확인용 (태그 개수가 5개다? -> 잘못된 html 코드)
-	int wordCnt = 0; // 단어 개수 확인용. 단어 개수에 따라 margin이 정해짐.
+	int wordCnt = 0; // 단어 개수 확인용.
 
 	printf("\n출력 : ");
 
 	// 예외 처리 위한 알고리즘.
-
 	while (htmlAry[tempIdx] != NULL) {
 		// 1. '<'로 시작 ~ '>'로 끝날 때,
 		if (htmlAry[tempIdx] == '<') {
@@ -71,7 +70,6 @@ int main() {
 		}
 		tempIdx++;
 		j++;
-		margin++;
 		tagIdx++;
 	}
 
@@ -93,15 +91,32 @@ int main() {
 		if (0 < tagCnt) {
 			printf("       ");
 		}
-		if (wordCnt2 <= wordCnt / 2) {
-			for (k = 0; k < wordCnt2; k++) {
-				printf("  ");
+		// Html의 모든 태그(비 태그 포함)가 홀수 형태일 때,
+		if (wordCnt % 2 != 0) {
+			if (wordCnt2 <= wordCnt / 2) {
+				for (k = 0; k < wordCnt2; k++) {
+					printf("  ");
+				}
+			}else if (wordCnt2 > wordCnt / 2) {
+				for (k = 0; k < wordCnt - wordCnt2 - 1; k++) {
+					printf("  ");
+				}
 			}
-		}else if(wordCnt2 > wordCnt / 2){
-			for (k = 0; k < wordCnt - wordCnt2 - 1; k++) {
-				printf("  ");
+		}else{
+			// Html의 모든 태그(비 태그 포함)가 짝수 형태일 때,
+			if (wordCnt2 < wordCnt / 2) {
+				for (k = 0; k < wordCnt2; k++) {
+					printf("  ");
+				}
+			}else if (wordCnt2 >= wordCnt / 2) {
+				for (k = 0; k < wordCnt - wordCnt2 - 1; k++) {
+					printf("  ");
+				}
 			}
 		}
+
+
+		
 		// 1. '<'로 시작 ~ '>'로 끝날 때,
 		if (htmlAry[tempIdx] == '<') {
 			while (1) {
@@ -146,7 +161,6 @@ int main() {
 		}
 		tempIdx++;
 		j++;
-		margin++;
 		tagIdx++;
 	}
 	
