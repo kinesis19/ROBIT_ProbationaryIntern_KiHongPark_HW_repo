@@ -15,25 +15,22 @@ int main() {
 	int i;
 	int margin = 0, tempIdx = 0, targetIdx = 0, tempWordSize = 0;
 	char* htmlAry = (char*)calloc(htmlArySize, sizeof(char) * 100);
-	/*
-	* 과제에서는 동적할당을 사용해 스택을 구현하라고 제시되었으나,
-	* 이번 차시 수업에서는 스택을 배우지 않음.
-	* 정확히는 스택이 무엇인지 사진만 보고 넘어갔으며, 스택 사용법은 배우지 않음.
-	* 로빛 수습 단원 규정상 생성형 인공지능(GPT), 타인의 소스코드, 구글링은 허용되지 않는 것으로 알고 있음.
-	* 확인을 위해 멘토 선배님께 여쭤봄.
-	* 구글 검색이 가능하다면 -> 스택 개념을 본 코드에 적용할 예정임.
-	* 구글 검색이 불가능하다면 -> 최대한 스택 개념을 비슷하게 구현해 낼 예정임.
-	* 지금은, 스택의 FIFO 방식과 유사하게 구현해 봄.
-	*/
+
+	// htmlTagAry : 입력 받은 문자들을 분류하여, 태그별, 단어별로 구분하여 저장하는 배열임.
+	char* htmlTagAry = (char*)calloc(htmlArySize, sizeof(char) * 100);
 	int* htmlStack = (int*)malloc((int)htmlAry);
 
 
 	// 형식 입력출력하기
+	printf("입력 : ");
 	scanf("%s", &htmlAry[0]);
 	/*printf("%s\n", &htmlAry[2]);*/
 
-	int j = 0;
+	int j = 0, k = 0;
 	int isBreak = 0;
+	int tagIdx = 0;
+
+	printf("출력 : ");
 
 	while (htmlAry[tempIdx] != NULL){
 		// 1. '<'로 시작 ~ '>'로 끝날 때,
@@ -46,12 +43,14 @@ int main() {
 					break;
 				}else if (htmlAry[j] != '>') {
 					tempWordSize++;
+					htmlTagAry[tagIdx] = htmlAry[j];
 					printf("%c", htmlAry[j]);
 				}
 				tempIdx++;
 				j++;
+				tagIdx++;
 			}
-			printf("%d %d", tempIdx, j);
+			/*printf("%d %d", tempIdx, j);*/
 		}else if (htmlAry[tempIdx] != '>' && htmlAry[tempIdx] != '<') { 
 			// 2. '>'로 시작 ~ '<'로 끝날 때 = '>'와 '<'로 시작하고 끝나지 않을 때
 			while (1) {
@@ -67,7 +66,7 @@ int main() {
 				tempIdx++;
 				j++;
 			}
-			printf("%d %d", tempIdx, j);
+			/*printf("%d %d", tempIdx, j);*/
 		}
 		printf("\n");
 
@@ -76,10 +75,15 @@ int main() {
 		}
 		tempIdx++;
 		j++;
+		margin++;
+		tagIdx++;
 	}
 	
 
 	printf("%d\n", tempIdx);
+	for (i = 0; htmlTagAry[i] != NULL; i++) {
+		printf("%c", htmlTagAry[i]);
+	}
 
 	free(htmlAry);
 
