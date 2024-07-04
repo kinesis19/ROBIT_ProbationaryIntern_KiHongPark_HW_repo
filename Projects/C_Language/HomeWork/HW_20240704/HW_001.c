@@ -58,18 +58,34 @@ int main() {
 	for (i = 0; i < num1; i++) {
 		for (j = 0; j < num2; j++) {
 
+			// 배열의 i(aryIdx1)값 체크하기.
 			if (aryIdx1 == (num1 - 1)) {
 				isHigh = 0;
 			}else if (aryIdx1 == 0) {
 				isHigh = 1;
 			}
 
+			// 배열의 i(aryIdx1)값 업데이트하기.
 			if (isHigh != 1) {
 				aryIdx1--;
 			}else if(isHigh == 1){
 				aryIdx1++;
 			}
 
+
+			// 배열의 j(aryIdx2)값 체크하기.
+			if (aryIdx2 == (num2 - 1)) {
+				isLeft = 0;
+			}else if (aryIdx2 == 0) {
+				isLeft = 1;
+			}
+
+			// 배열의 j(aryIdx2)값 업데이트하기.
+			if (isLeft != 1) {
+				aryIdx2--;
+			}else if (isLeft == 1) {
+				aryIdx2++;
+			}
 
 		}
 	}
