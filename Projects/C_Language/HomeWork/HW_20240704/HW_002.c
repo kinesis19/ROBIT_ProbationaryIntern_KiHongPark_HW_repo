@@ -22,15 +22,21 @@ int main() {
 
 	// 형식 입력출력하기
 	scanf("%s", &htmlAry[0]);
-	/*printf("%s\n", &htmlAry);
-
-	printf("%c\n", &htmlAry[1]);*/
 	printf("%s\n", &htmlAry[2]);
 
-	/*printf("%d\n", tempIdx);*/
-	for (i = 0; i < 10; i++) {
-		printf("%c", &htmlAry[i]);
+
+	for (i = 0; i < 100; i++) {
+		printf("%c\n", htmlAry[i]);
+		/*printf("%d\n", sizeof(&htmlAry[i]));*/
 	}
+
+	/*printf("%d\n", tempIdx);*/
+	/*for (i = 0; i < 10; i++) {
+		printf("%s\n", &htmlAry[i]);
+	}*/
+
+	i = 0;
+
 
 	printf("%d\n", tempIdx);
 	
