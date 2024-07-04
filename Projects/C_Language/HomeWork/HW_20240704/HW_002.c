@@ -3,9 +3,6 @@
 #include <stdlib.h>
 
 int main() {
-
-
-
 	/*변수 생성 및 동적 할당하기
 	* 
 	* htmlArySize는 max 값을 몰라서 임의로 지정한 것임.
@@ -28,7 +25,9 @@ int main() {
 
 	int j = 0, k = 0;
 	int isBreak = 0;
-	int tagIdx = 0;
+	int tagIdx = 0; 
+	int tagCnt = 0; // 태그의 개수 확인용 (태그 개수가 5개다? -> 잘못된 html 코드)
+	int wordCnt = 0; // 단어 개수 확인용. 단어 개수에 따라 margin이 정해짐.
 
 	printf("출력 : ");
 
@@ -40,6 +39,8 @@ int main() {
 					tempWordSize++;
 					printf("%c", htmlAry[j]);
 					isBreak = 0;
+					tagCnt++;
+					wordCnt++; // 단어 수에 포함 시키기1
 					break;
 				}else if (htmlAry[j] != '>') {
 					tempWordSize++;
@@ -57,6 +58,7 @@ int main() {
 				if (htmlAry[j] == '>' || htmlAry[j] == '<') {
 					/*tempWordSize++;*/
 					isBreak = 1;
+					wordCnt++; // 단어 수에 포함시키기 2
 					break;
 				}else if (htmlAry[j] != '>' && htmlAry[j] != '<') {
 					tempWordSize++;
@@ -84,7 +86,8 @@ int main() {
 	for (i = 0; htmlTagAry[i] != NULL; i++) {
 		printf("%c", htmlTagAry[i]);
 	}
-
+	printf("\n%d %d", tagCnt, wordCnt);
+	
 	free(htmlAry);
 
 	return 0;
