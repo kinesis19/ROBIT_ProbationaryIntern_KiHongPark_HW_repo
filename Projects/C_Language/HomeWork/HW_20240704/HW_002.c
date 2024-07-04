@@ -27,7 +27,7 @@ int main() {
 
 	for (i = 0; i < 100; i++) {
 		if (htmlAry[i] == '<') {
-
+			tempWordSize = 0;
 		}
 		tempWordSize++;
 		printf("%c", htmlAry[i]);
