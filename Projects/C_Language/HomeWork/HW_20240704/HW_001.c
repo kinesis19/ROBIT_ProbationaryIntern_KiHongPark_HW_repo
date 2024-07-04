@@ -22,14 +22,30 @@ int main() {
 		printf("malloc error!");
 	}*/
 
+
+
 	for (i = 0; i < num1; i++) {
 		for (j = 0; j < num2; j++) {
-			pArr[cnt] = cnt + 1;
+
+			if ((num2 - 1) / 2 == j && (num1 - 1) / 2 == i) {
+				pArr[cnt] = 1;
+			}else{
+				pArr[cnt] = cnt + 1;
+			}
+			cnt++;
+		}
+	}
+
+	cnt = 0;
+
+	for (i = 0; i < num1; i++) {
+		for (j = 0; j < num2; j++) {
 			printf("%d ", pArr[cnt]);
 			cnt++;
 		}
 		printf("\n");
 	}
+
 
 	free(pArr);
 
