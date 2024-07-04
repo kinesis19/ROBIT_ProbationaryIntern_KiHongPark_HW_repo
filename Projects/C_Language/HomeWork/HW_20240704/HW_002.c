@@ -32,7 +32,7 @@ int main() {
 	* 따라서, 입력 값에서 공백(마지막 글자 이후)이면 바로 검출을 중단하게끔 알고리즘을 설계함.
 	*/ 
 
-	while (htmlAry[tempIdx] != ' '){
+	while (htmlAry[tempIdx] != NULL){
 		// 1. '<'로 시작 ~ '>'로 끝날 때,
 		if (htmlAry[tempIdx] == '<') {
 			while (1) {
@@ -52,7 +52,7 @@ int main() {
 			// 2. '>'로 시작 ~ '<'로 끝날 때 = '>'와 '<'로 시작하고 끝나지 않을 때
 			while (1) {
 				if (htmlAry[j] == '>' || htmlAry[j] == '<') {
-					tempWordSize++;
+					/*tempWordSize++;*/
 					break;
 				}else if (htmlAry[j] != '>' && htmlAry[j] != '<') {
 					tempWordSize++;
@@ -63,32 +63,13 @@ int main() {
 			}
 			printf("%d %d\n", tempIdx, j);
 		}
+		printf("\n");
 		tempIdx++;
 		j++;
-
 	}
 	
 
 	printf("%d\n", tempIdx);
-
-	
-	// 기존 코드 임시 저장
-	/*for (i = 0; i < 100; i++) {
-		if (htmlAry[i] == '<') {
-			tempWordSize = 0;
-		}
-		tempWordSize++;
-		printf("%c", htmlAry[i]);
-
-		if (htmlAry[i] == '>') {
-			printf("%d", tempWordSize);
-			tempWordSize = 0;
-			printf("\n");
-		}
-	}*/
-
-	
-	
 
 	free(htmlAry);
 
