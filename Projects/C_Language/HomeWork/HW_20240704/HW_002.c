@@ -26,11 +26,7 @@ int main() {
 	/*printf("%s\n", &htmlAry[2]);*/
 
 	int j = 0;
-
-	/*
-	* 입력 형식에는 공백이 없음.
-	* 따라서, 입력 값에서 공백(마지막 글자 이후)이면 바로 검출을 중단하게끔 알고리즘을 설계함.
-	*/ 
+	int isBreak = 0;
 
 	while (htmlAry[tempIdx] != NULL){
 		// 1. '<'로 시작 ~ '>'로 끝날 때,
@@ -39,6 +35,7 @@ int main() {
 				if (htmlAry[j] == '>') {
 					tempWordSize++;
 					printf("%c", htmlAry[j]);
+					isBreak = 0;
 					break;
 				}else if (htmlAry[j] != '>') {
 					tempWordSize++;
@@ -47,23 +44,29 @@ int main() {
 				tempIdx++;
 				j++;
 			}
-			printf("%d %d\n", tempIdx, j);
+			printf("%d %d", tempIdx, j);
 		}else if (htmlAry[tempIdx] != '>' && htmlAry[tempIdx] != '<') { 
 			// 2. '>'로 시작 ~ '<'로 끝날 때 = '>'와 '<'로 시작하고 끝나지 않을 때
 			while (1) {
 				if (htmlAry[j] == '>' || htmlAry[j] == '<') {
 					/*tempWordSize++;*/
+					isBreak = 1;
 					break;
 				}else if (htmlAry[j] != '>' && htmlAry[j] != '<') {
 					tempWordSize++;
 					printf("%c", htmlAry[j]);
+					isBreak = 0;
 				}
 				tempIdx++;
 				j++;
 			}
-			printf("%d %d\n", tempIdx, j);
+			/*printf("%d %d", tempIdx, j);*/
 		}
 		printf("\n");
+
+		if (isBreak == 1) {
+			continue;
+		}
 		tempIdx++;
 		j++;
 	}
