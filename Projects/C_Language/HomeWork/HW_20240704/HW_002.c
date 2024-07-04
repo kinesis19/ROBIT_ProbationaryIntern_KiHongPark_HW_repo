@@ -48,16 +48,26 @@ int main() {
 				j++;
 			}
 			printf("%d %d\n", tempIdx, j);
+		}else if (htmlAry[tempIdx] != '>' && htmlAry[tempIdx] != '<') { 
+			// 2. '>'로 시작 ~ '<'로 끝날 때 = '>'와 '<'로 시작하고 끝나지 않을 때
+			while (1) {
+				if (htmlAry[j] == '>' || htmlAry[j] == '<') {
+					tempWordSize++;
+					break;
+				}else if (htmlAry[j] != '>' && htmlAry[j] != '<') {
+					tempWordSize++;
+					printf("%c", htmlAry[j]);
+				}
+				tempIdx++;
+				j++;
+			}
+			printf("%d %d\n", tempIdx, j);
 		}
 		tempIdx++;
 		j++;
+
 	}
-
-	//for (i = tempIdx; htmlAry[tempIdx] != ' '; i++) {
-	//	
-	//	// 2. '>'로 시작 ~ '<'로 끝날 때,
-
-	//}
+	
 
 	printf("%d\n", tempIdx);
 
