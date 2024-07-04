@@ -4,16 +4,23 @@
 
 int main() {
 
-	// 변수 선언하기.
-	int num1, num2, i, j, cnt = 0;
+	/* 변수 선언하기.
+	*
+	* tempNum : 숫자를 pArr에 넣을 때, 해당 숫자의 정보를 나타냄.
+	* 
+	*/
+
+	int num1, num2, i, j, cnt = 0, tempNum = 1;
 	// pArr 전용 index Checker
 	int aryIdx1 = 0, aryIdx2 = 0;
 	/* aryIdx1과 aryIdx2의 변화를 주기 위한 논리 연산자.
 	* (but, boolean은 안 배운 개념이므로 int type을 사용함)
 	* 0 : false, 1 : true
 	* aryIdx1(isHigh)의 값이 0일 때 : High(1), num1일 때 : Low(0).
+	* aryIdx2(isLeft)의 값이 0일 때 : Left(1), num2일 때 : Left(0).
+	* spaceHigh, spaceLeft : 한 바퀴씩 회전해 돌아 왔을때, 몇 칸 뛰어서 채워야 하는지를 나타냄.
 	*/ 
-	int isHigh = 0;
+	int isHigh = 0, isLeft = 0, spaceHigh = 1, spaceLeft = 1;
 
 	// 형식 입출력 하기.
 	printf("입력 : ");
@@ -31,19 +38,21 @@ int main() {
 		for (j = 0; j < num2; j++) {
 			// 가운데 숫자 지정하기
 			if ((num2 - 1) / 2 == j && (num1 - 1) / 2 == i) {
-				pArr[cnt] = 1;
+				pArr[cnt] = tempNum; // tempNum = 1
 				aryIdx1 = (num1 - 1) / 2;
 				aryIdx2 = (num2 - 1) / 2;
+				tempNum++;
 			}else if((num2 - 1) / 2 == j && i == (num1 - 1) / 2 + 1){ // 가운데 숫자 바로 아래일 때,
 				/* 반복문 탈출하기.
 				* -> 가운데 숫자를 제외한 모든 숫자를 채우기 위해 반복문을 탈출함.
 				*/
-				pArr[cnt] = 2;
+				pArr[cnt] = tempNum; // tempNum = 2
 				break;
 			}
 			cnt++;
 		}
 	}
+
 
 	// 가운데 제외 숫자를 지정하는 for문.
 	for (i = 0; i < num1; i++) {
