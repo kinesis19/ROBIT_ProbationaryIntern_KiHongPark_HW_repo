@@ -29,9 +29,90 @@ int main() {
 	int tagCnt = 0; // 태그의 개수 확인용 (태그 개수가 5개다? -> 잘못된 html 코드)
 	int wordCnt = 0; // 단어 개수 확인용. 단어 개수에 따라 margin이 정해짐.
 
-	printf("출력 : ");
+	printf("\n출력 : ");
 
+	// 예외 처리 위한 알고리즘.
+
+	while (htmlAry[tempIdx] != NULL) {
+		// 1. '<'로 시작 ~ '>'로 끝날 때,
+		if (htmlAry[tempIdx] == '<') {
+			while (1) {
+				if (htmlAry[j] == '>') {
+					tempWordSize++;
+					isBreak = 0;
+					tagCnt++;
+					wordCnt++; // 단어 수에 포함 시키기1
+					break;
+				}
+				else if (htmlAry[j] != '>') {
+					tempWordSize++;
+					htmlTagAry[tagIdx] = htmlAry[j];
+				}
+				tempIdx++;
+				j++;
+				tagIdx++;
+			}
+			/*printf("%d %d", tempIdx, j);*/
+		}
+		else if (htmlAry[tempIdx] != '>' && htmlAry[tempIdx] != '<') {
+			// 2. '>'로 시작 ~ '<'로 끝날 때 = '>'와 '<'로 시작하고 끝나지 않을 때
+			while (1) {
+				if (htmlAry[j] == '>' || htmlAry[j] == '<') {
+					/*tempWordSize++;*/
+					isBreak = 1;
+					wordCnt++; // 단어 수에 포함시키기 2
+					break;
+				}
+				else if (htmlAry[j] != '>' && htmlAry[j] != '<') {
+					tempWordSize++;
+					isBreak = 0;
+				}
+				tempIdx++;
+				j++;
+			}
+		}
+
+		if (isBreak == 1) {
+			continue;
+		}
+		tempIdx++;
+		j++;
+		margin++;
+		tagIdx++;
+	}
+
+	if (tagCnt % 2 != 0) {
+		printf("잘못된 태그 구조이므로, 프로그램을 종료합니다.\n");
+		return 0;
+	}
+
+
+	// 초기화
+	tempIdx = 0, targetIdx = 0, tempWordSize = 0;
+	isBreak = 0;
+	tagIdx = 0;
+	tagCnt = 0; // 태그의 개수 확인용 (태그 개수가 5개다? -> 잘못된 html 코드)
+	//wordCnt = 0; // 단어 개수 확인용. 단어 개수에 따라 margin이 정해짐.
+	j = 0;
+	int marginCnt = 0;
+	// 기존 wordCnt는 출력을 위해 비교 변수로 사용됨. wordCnt2는 비교 변수와 비교를 할 때 사용하기 위해 선언함.
+	int wordCnt2 = 0; 
+
+	// 출력을 위한 알고리즘.
 	while (htmlAry[tempIdx] != NULL){
+		// 첫 번째 태그 제외 나머지 태그의 여백 균일화 작업.
+		if (0 < tagCnt) {
+			printf("       ");
+		}
+		if (wordCnt2 <= wordCnt / 2) {
+			for (k = 0; k < wordCnt2; k++) {
+				printf("  ");
+			}
+		}else if(wordCnt2 > wordCnt / 2){
+			for (k = 0; k < wordCnt - wordCnt2 - 1; k++) {
+				printf("  ");
+			}
+		}
 		// 1. '<'로 시작 ~ '>'로 끝날 때,
 		if (htmlAry[tempIdx] == '<') {
 			while (1) {
@@ -40,7 +121,7 @@ int main() {
 					printf("%c", htmlAry[j]);
 					isBreak = 0;
 					tagCnt++;
-					wordCnt++; // 단어 수에 포함 시키기1
+					wordCnt2++; // 단어 수에 포함 시키기1
 					break;
 				}else if (htmlAry[j] != '>') {
 					tempWordSize++;
@@ -58,7 +139,7 @@ int main() {
 				if (htmlAry[j] == '>' || htmlAry[j] == '<') {
 					/*tempWordSize++;*/
 					isBreak = 1;
-					wordCnt++; // 단어 수에 포함시키기 2
+					wordCnt2++; // 단어 수에 포함시키기 2
 					break;
 				}else if (htmlAry[j] != '>' && htmlAry[j] != '<') {
 					tempWordSize++;
@@ -82,11 +163,11 @@ int main() {
 	}
 	
 
-	printf("%d\n", tempIdx);
+	/*printf("%d\n", tempIdx);
 	for (i = 0; htmlTagAry[i] != NULL; i++) {
 		printf("%c", htmlTagAry[i]);
 	}
-	printf("\n%d %d", tagCnt, wordCnt);
+	printf("\n%d %d", tagCnt, wordCnt2);*/
 	
 	free(htmlAry);
 
