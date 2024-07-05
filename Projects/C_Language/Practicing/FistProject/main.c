@@ -1,27 +1,34 @@
 #define _CRT_SECURE_NO_WARNINGS
-#include <stdlib.h>
 #include <stdio.h>
+#define SIZE 2
+
+typedef struct _Student {
+
+	int number;
+	char name[10];
+	double grade;
+}Student;
 
 int main() {
+	Student list[SIZE];
+	int i = 0;
 
-	int array[4][3];
-	array[0][0] = 1;
-	array[0][1] = 2;
-	array[0][2] = 3;
-	array[1][0] = 4;
-	array[1][1] = 5;
-	array[1][2] = 6;
-	array[2][0] = 7;
-	array[2][1] = 8;
-	array[2][2] = 9;
-	array[3][0] = 10;
-	array[3][1] = 11;
-	array[3][2] = 12;
+	printf("%d", sizeof(list[SIZE]));
 
-	printf("%d %d %d\n", array[0][0], array[0][1], array[0][2]);
-	printf("%d %d %d\n", array[1][0], array[1][1], array[1][2]);
-	printf("%d %d %d\n", array[2][0], array[2][1], array[2][2]);
-	printf("%d %d %d\n", array[3][0], array[3][1], array[3][2]);
+
+	for (i = 0; i < SIZE; i++) {
+		printf("학번을 입력하시오: ");
+		scanf("%d", &list[i].number);
+		printf("이름을 입력하시오: ");
+		scanf("%s", &list[i].name);
+		printf("학점을 입력하시오: ");
+		scanf("%lf", &list[i].grade);
+	}
+
+	for (i = 0; i < SIZE; i++) {
+		printf("학번 : %d, 이름 : %s, 학점 : %lf\n", list[i].number, list[i].name, list[i].grade);
+	}
+
 
 	return 0;
 }
