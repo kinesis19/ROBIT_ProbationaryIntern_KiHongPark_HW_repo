@@ -44,7 +44,6 @@ int main() {
 				// 학년, 학점, 이름 변경을 위한 임시 변수 선언 및 정의하기.
 				int tempSchoolYear;
 				double tempGrade;
-				char* pArrName = (char*)calloc(personMax, sizeof(char));
 				char tempName;
 				
 				// 학년 위치 변경하기
@@ -57,15 +56,14 @@ int main() {
 				student[j].grade = tempGrade;
 
 				// 이름 위치 변경하기
-				pArrName = student[i].name;
+				tempName = student[i].name;
 				student[i].name = student[j].name;
-				student[j].name = pArrName;
+				student[j].name = tempName;
 			}else if(student[i].schoolYear == student[j].schoolYear){
 				if (student[i].grade > student[j].grade) {
 					// 학년, 학점, 이름 변경을 위한 임시 변수 선언 및 정의하기.
 					int tempSchoolYear;
 					double tempGrade;
-					char* pArrName = (char*)calloc(personMax, sizeof(char));
 					char tempName;
 
 					// 학년 위치 변경하기
@@ -78,16 +76,15 @@ int main() {
 					student[j].grade = tempGrade;
 
 					// 이름 위치 변경하기
-					pArrName = student[i].name;
+					tempName = student[i].name;
 					student[i].name = student[j].name;
-					student[j].name = pArrName;
+					student[j].name = tempName;
 				}else if(student[i].grade == student[j].grade){
 					/*printf("%d %d ", student[i].name, student[j].name);*/
 					if (student[i].name > student[j].name) {
 						// 학년, 학점, 이름 변경을 위한 임시 변수 선언 및 정의하기.
 						int tempSchoolYear;
 						double tempGrade;
-						char* pArrName = (char*)calloc(personMax, sizeof(char));
 						char tempName;
 
 						// 학년 위치 변경하기
@@ -100,9 +97,11 @@ int main() {
 						student[j].grade = tempGrade;
 
 						// 이름 위치 변경하기
-						pArrName = student[i].name;
+						tempName = student[i].name;
 						student[i].name = student[j].name;
-						student[j].name = pArrName;
+						student[j].name = tempName;
+						student[i].name = student[j].name;
+
 					}
 				}
 			}
