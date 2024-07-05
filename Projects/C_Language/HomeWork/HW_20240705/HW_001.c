@@ -1,5 +1,6 @@
 #define _CRT_SECURE_NO_WARNINGS
 #include <stdio.h>
+#include <stdlib.h>
 
 // 학년 구조체 선언
 typedef struct _Student {
@@ -28,68 +29,109 @@ int main() {
 		}
 		scanf("%d %lf %s", &student[i].schoolYear, &student[i].grade, &student[i].name);
 	}
-	// Nesting 현상 발생!!!!!!!! 비상!!!!!
+
+
+	for (int k = 0; k < personMax; k++) {
+		printf("%.1lf ", student[k].grade);
+	}
+	printf("\n\n");
 
 	// 정렬하기 (오름차순)
 	for (i = 0; i < personMax; i++) {
-		for (j = 0; j < personMax; j++) {
+		for (j = i; j < personMax; j++) {
 			// 정렬 조건 1: 학년 기준으로 정렬하기 ,
 			if (student[i].schoolYear > student[j].schoolYear) {
-				/*printf("%d %d\n\n", student[i].schoolYear, student[j].schoolYear);*/
 				// 학년, 학점, 이름 변경을 위한 임시 변수 선언 및 정의하기.
-				int tempSchoolYear, tempGrade, tempName;
-				tempSchoolYear = student[i].schoolYear;
-				tempGrade = student[i].grade;
-				tempName = student[i].name;
-
+				int tempSchoolYear;
+				double tempGrade;
+				char* pArrName = (char*)calloc(personMax, sizeof(char));
+				char tempName;
+				
 				// 학년 위치 변경하기
+				tempSchoolYear = student[i].schoolYear;
 				student[i].schoolYear = student[j].schoolYear;
 				student[j].schoolYear = tempSchoolYear;
+				// 학점 위치 변경하기
+				tempGrade = student[i].grade;
+				student[i].grade = student[j].grade;
+				student[j].grade = tempGrade;
 
-				/*printf("%d %d\n\n", student[i].schoolYear, student[j].schoolYear);*/
-				//// 학점 위치 변경하기
-				//student[i].grade = student[j].grade;
-				//student[j].grade = tempGrade;
-				//// 이름 위치 변경하기
-				//student[i].name = student[j].name;
-				//student[j].name = tempName;
-			}else if (student[i].schoolYear == student[j].schoolYear) {
-				/*printf("%.1lf %.1lf\n\n", student[i].grade, student[j].grade);*/
-				// 정렬 조건 2: 학년이 동일할 땐 학점을 기준으로 정렬하기.
+				// 이름 위치 변경하기
+				pArrName = student[i].name;
+				student[i].name = student[j].name;
+				student[j].name = pArrName;
+			}else if(student[i].schoolYear == student[j].schoolYear){
 				if (student[i].grade > student[j].grade) {
-					int tempGrade;
+					// 학년, 학점, 이름 변경을 위한 임시 변수 선언 및 정의하기.
+					int tempSchoolYear;
+					double tempGrade;
+					char* pArrName = (char*)calloc(personMax, sizeof(char));
+					char tempName;
+
+					// 학년 위치 변경하기
+					tempSchoolYear = student[i].schoolYear;
+					student[i].schoolYear = student[j].schoolYear;
+					student[j].schoolYear = tempSchoolYear;
+					// 학점 위치 변경하기
 					tempGrade = student[i].grade;
 					student[i].grade = student[j].grade;
 					student[j].grade = tempGrade;
 
-				}else if (student[i].grade == student[j].grade) {
-					// 정렬 조건 3: 학점이 동일할 땐 이름을 기준으로 정렬하기.
-					/*if (student[i].name > student[j].grade) {
-						int tempName;
-						tempName = student[i].name;
+					// 이름 위치 변경하기
+					pArrName = student[i].name;
+					student[i].name = student[j].name;
+					student[j].name = pArrName;
+				}else if(student[i].grade == student[j].grade){
+					/*printf("%d %d ", student[i].name, student[j].name);*/
+					if (student[i].name > student[j].name) {
+						// 학년, 학점, 이름 변경을 위한 임시 변수 선언 및 정의하기.
+						int tempSchoolYear;
+						double tempGrade;
+						char* pArrName = (char*)calloc(personMax, sizeof(char));
+						char tempName;
+
+						// 학년 위치 변경하기
+						tempSchoolYear = student[i].schoolYear;
+						student[i].schoolYear = student[j].schoolYear;
+						student[j].schoolYear = tempSchoolYear;
+						// 학점 위치 변경하기
+						tempGrade = student[i].grade;
+						student[i].grade = student[j].grade;
+						student[j].grade = tempGrade;
+
+						// 이름 위치 변경하기
+						pArrName = student[i].name;
 						student[i].name = student[j].name;
-						student[j].name = tempName;
-					}*/
+						student[j].name = pArrName;
+					}
 				}
+			}
+
 		}
+		// Debugging
+		/*for (int k = 0; k < personMax; k++) {
+			printf("%.1lf ", student[k].grade);
+		}
+		printf("\n\n");*/
 	}
 
+	/*char* pArrName = (char*)calloc(personMax, sizeof(char));
+	pArrName = student[1].name;
+	printf("%s", &pArrName[0]);*/
 
-
+	printf("\n\n");
+	for (i = 0; i < personMax; i++) {
+		printf("%d ", student[i].schoolYear);
+	}
+	printf("\n\n");
+	for (i = 0; i < personMax; i++) {
+		printf("%.1lf ", student[i].grade);
+	}
+	printf("\n\n");
 	for (i = 0; i < personMax; i++) {
 		printf("%s ", &student[i].name);
 	}
-	/*for (i = 0; i < personMax; i++) {
-		printf("%.1lf ", student[i].grade);
-	}*/
-
 	printf("\n\n");
-
-
-
-
-
-
 
 
 	// 최종 결과 값 출력하기.
