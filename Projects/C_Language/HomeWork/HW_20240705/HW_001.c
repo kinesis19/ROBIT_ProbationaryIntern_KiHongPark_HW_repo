@@ -31,50 +31,47 @@ int main() {
 	// Nesting 현상 발생!!!!!!!! 비상!!!!!
 
 	// 정렬하기 (오름차순)
-	for (i = 0; i < personMax - 1; i++) {
-		// 정렬 조건 1: 학년 기준으로 정렬하기 ,
-		if (student[i].schoolYear > student[i + 1].schoolYear) {
-			/*printf("%d %d\n\n", student[i].schoolYear, student[i + 1].schoolYear);*/
-			// 학년, 학점, 이름 변경을 위한 임시 변수 선언 및 정의하기.
-			int tempSchoolYear, tempGrade, tempName;
-			tempSchoolYear = student[i].schoolYear;
-			tempGrade = student[i].grade;
-			tempName = student[i].name;
+	for (i = 0; i < personMax; i++) {
+		for (j = 0; j < personMax; j++) {
+			// 정렬 조건 1: 학년 기준으로 정렬하기 ,
+			if (student[i].schoolYear > student[j].schoolYear) {
+				/*printf("%d %d\n\n", student[i].schoolYear, student[j].schoolYear);*/
+				// 학년, 학점, 이름 변경을 위한 임시 변수 선언 및 정의하기.
+				int tempSchoolYear, tempGrade, tempName;
+				tempSchoolYear = student[i].schoolYear;
+				tempGrade = student[i].grade;
+				tempName = student[i].name;
 
-			// 학년 위치 변경하기
-			student[i].schoolYear = student[i + 1].schoolYear;
-			student[i + 1].schoolYear = tempSchoolYear;
+				// 학년 위치 변경하기
+				student[i].schoolYear = student[j].schoolYear;
+				student[j].schoolYear = tempSchoolYear;
 
+				/*printf("%d %d\n\n", student[i].schoolYear, student[j].schoolYear);*/
+				//// 학점 위치 변경하기
+				//student[i].grade = student[j].grade;
+				//student[j].grade = tempGrade;
+				//// 이름 위치 변경하기
+				//student[i].name = student[j].name;
+				//student[j].name = tempName;
+			}else if (student[i].schoolYear == student[j].schoolYear) {
+				/*printf("%.1lf %.1lf\n\n", student[i].grade, student[j].grade);*/
+				// 정렬 조건 2: 학년이 동일할 땐 학점을 기준으로 정렬하기.
+				if (student[i].grade > student[j].grade) {
+					int tempGrade;
+					tempGrade = student[i].grade;
+					student[i].grade = student[j].grade;
+					student[j].grade = tempGrade;
 
-			/*printf("%d %d\n\n", student[i].schoolYear, student[i + 1].schoolYear);*/
-			//// 학점 위치 변경하기
-			//student[i].grade = student[i + 1].grade;
-			//student[i + 1].grade = tempGrade;
-			//// 이름 위치 변경하기
-			//student[i].name = student[i + 1].name;
-			//student[i + 1].name = tempName;
-
+				}else if (student[i].grade == student[j].grade) {
+					// 정렬 조건 3: 학점이 동일할 땐 이름을 기준으로 정렬하기.
+					/*if (student[i].name > student[j].grade) {
+						int tempName;
+						tempName = student[i].name;
+						student[i].name = student[j].name;
+						student[j].name = tempName;
+					}*/
+				}
 		}
-
-		//else if(student[i].schoolYear == student[i + 1].schoolYear){
-		//	// 정렬 조건 2: 학년이 동일할 땐 학점을 기준으로 정렬하기.
-		//	if (student[i].grade < student[i + 1].grade) {
-		//		int tempGrade;
-		//		tempGrade = student[i].grade;
-		//		student[i].grade = student[i + 1].grade;
-		//		student[i + 1].grade = tempGrade;
-
-
-		//	}else if(student[i].grade == student[i + 1].grade){
-		//		// 정렬 조건 3: 학점이 동일할 땐 이름을 기준으로 정렬하기.
-		//		/*if (student[i].name > student[i + 1].grade) {
-		//			int tempName;
-		//			tempName = student[i].name;
-		//			student[i].name = student[i + 1].name;
-		//			student[i + 1].name = tempName;
-		//		}*/
-		//	}
-		//}
 	}
 
 
@@ -82,6 +79,9 @@ int main() {
 	for (i = 0; i < personMax; i++) {
 		printf("%s ", &student[i].name);
 	}
+	/*for (i = 0; i < personMax; i++) {
+		printf("%.1lf ", student[i].grade);
+	}*/
 
 	printf("\n\n");
 
@@ -98,7 +98,7 @@ int main() {
 		if (i != 0) {
 			printf("       ");
 		}
-		printf("%d %.2lf %s\n", student[i].schoolYear, student[i].grade, &student[i].name);
+		printf("%d %.1lf %s\n", student[i].schoolYear, student[i].grade, &student[i].name);
 	}
 
 	
