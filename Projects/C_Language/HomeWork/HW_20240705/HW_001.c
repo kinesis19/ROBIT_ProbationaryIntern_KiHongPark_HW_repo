@@ -7,7 +7,7 @@ typedef struct _Student {
 
 	int schoolYear;
 	double grade;
-	char name;
+	char name[20];
 }Student;
 
 int main() {
@@ -17,13 +17,17 @@ int main() {
 	int i, j;
 
 	// 구조체 정의하기
-	/*Student student[6];*/
-
-	Student student[6] = { {0, 0.0, " "}, {0, 0.0, " "}, {0, 0.0, " "}, {0, 0.0, " "}, {0, 0.0, " "}, {0, 0.0, " "} };
+	Student student[5];
+	Student temp;
 
 	// 형식 입출력하기.
 	printf("입력 : ");
-
+	// Name을 Null로 초기화 하기 (이름 변경을 위함)
+	for (i = 0; i < personMax; i++) {
+		for (int k = 0; k < 20; k++) {
+			student[i].name[k] = '\0';
+		}
+	}
 	for (i = 0; i < personMax; i++) {
 		if (i != 0) {
 			printf("       ");
@@ -34,7 +38,7 @@ int main() {
 
 
 	// Debugging
-	for (int k = 0; k < 1; k++) {
+	/*for (int k = 0; k < 1; k++) {
 		printf("[%d %d]\n", 0, 0);
 		for (int m = 0; m < personMax; m++) {
 			printf("%d ", student[m].schoolYear);
@@ -48,6 +52,17 @@ int main() {
 			printf("%s ", &student[m].name);
 		}
 		printf("\n\n");
+	}*/
+
+
+	for (int m = 0; m < personMax; m++) {
+		for (int p = 0; p < personMax; p++) {
+			printf("%d ", student[m].name[p]);
+			/*if (student[m].name[p] == 0) {
+				printf("NULL ");
+			}*/
+		}
+		printf("\n");
 	}
 
 	// 정렬하기 (오름차순)
@@ -71,15 +86,12 @@ int main() {
 				student[j].grade = tempGrade;
 
 				// 이름 위치 변경하기
-				/*tempName = student[i].name;
-				student[i].name = student[j].name;
-				student[j].name = tempName;*/
-				
-				/*student[5].name = student[i].name;
-				student[i].name = student[j].name;
-				student[j].name = student[5].name;*/
-
-				student[i].name = student[j].name;
+				for (int k = 0; student[i].name[k] != 0 || student[j].name[k] != 0; k++) {
+					temp.name[k] = student[i].name[k];
+					student[i].name[k] = student[j].name[k];
+					student[j].name[k] = temp.name[k];
+				}
+				printf("\n\n");
 
 			}else if (student[i].schoolYear == student[j].schoolYear) {
 				if (student[i].grade > student[j].grade) {
@@ -98,35 +110,43 @@ int main() {
 					student[j].grade = tempGrade;
 
 					// 이름 위치 변경하기
-					/*tempName = student[i].name;
-					student[i].name = student[j].name;
-					student[j].name = tempName;*/
+					for (int k = 0; student[i].name[k] != 0 || student[j].name[k] != 0; k++) {
+						temp.name[k] = student[i].name[k];
+						student[i].name[k] = student[j].name[k];
+						student[j].name[k] = temp.name[k];
+					}
+					printf("\n\n");
+				}else if (student[i].grade == student[j].grade) {
+					printf("aaaaaaaaaaaaaaaaaaaaaaaaa\n");
+					// 이름의 각 번째마다 순서 비교하기
+					for (int n = 0; n < personMax; n++) {
+						if (student[i].name[n] > student[j].name[n]) {
+							printf("bbbbbbbbbbbbbbbbbbbbbbb\n");
+							/*printf("%s %s ", &student[i].name, &student[j].name);*/
+							// 학년, 학점, 이름 변경을 위한 임시 변수 선언 및 정의하기.
+							int tempSchoolYear;
+							double tempGrade;
+							char tempName;
 
-					student[i].name = student[j].name;
-				}
-				else if (student[i].grade == student[j].grade) {
-					if (student[i].name > student[j].name) {
-						/*printf("%s %s ", &student[i].name, &student[j].name);*/
-						// 학년, 학점, 이름 변경을 위한 임시 변수 선언 및 정의하기.
-						int tempSchoolYear;
-						double tempGrade;
-						char tempName;
+							// 학년 위치 변경하기
+							tempSchoolYear = student[i].schoolYear;
+							student[i].schoolYear = student[j].schoolYear;
+							student[j].schoolYear = tempSchoolYear;
+							// 학점 위치 변경하기
+							tempGrade = student[i].grade;
+							student[i].grade = student[j].grade;
+							student[j].grade = tempGrade;
 
-						// 학년 위치 변경하기
-						tempSchoolYear = student[i].schoolYear;
-						student[i].schoolYear = student[j].schoolYear;
-						student[j].schoolYear = tempSchoolYear;
-						// 학점 위치 변경하기
-						tempGrade = student[i].grade;
-						student[i].grade = student[j].grade;
-						student[j].grade = tempGrade;
-
-						// 이름 위치 변경하기
-						/*tempName = student[i].name;
-						student[i].name = student[j].name;
-						student[j].name = tempName;*/
-
-						student[i].name = student[j].name;
+							// 이름 위치 변경하기
+							for (int k = 0; student[i].name[k] != 0 || student[j].name[k] != 0; k++) {
+								printf("Before: %d %d\n", student[i].name[k], student[j].name[k]);
+								temp.name[k] = student[i].name[k];
+								student[i].name[k] = student[j].name[k];
+								student[j].name[k] = temp.name[k];
+								printf("After: %d %d\n", student[i].name[k], student[j].name[k]);
+							}
+							printf("\n\n");
+						}
 					}
 				}
 			}
@@ -143,7 +163,7 @@ int main() {
 				}
 				printf("\n");
 				for (int m = 0; m < personMax; m++) {
-					printf("%s ", &student[m].name);
+					printf("%s ", &student[m].name[0]);
 				}
 				printf("\n\n");
 			}
