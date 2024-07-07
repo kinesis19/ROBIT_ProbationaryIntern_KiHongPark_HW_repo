@@ -24,7 +24,7 @@ int main() {
 	int* pArrPosY = (int*)calloc(inputNum, sizeof(int));
 
 	// 포인터 개념을 사용하여 동적할당된 값을 구조체에 저장하기 위한 선언.
-	Position* position = (int*)calloc(inputNum, sizeof(int));
+	Position* position = malloc(sizeof(Position));
 
 
 	for (i = 0; i < inputNum; i++) {
