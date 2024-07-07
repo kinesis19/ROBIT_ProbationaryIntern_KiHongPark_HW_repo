@@ -40,24 +40,27 @@ int main() {
 	}
 
 	// 입력된 좌표 중 가장 멀리 있는 좌표를 찾아내기.
-	
-	/*for (i = 0; i < inputNum; i++) {
+	int highPosX = position[0].posX;
+	int highPosY = position[0].posY;
+	for (i = 0; i < inputNum; i++) {
 		for (int j = 0; j < inputNum; j++) {
-
+			if (position[i].posTotal < position[j].posTotal) {
+				highPosX = position[j].posX;
+				highPosY = position[j].posY;
+			}
 		}
-	}*/
+	}
 
 	
 
 	// Debugging: 동적할당된 값이 구조체에 잘 저장되었는지 출력하기.
 	for (i = 0; i < inputNum; i++) {
+		/*printf("%d %d\n", position[i].posX, position[i].posY);*/
 		printf("%d %d %d\n", position[i].posX, position[i].posY, position[i].posTotal);
 	}
 
 	// Debugging: Number는 임시로 출력.
-	printf("\n출력 : 가장 거리가 먼 좌표는 (%d, %d)이며, 다른 좌표의 거리 총합은 약 %d입니다.", 1, 1, 1);
-
-	free(position);
+	printf("\n출력 : 가장 거리가 먼 좌표는 (%d, %d)이며, 다른 좌표의 거리 총합은 약 %d입니다.", highPosX, highPosY, 1);
 
 	return 0;
 }
