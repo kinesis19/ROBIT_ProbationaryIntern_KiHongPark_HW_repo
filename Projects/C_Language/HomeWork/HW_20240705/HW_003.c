@@ -17,21 +17,22 @@ int main() {
 	printf("입력 : ");
 	scanf("%d", &inputNum);
 
-	char* stuffName = (char*)calloc(inputNum, sizeof(char) * 20);
-	int* stuffCost = (int*)calloc(inputNum, sizeof(int));
+	Something* something = calloc(inputNum, sizeof(char) * 20);
 
 
 	for (i = 0; i < inputNum; i++) {
-		scanf("%s %d", &stuffName[i], &stuffCost[i]);
+		printf("       ");
+		scanf("%s %d", &something[i].name, &something[i].cost);
 		wantIdx++;
 	}
 
 
-	scanf("%s", &stuffName[wantIdx]);
+	printf("       ");
+	scanf("%s", &something[i].name);
 
 	printf("출력 : ");
 
-	printf("%s \n\n", &stuffName[wantIdx]);
+	printf("%s \n\n", &something[i].name);
 
 
 	//// 찾는 물건이 입력된 물건 리스트에 있는지 찾아보는 알고리즘.
@@ -49,7 +50,7 @@ int main() {
 
 
 	for (i = 0; i < inputNum; i++) {
-		printf("%s %d\n", &stuffName[i], stuffCost[i]);
+		printf("%s %d\n", &something[i].name, something[i].cost);
 	}
 
 
