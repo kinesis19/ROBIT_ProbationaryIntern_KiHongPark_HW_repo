@@ -157,24 +157,10 @@ int comparingTimestamp(TIMESTAMP stamp1, TIMESTAMP stamp2, int level) {
 	}
 	tempSec = stamp1.Time.sec - stamp2.Time.sec;
 
-	/* year, month, day를 hour로 환산하는 알고리즘.
-	* 1year = 12month.
-	* 1month = 28day or 29day or 30day or 31day.
-	* 1day = 24hour.
-	*/ 
+	// year, month, day를 hour로 환산하는 알고리즘.
 
 	printf("       %d %d %d %d %d %d\n\n", tempYear, tempMonth, tempDay, tempHour, tempMin, tempSec);
-	if (tempYear != 0) {
-		while (1) {
-			tempYear--;
-			tempHour = tempHour + ((tempYear * 12) * 31) * 24;
-			printf("%d ", tempHour);
-			if (tempYear == 0) {
-				break;
-			}
-		}
-		printf("\n");
-	}
+	tempHour = tempHour + ((tempYear * 12) * 31) * 24;
 
 	while (1) {
 		if (tempMonth == 0) {
@@ -221,20 +207,3 @@ int comparingTimestamp(TIMESTAMP stamp1, TIMESTAMP stamp2, int level) {
 
 	return 0;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
