@@ -108,6 +108,16 @@ int main() {
 int comparingTimestamp(TIMESTAMP stamp1, TIMESTAMP stamp2, int level) {
 	// 계산을 위한 변수 선언하기.
 	int tempYear = 0, tempMonth = 0, tempDay = 0, tempHour = 0, tempMin = 0, tempSec = 0;
+	// 윤년임을 파악하기 위한 변수
+	int isLeapYear = 0;
+
+	// 나중에 남은 year, month, day를 hour로 변경하기 위해서 윤년임을 저장하는 알고리즘.
+	if (((stamp1.Date.year % 4 == 0 && stamp1.Date.year % 100 != 0) || stamp1.Date.year % 400 == 0)) {
+		isLeapYear = 1;
+	}else{
+		isLeapYear = 0;
+	}
+
 	// 차이 계산하기.
 	tempYear = stamp1.Date.year - stamp2.Date.year;
 
@@ -118,6 +128,7 @@ int comparingTimestamp(TIMESTAMP stamp1, TIMESTAMP stamp2, int level) {
 	}
 	tempMonth = stamp1.Date.month - stamp2.Date.month;
 
+	// 늦은 시각과 빠른 시각의 차가 0 미만일 때, month에서 1을 빼고 day를 추가한다.
 	if (stamp1.Date.day - stamp2.Date.day < 0) {
 		// 짝수 달인지, 홀수 달인지 체크하기.
 		if(stamp1.Date.day % 2 == 0){ // 짝수 달이라면,
@@ -139,18 +150,21 @@ int comparingTimestamp(TIMESTAMP stamp1, TIMESTAMP stamp2, int level) {
 	}
 	tempDay = stamp1.Date.day - stamp2.Date.day;
 
+	// 늦은 시각과 빠른 시각의 차가 0 미만일 때, day에서 1을 빼고 hour를 추가한다.
 	if (stamp1.Time.hour - stamp2.Time.hour < 0) {
 		tempDay--;
 		stamp1.Time.hour =  stamp1.Time.hour + 24;
 	}
 	tempHour = stamp1.Time.hour - stamp2.Time.hour;
 
+	// 늦은 시각과 빠른 시각의 차가 0 미만일 때, hour에서 1을 빼고 min을 추가한다.
 	if (stamp1.Time.min - stamp2.Time.min < 0) {
 		tempHour--;
 		stamp1.Time.min = stamp1.Time.min + 60;
 	}
 	tempMin = stamp1.Time.min - stamp2.Time.min;
 
+	// 늦은 시각과 빠른 시각의 차가 0 미만일 때, min에서 1을 빼고 sec을 추가한다.
 	if (stamp1.Time.sec - stamp2.Time.sec < 0) {
 		tempMin--;
 		stamp1.Time.sec = stamp1.Time.sec + 60;
@@ -158,20 +172,24 @@ int comparingTimestamp(TIMESTAMP stamp1, TIMESTAMP stamp2, int level) {
 	tempSec = stamp1.Time.sec - stamp2.Time.sec;
 
 	// year, month, day를 hour로 환산하는 알고리즘.
-
-	printf("       %d %d %d %d %d %d\n\n", tempYear, tempMonth, tempDay, tempHour, tempMin, tempSec);
+	// 1. year를 hour로 변환하기.
 	tempHour = tempHour + ((tempYear * 12) * 31) * 24;
 
+	// 2. month를 hour로 변환하기.
 	while (1) {
 		if (tempMonth == 0) {
 			break;
 		}
-		printf("%d ::::::::: ", tempMonth);
 		switch (tempMonth) {
 		case 1:
 			tempHour = tempHour + 31 * 24; tempMonth--;  break;
 		case 2:
-			tempHour = tempHour + 28 * 24; tempMonth--; break;
+			// 윤년일 때는 29일로 변환하여 계산하기.
+			if (isLeapYear == 1) {
+				tempHour = tempHour + 29 * 24; tempMonth--; break;
+			}else { // 윤년이 아닐때는 28일로 변환하여 계산하기.
+				tempHour = tempHour + 28 * 24; tempMonth--; break;
+			}
 		case 3:
 			tempHour = tempHour + 31 * 24; tempMonth--; break;
 		case 4:
@@ -195,15 +213,11 @@ int comparingTimestamp(TIMESTAMP stamp1, TIMESTAMP stamp2, int level) {
 		default:
 			break;
 		}
-		printf(" || Total Hour : %d\n", tempHour);
 	}
-	printf("\n");
-
+	// 3. day를 hour로 변환하기.
 	tempHour = tempHour + tempDay * 24;
-	printf("Day=====%d || Total Hour : %d", tempDay * 24, tempHour);
 
-	printf("       %d %d %d %d %d %d\n\n", tempYear, tempMonth, tempDay, tempHour, tempMin, tempSec);
-	printf("출력 : %d시  %d분 %d초\n", tempHour, tempMin, tempSec);
+	printf("\n출력 : %d시  %d분 %d초\n", tempHour, tempMin, tempSec);
 
 	return 0;
 }
