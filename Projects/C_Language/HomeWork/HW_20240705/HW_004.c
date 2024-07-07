@@ -96,7 +96,6 @@ int main() {
 
 
 
-	printf("출력 : %d시  %d분 %d초\n", resultHour, resultMin, resultSec);
 	//Debugging:
 	/*printf("%02d %02d %02d %02d %02d %02d\n", timeStamp1.Date.year, timeStamp1.Date.month, timeStamp1.Date.day, timeStamp1.Time.hour, timeStamp1.Time.min, timeStamp1.Time.sec);
 	printf("       ");
@@ -158,7 +157,67 @@ int comparingTimestamp(TIMESTAMP stamp1, TIMESTAMP stamp2, int level) {
 	}
 	tempSec = stamp1.Time.sec - stamp2.Time.sec;
 
-	printf("%d %d %d %d %d %d\n", tempYear, tempMonth, tempDay, tempHour, tempMin, tempSec);
+	/* year, month, day를 hour로 환산하는 알고리즘.
+	* 1year = 12month.
+	* 1month = 28day or 29day or 30day or 31day.
+	* 1day = 24hour.
+	*/ 
+
+	printf("       %d %d %d %d %d %d\n\n", tempYear, tempMonth, tempDay, tempHour, tempMin, tempSec);
+	if (tempYear != 0) {
+		while (1) {
+			tempYear--;
+			tempHour = tempHour + ((tempYear * 12) * 31) * 24;
+			printf("%d ", tempHour);
+			if (tempYear == 0) {
+				break;
+			}
+		}
+		printf("\n");
+	}
+
+	while (1) {
+		if (tempMonth == 0) {
+			break;
+		}
+		printf("%d ::::::::: ", tempMonth);
+		switch (tempMonth) {
+		case 1:
+			tempHour = tempHour + 31 * 24; tempMonth--;  break;
+		case 2:
+			tempHour = tempHour + 28 * 24; tempMonth--; break;
+		case 3:
+			tempHour = tempHour + 31 * 24; tempMonth--; break;
+		case 4:
+			tempHour = tempHour + 30 * 24; tempMonth--; break;
+		case 5:
+			tempHour = tempHour + 31 * 24; tempMonth--; break;
+		case 6:
+			tempHour = tempHour + 30 * 24; tempMonth--; break;
+		case 7:
+			tempHour = tempHour + 31 * 24; tempMonth--; break;
+		case 8:
+			tempHour = tempHour + 30 * 24; tempMonth--; break;
+		case 9:
+			tempHour = tempHour + 31 * 24; tempMonth--; break;
+		case 10:
+			tempHour = tempHour + 30 * 24; tempMonth--; break;
+		case 11:
+			tempHour = tempHour + 31 * 24; tempMonth--; break;
+		case 12:
+			tempHour = tempHour + 30 * 24; tempMonth--; break;
+		default:
+			break;
+		}
+		printf(" || Total Hour : %d\n", tempHour);
+	}
+	printf("\n");
+
+	tempHour = tempHour + tempDay * 24;
+	printf("Day=====%d || Total Hour : %d", tempDay * 24, tempHour);
+
+	printf("       %d %d %d %d %d %d\n\n", tempYear, tempMonth, tempDay, tempHour, tempMin, tempSec);
+	printf("출력 : %d시  %d분 %d초\n", tempHour, tempMin, tempSec);
 
 	return 0;
 }
