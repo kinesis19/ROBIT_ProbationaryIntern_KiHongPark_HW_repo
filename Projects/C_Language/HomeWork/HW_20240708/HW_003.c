@@ -27,14 +27,11 @@ int main() {
 	char* inputCmd = (char*)malloc(sizeof(char) * 20);
 	
 	// 노드1의 현재 값은 NULL 상태임.
-	node->data = NULL;
-	printf("size : %d\n\n", node->data);
+	/*node->data = NULL;
+	printf("size : %d\n\n", node->data);*/
 
 	// 노드1 연결하기
-
-
-	/*node->next->data = NULL;*/
-	printf("Bit structure Data : %d\n\n", node->data);
+	/*printf("Bit structure Data : %d\n\n", node->data);*/
 
 
 
@@ -43,6 +40,11 @@ int main() {
 		scanf("%s", inputCmd);
 
 		if (strcmp(inputCmd, "insert") == 0) {
+			// 두 번째 노드(노드2)를 기존 노드(노드1)의 꼬리 뒤에 오게끔 함.
+			Node* node = linkedList->tail;
+			// 노드2의 값을 NULL로 지정함. (현재 상황 : node1->node2)
+			node->next->data = NULL;
+			printf("%d %d", node->data, node->next->data);
 			printf("insert!");
 		}else if (strcmp(inputCmd, "insert_back") == 0) {
 			printf("insert_back!");
@@ -77,8 +79,5 @@ int main() {
 // 1. insert 함수
 void Inserting(LinkedList* list) {
 	
-	list->Test.data = 3;
-
-	printf("%d\n", list->Test.data);
 
 }
