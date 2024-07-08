@@ -5,7 +5,7 @@ int main() {
 
 	// 변수 선언하기.
 	char inputText[20] = { '\0', }	;
-	int i;
+	int i, textCnt = 0;
 
 	// 입출력 받기.
 	printf("입력 : ");
@@ -13,9 +13,14 @@ int main() {
 
 	for (i = 0; inputText[i] != 0; i++) {
 		printf("%d ", inputText[i]);
+		textCnt++;
 	}
 
 	printf("\n\n출력 : ");
+	printf("%d\n\n", textCnt);
+	for (i = textCnt; i > 0; i--) {
+		printf("%d ", inputText[i-1]);
+	}
 
 	printf("\n%s", &inputText);
 
