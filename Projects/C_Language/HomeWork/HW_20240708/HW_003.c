@@ -5,14 +5,16 @@
 
 typedef struct _Node {
 	int data;
-	struct _Node* next;
+	struct _Node* next; // 다음 노드를 가리킴.
 }Node;
 
 typedef struct _LinkedList {
 	Node* head;
 	Node* tail;
 	Node* Cur;
+	Node Test;
 	int size;
+	int sibal;
 }LinkedList;
 
 void Inserting(LinkedList* list);
@@ -20,19 +22,29 @@ void Inserting(LinkedList* list);
 
 int main() {
 	// 단순 연결 리스트 구조체 선언하기.
-	LinkedList linkedList;
-	linkedList.Cur = 0;
+	LinkedList* linkedList = (LinkedList*)malloc(sizeof(linkedList) * 10);
+	
 	// 변수 선언하기.
 	char* inputCmd = (char*)malloc(sizeof(char) * 20);
 	
+	linkedList->size = 22;
+	printf("size : %d\n\n", linkedList->size);
+
+	linkedList->Test.data = 2;
+	printf("With Out the pointer : %d\n\n", linkedList->Test.data);
+
+
+	/*linkedList->sibal = 1234;
+	printf("sibal : %d\n\n", linkedList->head->data);*/
+
+
 	// 명령어(cmd)을 입력 받고, 각 명령에 따라 정해진 작업을 진행함.
 	while (1){
 		scanf("%s", inputCmd);
 
 		if (strcmp(inputCmd, "insert") == 0) {
-			printf("%d\n", linkedList.Cur);
 			Inserting(&linkedList);
-			printf("%d\n", linkedList.Cur);
+			printf("%d", linkedList->Test.data);
 			printf("insert!");
 		}else if (strcmp(inputCmd, "insert_back") == 0) {
 			printf("insert_back!");
@@ -67,21 +79,10 @@ int main() {
 // 1. insert 함수
 void Inserting(LinkedList* list) {
 	
-	list->Cur = 1;
+	list->Test.data = 3;
 
-	printf("%d\n", list->Cur);
+	printf("%d\n", list->Test.data);
 
 }
-
-
-
-
-
-
-
-
-
-
-
 
 
