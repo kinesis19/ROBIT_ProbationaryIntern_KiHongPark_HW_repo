@@ -15,12 +15,13 @@ typedef struct _LinkedList {
 	int size;
 }LinkedList;
 
+void Inserting(LinkedList* list);
 
 
 int main() {
 	// 단순 연결 리스트 구조체 선언하기.
 	LinkedList linkedList;
-
+	linkedList.Cur = 0;
 	// 변수 선언하기.
 	char* inputCmd = (char*)malloc(sizeof(char) * 20);
 	
@@ -29,6 +30,9 @@ int main() {
 		scanf("%s", inputCmd);
 
 		if (strcmp(inputCmd, "insert") == 0) {
+			printf("%d\n", linkedList.Cur);
+			Inserting(&linkedList);
+			printf("%d\n", linkedList.Cur);
 			printf("insert!");
 		}else if (strcmp(inputCmd, "insert_back") == 0) {
 			printf("insert_back!");
@@ -58,3 +62,26 @@ int main() {
 
 	return 0;
 }
+
+
+// 1. insert 함수
+void Inserting(LinkedList* list) {
+	
+	list->Cur = 1;
+
+	printf("%d\n", list->Cur);
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
