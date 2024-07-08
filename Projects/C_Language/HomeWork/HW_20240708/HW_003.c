@@ -12,30 +12,30 @@ typedef struct _LinkedList {
 	Node* head;
 	Node* tail;
 	Node* Cur;
-	Node Test;
 	int size;
-	int sibal;
 }LinkedList;
 
 void Inserting(LinkedList* list);
 
-
 int main() {
 	// 단순 연결 리스트 구조체 선언하기.
 	LinkedList* linkedList = (LinkedList*)malloc(sizeof(linkedList) * 10);
+	// 노드1 생성하기.
+	Node* node = (Node*)malloc(sizeof(node));
 	
 	// 변수 선언하기.
 	char* inputCmd = (char*)malloc(sizeof(char) * 20);
 	
-	linkedList->size = 22;
-	printf("size : %d\n\n", linkedList->size);
+	// 노드1의 현재 값은 NULL 상태임.
+	node->data = NULL;
+	printf("size : %d\n\n", node->data);
 
-	linkedList->Test.data = 2;
-	printf("With Out the pointer : %d\n\n", linkedList->Test.data);
+	// 노드1 연결하기
 
 
-	/*linkedList->sibal = 1234;
-	printf("sibal : %d\n\n", linkedList->head->data);*/
+	/*node->next->data = NULL;*/
+	printf("Bit structure Data : %d\n\n", node->data);
+
 
 
 	// 명령어(cmd)을 입력 받고, 각 명령에 따라 정해진 작업을 진행함.
@@ -43,8 +43,7 @@ int main() {
 		scanf("%s", inputCmd);
 
 		if (strcmp(inputCmd, "insert") == 0) {
-			Inserting(&linkedList);
-			printf("%d", linkedList->Test.data);
+
 			printf("insert!");
 		}else if (strcmp(inputCmd, "insert_back") == 0) {
 			printf("insert_back!");
@@ -84,5 +83,3 @@ void Inserting(LinkedList* list) {
 	printf("%d\n", list->Test.data);
 
 }
-
-
