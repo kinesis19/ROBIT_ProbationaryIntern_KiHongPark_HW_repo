@@ -80,5 +80,7 @@ int main() {
 
 	}
 
+	free(numList);
+
 	return 0;
 }
