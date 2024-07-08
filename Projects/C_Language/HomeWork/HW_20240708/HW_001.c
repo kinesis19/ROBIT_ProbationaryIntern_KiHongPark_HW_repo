@@ -19,7 +19,7 @@ int main() {
 	printf("\n\nÃâ·Â : ");
 	printf("%d\n\n", textCnt);
 	for (i = textCnt; i > 0; i--) {
-		printf("%d ", inputText[i-1]);
+		printf("%c", inputText[i-1]);
 	}
 
 	printf("\n%s", &inputText);
