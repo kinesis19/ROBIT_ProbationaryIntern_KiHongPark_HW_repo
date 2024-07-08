@@ -4,13 +4,13 @@
 int main() {
 
 	// 변수 선언하기.
-	char inputText[30] = { '\0', };
-	char* pText[30];
+	char inputText[] = { '\0', };
+	char* pText;
 	char tempChar, mostChar; // 최다 등장 비교용도.
 	int cmpCnt = 0, tempCmpCnt = 0;
 	int i, j, textCnt = 0, textSpaceCnt = 0;
 
-	*pText = &inputText;
+	*pText = inputText;
 
 	// 입출력 받기.
 	printf("입력 : ");
@@ -27,8 +27,9 @@ int main() {
 	}
 
 	// Debugging: pText 출력하기.
-	/*printf("\n");
-	printf("%d, %d\n", textCnt, textSpaceCnt);*/
+	printf("\n");
+	/*printf("%c %c", *(pText + 0), *(pText + 1));*/
+	/*printf("%d, %d\n", textCnt, textSpaceCnt);*/
 	for (i = 0; i < textCnt + textSpaceCnt; i++) {
 		*(pText + i) = inputText[i];
 		/*printf("%d ", *(pText + i));*/
@@ -37,7 +38,7 @@ int main() {
 	// 최다등장문자 구하는 알고리즘.
 	for (i = 0; i < textCnt + textSpaceCnt; i++) {
 		tempChar = *(pText + i);
-		if (*(pText + i) == 32) { //
+		if (*(pText + i) == 32) { // 공백은 최다등장문자에 포함하지 않음.
 			continue;
 		}
 		for (j = 0; j < textCnt + textSpaceCnt; j++) {
