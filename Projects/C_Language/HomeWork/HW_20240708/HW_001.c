@@ -5,7 +5,7 @@
 int main() {
 
 	// 변수 선언하기.
-	char* inputText = (char*)malloc(sizeof(char) * 20);
+	char* inputText = (char*)malloc(sizeof(char) * 100);
 	char tempChar, mostChar; // 최다 등장 비교용도.
 	int cmpCnt = 0, tempCmpCnt = 0;
 	int i, j, textCnt = 0, textSpaceCnt = 0;
@@ -13,11 +13,6 @@ int main() {
 	// 입출력 받기.
 	printf("입력 : ");
 	scanf("%[^\n]s", inputText); // 공백으로 입력 받기 위한 연산자 (광운대 SW예비학교 때 배운 내용)
-
-	printf("%s", inputText);
-	for (i = 0; i < 20; i++) {
-		printf("%d : %c\n", i, *(inputText + i));
-	}
 
 	for (i = 0; *(inputText + i); i++) {
 		if (*(inputText + i) != 32) { // ASCII Code값이 32 (공백)이 아니라면,
@@ -28,18 +23,21 @@ int main() {
 	}
 
 
-	//// 최다등장문자 구하는 알고리즘.
+	// 최다등장문자 구하는 알고리즘.
 	for (i = 0; i < textCnt + textSpaceCnt; i++) {
 		tempChar = *(inputText + i);
 		if (*(inputText + i) == 32) { // 공백은 최다등장문자에 포함하지 않음.
 			continue;
 		}
 		for (j = 0; j < textCnt + textSpaceCnt; j++) {
+			// 만약 해당 문자가 입력된 문자열에 있다면,
 			if (tempChar == *(inputText + j)) {
 				tempCmpCnt++;
 			}
 		}
-
+		// 문자열의 등장 횟수를 비교해서, 
+		// 해당 문자의 등장 횟수가 기존에 등장한 문자의 횟수보다 많다면, 
+		// 기록을 갱신함.
 		if (tempCmpCnt > cmpCnt) {
 			cmpCnt = tempCmpCnt;
 			mostChar = tempChar;
