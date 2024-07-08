@@ -3,5 +3,21 @@
 
 int main() {
 
+	// 변수 선언하기.
+	char inputText[20] = { '\0', }	;
+	int i;
+
+	// 입출력 받기.
+	printf("입력 : ");
+	scanf("%[^\n]s", &inputText); // 공백으로 입력 받기 위한 연산자 (광운대 SW예비학교 때 배운 내용)
+
+	for (i = 0; inputText[i] != 0; i++) {
+		printf("%d ", inputText[i]);
+	}
+
+	printf("\n\n출력 : ");
+
+	printf("\n%s", &inputText);
+
 	return 0;
 }
