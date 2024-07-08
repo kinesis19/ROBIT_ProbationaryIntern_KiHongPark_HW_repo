@@ -43,7 +43,6 @@ int main() {
 		scanf("%s", inputCmd);
 
 		if (strcmp(inputCmd, "insert") == 0) {
-
 			printf("insert!");
 		}else if (strcmp(inputCmd, "insert_back") == 0) {
 			printf("insert_back!");
