@@ -15,10 +15,10 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="HW_001_1.c">
+    <ClCompile Include="HW_001_2.c">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="HW_001_2.c">
+    <ClCompile Include="HW_001_3.c">
       <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>
