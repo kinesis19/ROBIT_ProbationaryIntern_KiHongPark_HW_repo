@@ -4,7 +4,7 @@
 void myPrint1(int* a, int row, int col);
 void myPrint2(int a[4][3], int row, int col);
 void myPrint3(int a[][3], int row, int col);
-void myPrint4(int *(a)[3], int row, int col);
+void myPrint4(int* (a)[3], int row, int col);
 
 int main() {
 
@@ -41,7 +41,7 @@ void myPrint3(int a[][3], int row, int col) {
 }
 void myPrint4(int* (a)[3], int row, int col) {
 	for (int i = 0; i < row; i++) {
-		for (int j = 0; j < col; j++) printf("%d ", *(*(a+i) + j));
+		for (int j = 0; j < col; j++) printf("%d ", *(*(a + i) + j));
 	}
 	printf("\n");
 }
