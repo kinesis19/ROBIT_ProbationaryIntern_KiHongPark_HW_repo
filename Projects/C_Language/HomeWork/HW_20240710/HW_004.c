@@ -9,7 +9,8 @@ typedef struct _textStack {
 }TextStack;
 
 void GettingPalindrome(char* text);
-void InitializingStack(TextStack* tStack, char* text);
+void InitializingStack(TextStack* tStack, char* text); // Stack 초기화 함수.
+void PushingStack(TextStack* tStack, char* text); // Stack에 push하는 함수.
 
 int main() {
 
@@ -27,12 +28,19 @@ int main() {
 	for (int i = 0; *(inputText + i) != NULL; i++) {
 		printf("%c", *(inputText + i));
 	}
-
 	InitializingStack(textStack, inputText);
 	/*GettingPalindrome(&inputText);*/
 
 	printf("\n");
-	printf("%s", inputText);
+	printf("%d\n", textStack->max);
+	printf("%s\n", inputText);
+
+	PushingStack(textStack, inputText);
+
+	for (int i = 0; *(inputText + i) != NULL; i++) {
+		printf("%c ", textStack->stk[textStack->ptr]);
+		textStack->stk[textStack->ptr] = *(inputText + i);
+	}
 
 	// 동적 메모리 할당 해제 하기.
 	free(inputText);
@@ -46,9 +54,25 @@ void InitializingStack(TextStack* tStack, char* text) {
 	for (int i = 0; *(text + i) != NULL; i++) {
 		cnt++;
 	}
-	tStack->max = 0; // stack 초기화 시, 스택의 pointer는 0으로 초기화 함.
+	tStack->ptr = 0; // stack 초기화 시, 스택의 pointer는 0으로 초기화 함.
 	tStack->max = cnt; // stack의 용량은 입력된 문자열의 문자 수로 지정함.
 	printf(" : %d", tStack->max);
+}
+
+void PushingStack(TextStack* tStack, char* text) {
+	printf("aa");
+	if (tStack->ptr < tStack->max) { // stack의 용량 범위 이내라면 push를 진행함.
+		printf("ㅠㅠ\n\n");
+		for (int i = 0; *(text + i) != NULL; i++) {
+			/*printf("%d\n", *(text + i));*/
+			/*tStack->stk[tStack->ptr] = 0;*/
+			printf("%d\n\n", sizeof(*(text + i)));
+			printf("%d %d\n\n", tStack->stk, tStack->ptr);
+			printf("%c %d\n", *(text + i), *(text + i));
+			tStack->ptr++;
+		}
+	}
+
 }
 
 void GettingPalindrome(char* text) {
