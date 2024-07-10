@@ -37,10 +37,11 @@ int main() {
 }
 // 달팽이 형식에 맞게 출력하는 함수.
 void print(int* row, int* col, int** pArr) {
-
+	printf("bbb");
+	printf("%3d ", pArr[0][0]);
 	for (int i = 0; i < *row; i++) {
 		for (int j = 0; j < *col; j++) {
-			printf("%d ", *(*(pArr + 0) + 0));
+			printf("%3d ", pArr[i][j]);
 		}
 		printf("\n");
 	}
@@ -55,15 +56,19 @@ void arr_ij(int* sizeRow, int* sizeCol, int** pArr) {
 	// 1. 행의 갯수만큼 2차원 배열 동적 할당하기.
 	pArr = (int**)malloc(sizeof(int) * (*sizeRow));
 	if (pArr == NULL) printf("동적할당 실패함.");
-	for (int i = 0; i < *sizeRow; i++) {
-
-		printf("%d ", pArr);
-
-	}
 	// 2. 각 행별 열의 갯수만큼 동적 할당하기.
 	for (int i = 0; i < *sizeRow; i++) {
 		printf("aa\n");
 		pArr[i] = (int*)malloc(sizeof(int) * (*sizeCol));
+	}
+	int cnt = 1;
+	for (int i = 0; i < *sizeRow; i++) {
+		for (int j = 0; j < *sizeCol; j++) {
+			pArr[i][j] = cnt;
+			cnt++;
+			/*printf("%3d ", pArr[i][j]);*/
+		}
+		printf("\n");
 	}
 
 }
