@@ -1,5 +1,6 @@
 #define _CRT_SECURE_NO_WARNINGS
 #include <stdio.h>
+#include <stdlib.h>
 
 void print(int* row, int* col, int** pArr);
 void arr_ij(int* sizeRow, int* sizeCol, int** pArr);
@@ -45,9 +46,19 @@ void arr_ij(int* sizeRow, int* sizeCol, int** pArr) {
 	printf("%d %d\n\n", *sizeRow, *sizeCol);
 	printf("%d\n\n", sizeof(int) * (*sizeRow));
 	// 2차원 동적 메모리 할당하기.
+	// 1. 행의 갯수만큼 2차원 배열 동적 할당하기.
 	pArr = (int**)malloc(sizeof(int) * (*sizeRow));
-	for (int i = 0; i < *sizeCol; i++) {
-		printf("%d ", i);
+	if (pArr == NULL) printf("동적할당 실패함.");
+	for (int i = 0; i < *sizeRow; i++) {
+
+		printf("%d ", pArr);
+
+	}
+	// 2. 각 행별 열의 갯수만큼 동적 할당하기.
+	for (int i = 0; i < *sizeRow; i++) {
+		printf("aa\n");
+		pArr[i] = (int*)malloc(sizeof(int) * (*sizeCol));
+		/*printf("%d ", pArr[i][i]);*/
 	}
 
 }
