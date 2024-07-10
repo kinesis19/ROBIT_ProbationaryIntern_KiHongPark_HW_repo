@@ -21,5 +21,8 @@
     <ClCompile Include="HW_001_3.c">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="HW_003.c">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
