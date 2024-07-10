@@ -49,16 +49,12 @@ void print(int* row, int* col, int** pArr) {
 
 // 당팽이 형식에 맞게 구현하는 함수.
 void arr_ij(int* sizeRow, int* sizeCol, int** pArr) {
-
-	printf("%d %d\n\n", *sizeRow, *sizeCol);
-	printf("%d\n\n", sizeof(int) * (*sizeRow));
 	// 2차원 동적 메모리 할당하기.
 	// 1. 행의 갯수만큼 2차원 배열 동적 할당하기.
 	pArr = (int**)malloc(sizeof(int) * (*sizeRow));
 	if (pArr == NULL) printf("동적할당 실패함.");
 	// 2. 각 행별 열의 갯수만큼 동적 할당하기.
 	for (int i = 0; i < *sizeRow; i++) {
-		printf("aa\n");
 		pArr[i] = (int*)malloc(sizeof(int) * (*sizeCol));
 	}
 	int cnt = 1;
@@ -66,7 +62,7 @@ void arr_ij(int* sizeRow, int* sizeCol, int** pArr) {
 		for (int j = 0; j < *sizeCol; j++) {
 			pArr[i][j] = cnt;
 			cnt++;
-			/*printf("%3d ", pArr[i][j]);*/
+			printf("%3d ", pArr[i][j]);
 		}
 		printf("\n");
 	}
