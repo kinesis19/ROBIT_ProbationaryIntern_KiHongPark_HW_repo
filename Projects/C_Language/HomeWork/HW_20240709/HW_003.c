@@ -74,6 +74,19 @@ void arr_ij(int* sizeRow, int* sizeCol, int** pArr) {
 		}
 	}
 
+	int cnt = 1;
+	for (int i = 0; i < (*sizeRow); i++) {
+		for (int j = 0; j < (*sizeCol); j++) {
+			
+			while (i + 1 <= (*sizeRow) && *(*(pArr + i) + j) == 0){
+				*(*(pArr + i) + j) = cnt;
+				cnt++;
+			}
+
+
+
+		}
+	}
 
 
 
