@@ -25,6 +25,16 @@ int main() {
 	// 2차원 동적 메모리 할당하기.
 	arr_ij(&sizeRow, &sizeCol, arr);
 
+	if (arr == NULL) printf("arr의 동적할당 실패함.\n");
+	printf("aaaaaaaa\n");
+	for (int i = 0; i < row; i++) {
+		for (int j = 0; j < col; j++) {
+			printf("hhhhhh\n");
+			printf("%3d ", arr[i][j]);
+		}
+		printf("\n");
+	}
+
 	// 배열 arr 출력하기.
 	print(&row, &col, arr);
 
@@ -51,18 +61,22 @@ void print(int* row, int* col, int** pArr) {
 void arr_ij(int* sizeRow, int* sizeCol, int** pArr) {
 	// 2차원 동적 메모리 할당하기.
 	// 1. 행의 갯수만큼 2차원 배열 동적 할당하기.
-	pArr = (int**)malloc(sizeof(int) * (*sizeRow));
-	if (pArr == NULL) printf("동적할당 실패함.");
+	pArr = (int**)malloc(sizeof(int) * (*sizeRow)); // 10개의 포인터 변수 선언함. = pArr은 10개의 포인터 변수를 가지고 있음.
+	if (pArr == NULL) printf("동적할당 실패함.\n");
 	// 2. 각 행별 열의 갯수만큼 동적 할당하기.
 	for (int i = 0; i < *sizeRow; i++) {
-		pArr[i] = (int*)malloc(sizeof(int) * (*sizeCol));
+		*(pArr + i) = (int*)malloc(sizeof(int) * (*sizeCol)); // 선언된 10개의 포인터 변수에 각각 10개의 히위 포인터 변수를 선언함.
 	}
+
+	return 0;
+
+	if (*(*(pArr) + 0) == NULL) printf("하위 동적할당 실패함.\n");
 	int cnt = 1;
 	for (int i = 0; i < *sizeRow; i++) {
 		for (int j = 0; j < *sizeCol; j++) {
-			pArr[i][j] = cnt;
+			*(*(pArr + i) + j) = cnt;
 			cnt++;
-			printf("%3d ", pArr[i][j]);
+			printf("%3d ", *(*(pArr + i) + j));
 		}
 		printf("\n");
 	}
