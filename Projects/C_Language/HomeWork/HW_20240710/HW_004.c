@@ -6,6 +6,7 @@
 typedef struct _textStack {
 	int max; // stack의 용량 저장.
 	char ptr; // stack의 포인터.
+	char qPtr; // stack에서 Deque를 하기 위한 포인터. Queue 전용 Struct를 만드는 것 말고, 동일한 Struct에서 Deque가 되도록 시도해 봄.
 	char* stk[]; // stack을 가리키는 포인터.
 }TextStack;
 
@@ -13,6 +14,11 @@ typedef struct _textStack {
 void InitializingStack(TextStack* tStack, char* text); // Stack 초기화 함수.
 void PushingStack(TextStack* tStack, char* text); // Stack에 push하는 함수.
 void PoppingStack(TextStack* tStack, char* text); // Stack에 pop하는 함수.
+/* Stack에서 Deque하는 함수.
+* 원래는 Queue에서 Deque를 해야 하지만,
+* 미리 선언한 Stack에 Deque 기능을 추가하는 것으로 설계함.
+*/ 
+void DequeueingStack(TextStack* tStack, char* text); 
 
 int main() {
 
@@ -27,19 +33,15 @@ int main() {
 	printf("회문 여부를 파악하고 싶은 문자열 입력 : ");
 	scanf("%[^\n]s", inputText);
 
-	for (int i = 0; *(inputText + i) != NULL; i++) {
-		printf("%c", *(inputText + i));
-	}
+	printf("\n\n");
+	// Stack 초기화하기.
 	InitializingStack(textStack, inputText);
-	/*GettingPalindrome(&inputText);*/
-
-	printf("\n");
-	printf("%d\n", textStack->max);
-	printf("%s\n", inputText);
-
+	// inputText 전체를 Stack에 Push하기.
 	PushingStack(textStack, inputText);
-
+	// Stack에서 Pop하기 = 뒤에서 하나 빼기.
 	PoppingStack(textStack, inputText);
+	// Stack에서 Deque하기 = 앞에서 하나 빼기.
+	DequeueingStack(textStack, inputText);
 
 	textStack->ptr = 0;
 	for (int i = 0; *(inputText + i) != NULL; i++) {
@@ -59,9 +61,9 @@ void InitializingStack(TextStack* tStack, char* text) {
 	for (int i = 0; *(text + i) != NULL; i++) {
 		cnt++;
 	}
-	tStack->ptr = 0; // stack 초기화 시, 스택의 pointer는 0으로 초기화 함.
+	tStack->ptr = 0; // stack 초기화 시, stack의 pointer는 0으로 초기화 함.
+	tStack->qPtr = 0; // stack 초기화 시, queue의 pointer는 0으로 초기화 함.
 	tStack->max = cnt; // stack의 용량은 입력된 문자열의 문자 수로 지정함.
-	printf(" : %d", tStack->max);
 }
 
 void PushingStack(TextStack* tStack, char* text) {
@@ -77,5 +79,12 @@ void PoppingStack(TextStack* tStack, char* text) { // 하나씩 pop 하기.
 	if (0 < tStack->ptr) { // stack의 용량 범위 이내라면 push를 진행함.
 		tStack->stk[tStack->ptr] = NULL;
 		tStack->max--;
+	}
+}
+
+void DequeueingStack(TextStack* tStack, char* text) { // 하나씩 deque 하기.
+	if (tStack->qPtr < tStack->max) { // stack의 용량 범위 이내라면 push를 진행함.
+		tStack->stk[tStack->qPtr] = NULL;
+		tStack->qPtr++;
 	}
 }
