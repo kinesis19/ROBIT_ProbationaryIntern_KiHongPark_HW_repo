@@ -5,7 +5,6 @@
 void print(int* row, int* col, int** pArr);
 void arr_ij(int* sizeRow, int* sizeCol, int** pArr);
 
-
 int main() {
 
 	// 더블포인터 변수 및 일반 변수 선언하기.
@@ -24,6 +23,11 @@ int main() {
 
 	// 2차원 동적 메모리 할당하기.
 	arr_ij(&sizeRow, &sizeCol, arr);
+	int num = 10;
+	int* temp;
+
+	temp = &num;
+	arr = &temp;
 
 	if (arr == NULL) printf("arr의 동적할당 실패함.\n");
 	printf("aaaaaaaa\n");
@@ -45,6 +49,7 @@ int main() {
 
 	return 0;
 }
+
 // 달팽이 형식에 맞게 출력하는 함수.
 void print(int* row, int* col, int** pArr) {
 	printf("bbb");
@@ -61,14 +66,14 @@ void print(int* row, int* col, int** pArr) {
 void arr_ij(int* sizeRow, int* sizeCol, int** pArr) {
 	// 2차원 동적 메모리 할당하기.
 	// 1. 행의 갯수만큼 2차원 배열 동적 할당하기.
-	pArr = (int**)malloc(sizeof(int) * (*sizeRow)); // 10개의 포인터 변수 선언함. = pArr은 10개의 포인터 변수를 가지고 있음.
+	//pArr = (int**)malloc(sizeof(int) * (*sizeRow)); // 10개의 포인터 변수 선언함. = pArr은 10개의 포인터 변수를 가지고 있음.
+	pArr = (int**)calloc(*sizeRow, sizeof(int));
 	if (pArr == NULL) printf("동적할당 실패함.\n");
 	// 2. 각 행별 열의 갯수만큼 동적 할당하기.
 	for (int i = 0; i < *sizeRow; i++) {
-		*(pArr + i) = (int*)malloc(sizeof(int) * (*sizeCol)); // 선언된 10개의 포인터 변수에 각각 10개의 히위 포인터 변수를 선언함.
+		//*(pArr + i) = (int*)malloc(sizeof(int) * (*sizeCol)); // 선언된 10개의 포인터 변수에 각각 10개의 히위 포인터 변수를 선언함.
+		*(pArr + i) = (int*)calloc(*sizeCol, sizeof(int));
 	}
-
-	return 0;
 
 	if (*(*(pArr) + 0) == NULL) printf("하위 동적할당 실패함.\n");
 	int cnt = 1;
