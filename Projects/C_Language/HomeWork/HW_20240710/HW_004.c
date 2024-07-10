@@ -4,8 +4,8 @@
 
 typedef struct _textStack {
 	int max; // stack의 용량 저장.
-	int ptr; // stack의 포인터.
-	int* stk; // stack을 가리키는 포인터.
+	char ptr; // stack의 포인터.
+	char* stk[]; // stack을 가리키는 포인터.
 }TextStack;
 
 void GettingPalindrome(char* text);
@@ -37,9 +37,10 @@ int main() {
 
 	PushingStack(textStack, inputText);
 
+	textStack->ptr = 0;
 	for (int i = 0; *(inputText + i) != NULL; i++) {
 		printf("%c ", textStack->stk[textStack->ptr]);
-		textStack->stk[textStack->ptr] = *(inputText + i);
+		textStack->ptr++;
 	}
 
 	// 동적 메모리 할당 해제 하기.
@@ -60,15 +61,9 @@ void InitializingStack(TextStack* tStack, char* text) {
 }
 
 void PushingStack(TextStack* tStack, char* text) {
-	printf("aa");
 	if (tStack->ptr < tStack->max) { // stack의 용량 범위 이내라면 push를 진행함.
-		printf("ㅠㅠ\n\n");
 		for (int i = 0; *(text + i) != NULL; i++) {
-			/*printf("%d\n", *(text + i));*/
-			/*tStack->stk[tStack->ptr] = 0;*/
-			printf("%d\n\n", sizeof(*(text + i)));
-			printf("%d %d\n\n", tStack->stk, tStack->ptr);
-			printf("%c %d\n", *(text + i), *(text + i));
+			tStack->stk[tStack->ptr] = *(text + i);
 			tStack->ptr++;
 		}
 	}
