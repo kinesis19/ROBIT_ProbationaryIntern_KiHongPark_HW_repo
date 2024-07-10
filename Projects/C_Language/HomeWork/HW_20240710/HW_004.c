@@ -13,12 +13,12 @@ typedef struct _textStack {
 // 필요한 사용자 정의 함수를 프로토타입으로 선언하기.
 void InitializingStack(TextStack* tStack, char* text, int* textCnt); // Stack 초기화 함수.
 void PushingStack(TextStack* tStack, char* text); // Stack에 push하는 함수.
-char PoppingStack(TextStack* tStack, char* text); // Stack에 pop하는 함수.
+void PoppingStack(TextStack* tStack, char* text); // Stack에 pop하는 함수.
 /* Stack에서 Deque하는 함수.
 * 원래는 Queue에서 Deque를 해야 하지만,
 * 미리 선언한 Stack에 Deque 기능을 추가하는 것으로 설계함.
 */ 
-char DequeueingStack(TextStack* tStack, char* text); 
+void DequeueingStack(TextStack* tStack, char* text);
 
 int main() {
 
@@ -41,25 +41,19 @@ int main() {
 	// Stack 초기화하기.
 	InitializingStack(textStack, inputText, textCnt);
 
-	printf("%d", *textCnt);
+	printf("%d\n\n\n", *textCnt);
 	// inputText 전체를 Stack에 Push하기.
 	PushingStack(textStack, inputText);
-	// Stack에서 Pop하기 = 뒤에서 하나 빼기.
-	PoppingStack(textStack, inputText);
-	// Stack에서 Deque하기 = 앞에서 하나 빼기.
-	DequeueingStack(textStack, inputText);
-
-	
-
-	for (int i = 0; i < *textCnt; i++) {
-
-	}
 
 
-	textStack->ptr = 0;
-	for (int i = 0; *(inputText + i) != NULL; i++) {
-		printf("%c ", textStack->stk[textStack->ptr]);
-		textStack->ptr++;
+	textStack->ptr = textStack->max - 1;
+	// 회문 판별하기.
+	for (int i = 0; i < *textCnt / 2; i++) {
+		printf("%c %c\n", textStack->stk[textStack->qPtr], textStack->stk[textStack->ptr]);
+		// Stack에서 Deque하기 = 앞에서 하나 빼기.
+		DequeueingStack(textStack, inputText);
+		// Stack에서 Pop하기 = 뒤에서 하나 빼기.
+		PoppingStack(textStack, inputText);
 	}
 
 	// 동적 메모리 할당 해제 하기.
@@ -88,17 +82,22 @@ void PushingStack(TextStack* tStack, char* text) {
 		}
 	}
 }
-char PoppingStack(TextStack* tStack, char* text) { // 하나씩 pop 하기.
-	tStack->ptr = tStack->max - 1;
-	if (0 < tStack->ptr) { // stack의 용량 범위 이내라면 push를 진행함.
+void PoppingStack(TextStack* tStack, char* text) { // 하나씩 pop 하기.
+	/*tStack->ptr = tStack->max - 1;*/
+	if (tStack->qPtr < tStack->ptr) { // stack의 용량 범위 이내라면 push를 진행함.
 		tStack->stk[tStack->ptr] = NULL;
 		tStack->max--;
+		tStack->ptr--;
+	}else{
+		printf("더 이상 Pop을 못 합니다.");
 	}
 }
 
-char DequeueingStack(TextStack* tStack, char* text) { // 하나씩 deque 하기.
+void DequeueingStack(TextStack* tStack, char* text) { // 하나씩 deque 하기.
 	if (tStack->qPtr < tStack->max) { // stack의 용량 범위 이내라면 push를 진행함.
 		tStack->stk[tStack->qPtr] = NULL;
 		tStack->qPtr++;
+	}else{
+		printf("더 이상 Deque를 못 합니다.");
 	}
 }
