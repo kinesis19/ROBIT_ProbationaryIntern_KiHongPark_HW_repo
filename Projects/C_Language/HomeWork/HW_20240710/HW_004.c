@@ -2,15 +2,17 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+// Stack 구조체 정의하기.
 typedef struct _textStack {
 	int max; // stack의 용량 저장.
 	char ptr; // stack의 포인터.
 	char* stk[]; // stack을 가리키는 포인터.
 }TextStack;
 
-void GettingPalindrome(char* text);
+// 필요한 사용자 정의 함수를 프로토타입으로 선언하기.
 void InitializingStack(TextStack* tStack, char* text); // Stack 초기화 함수.
 void PushingStack(TextStack* tStack, char* text); // Stack에 push하는 함수.
+void PoppingStack(TextStack* tStack, char* text); // Stack에 pop하는 함수.
 
 int main() {
 
@@ -36,6 +38,8 @@ int main() {
 	printf("%s\n", inputText);
 
 	PushingStack(textStack, inputText);
+
+	PoppingStack(textStack, inputText);
 
 	textStack->ptr = 0;
 	for (int i = 0; *(inputText + i) != NULL; i++) {
@@ -67,10 +71,11 @@ void PushingStack(TextStack* tStack, char* text) {
 			tStack->ptr++;
 		}
 	}
-
 }
-
-void GettingPalindrome(char* text) {
-	char a[] = "bbbb";
-	text = a;
+void PoppingStack(TextStack* tStack, char* text) { // 하나씩 pop 하기.
+	tStack->ptr = tStack->max - 1;
+	if (0 < tStack->ptr) { // stack의 용량 범위 이내라면 push를 진행함.
+		tStack->stk[tStack->ptr] = NULL;
+		tStack->max--;
+	}
 }
