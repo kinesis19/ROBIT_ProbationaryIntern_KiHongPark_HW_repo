@@ -68,40 +68,17 @@ void arr_ij(int* sizeRow, int* sizeCol, int** pArr) {
 		*(pArr + i) = (int*)malloc(sizeof(int) * (*sizeCol));
 	}
 
-	int cntRow = 0, cntCol = 0;
-	int inputNumLast = 0; // 마지막 숫자 저장용 (행, 열). inputNum과는 다름.
-
 	for (int i = 0; i < (*sizeRow); i++) {
-		change = 0;
-
 		for (int j = 0; j < (*sizeCol); j++) {
-			int tempInputNum = inputNum;
-			// 최초 1회 inputNumLast 지정하기.
-			if (i == 0) {
-				inputNumLast = inputNum;
-			}
-
-			if ((0 < i && i < 9) && j == (*sizeCol) - 1) { // 열 출력
-				inputNumLast++;
-				inputNum = inputNumLast;
-				*(*(pArr + i) + j) = inputNum;
-			}else if (i == (*sizeRow) - 1 && j < ((*sizeCol))) {
-				inputNumLast++;
-				inputNum = inputNumLast;
-				*(*(pArr + i) + (*sizeCol) - 1 - j) = inputNum;
-			}else{
-				*(*(pArr + i) + j) = inputNum;
-			}
-
-			inputNum = tempInputNum;
-
-			// 변수 증감하기.
-			change++;
-			inputNum++;
+			*(*(pArr + i) + j) = 0;
 		}
-		cntRow++;
 	}
 
+
+
+
+
+	// 임시 출력하기.
 	for (int i = 0; i < (*sizeRow); i++) {
 		for (int j = 0; j < (*sizeCol); j++) {
 			printf("%3d[%d][%d] ", *(*(pArr + i) + j), i, j);
