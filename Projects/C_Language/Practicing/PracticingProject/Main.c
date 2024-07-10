@@ -1,28 +1,35 @@
 #define _CRT_SECURE_NO_WARNINGS
 #include <stdio.h>
-
-typedef struct _Date {
-	int month;
-	int day;
-	int year;
-}Date;
+#include <stdlib.h>
 
 typedef struct _Student {
 	int number;
-	char name[10];
-	double grade;
-	Date* mdy;
+	int name[20];
 }Student;
+
+void ADD(Student* list, int number) {
+	(*(list + number)).number = number;
+	printf("이름을 입력하시오 : ");
+	scanf("%s", (*(list + number)).name);
+}
 
 int main() {
 
-	Student s = { 44, "Kim", 4.5 };
-	Date d = { 6, 26, 1995 };
+	Student* list;
 
-	s.mdy = &d;
+	int student_num = 2;
 
-	printf("학번 : %d 이름 : %s 학점 : %.1f\n", s.number, s.name, s.grade);
-	printf("생년월일 : %d년 %d월 %d일\n", s.mdy->year, s.mdy->month, s.mdy->day);
+	list = (Student*)malloc(sizeof(Student) * student_num);
+
+	ADD(list, 0);
+	ADD(list, 1);
+
+	for (int i = 0; i < student_num; i++) {
+		printf("--------------------\n");
+		printf("이름 : %s\n", list[i].name);
+		printf("번호 : %d\n\n", list[i].number);
+	}
+	
 
 	return 0;
 }
