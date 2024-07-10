@@ -14,9 +14,12 @@ typedef struct _LinkedList {
 	int size;
 }LinkedList;
 
-void initializing(LinkedList* list) {
+void Initializing_Node(LinkedList* list) {
 	list = (LinkedList*)malloc(sizeof(LinkedList));
+	list->head = NULL;
+}
 
+void Inserting_Node(LinkedList* list, int num) {
 
 }
 
@@ -25,7 +28,14 @@ int main() {
 	// LinkedList 선언 및 동적할당함.
 	LinkedList* linkedList;
 	linkedList = (LinkedList*)malloc(sizeof(LinkedList));
-	initializing(linkedList);
+	Initializing_Node(linkedList);
+
+	/*printf("%d", linkedList->head);*/
+
+	// 삽입하기.
+	Inserting_Node(linkedList, 1);
+
+
 
 	return 0;
 }
