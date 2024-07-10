@@ -38,6 +38,12 @@ int main() {
 // 달팽이 형식에 맞게 출력하는 함수.
 void print(int* row, int* col, int** pArr) {
 
+	for (int i = 0; i < *row; i++) {
+		for (int j = 0; j < *col; j++) {
+			printf("%d ", *(*(pArr + 0) + 0));
+		}
+		printf("\n");
+	}
 }
 
 // 당팽이 형식에 맞게 구현하는 함수.
@@ -58,7 +64,6 @@ void arr_ij(int* sizeRow, int* sizeCol, int** pArr) {
 	for (int i = 0; i < *sizeRow; i++) {
 		printf("aa\n");
 		pArr[i] = (int*)malloc(sizeof(int) * (*sizeCol));
-		/*printf("%d ", pArr[i][i]);*/
 	}
 
 }
