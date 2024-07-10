@@ -18,8 +18,7 @@ void Inserting_Node(LinkedList* list, int num);
 
 int main() {
 	// LinkedList 선언 및 동적할당함.
-	LinkedList* linkedList;
-	linkedList = (LinkedList*)malloc(sizeof(LinkedList));
+	LinkedList* linkedList = (LinkedList*)malloc(sizeof(LinkedList));
 	Initializing_Node(linkedList);
 
 	char* inputText = (char*)malloc(sizeof(char) * 20);
@@ -31,10 +30,14 @@ int main() {
 		printf("\t7. get_length\t8.print_list\t9.reverse\n\n");
 		printf("[SYSTEM]명령을 입력하세요 : ");
 		scanf("%s", inputText);
-		printf("입력된 명령 : %s\n", inputText);
 
 		if(strcmp(inputText, "insert") == 0){
-			
+			int numLocation;
+			printf("[SYSTEM]원하는 위치를 입력하세요. 위치 선택 (%d ~ %d) : ", 0, 1);
+			scanf("%d", &numLocation);
+			Inserting_Node(linkedList, numLocation);
+			printf("%d\n\n", linkedList->head->data);
+
 		}else if (strcmp(inputText, "insert_back") == 0) {
 			printf("nnnnnnnn");
 		}else if (strcmp(inputText, "insert_first") == 0) {
@@ -65,13 +68,21 @@ int main() {
 	return 0;
 }
 
-
-
 void Initializing_Node(LinkedList* list) {
-	list = (LinkedList*)malloc(sizeof(LinkedList));
+	// 노드들의 앞 부분인 head는 NULL로 초기화 함.
 	list->head = NULL;
+	// 사용하는 노드가 없으므로, 노드의 집합인 list의 size 값도 0으로 초기화 함.
+	list->size = 0;
 }
 
 void Inserting_Node(LinkedList* list, int num) {
+	// Node 선언 및 동적할당함.
+	Node* node = (Node*)malloc(sizeof(node));
 
+	node->data = num;
+	list->head = node;
+
+	list->size++;
+	
+	printf("\n\n현재 노드의 수 : %d개, 입력된 값 : %d\n\n",list->size ,node->data);
 }
