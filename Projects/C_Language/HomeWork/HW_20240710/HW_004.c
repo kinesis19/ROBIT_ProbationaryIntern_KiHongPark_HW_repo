@@ -2,9 +2,56 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+typedef struct _textStack {
+	int max; // stack의 용량 저장.
+	int ptr; // stack의 포인터.
+	int* stk; // stack을 가리키는 포인터.
+}TextStack;
 
+void GettingPalindrome(char* text);
+void InitializingStack(TextStack* tStack, char* text);
 
 int main() {
 
+	// 단어, 문장이 입력 되며 회문 여부를 스택과 큐 개념을 사용하여 구해야 함.
+	// 1. 문자열을 동적 할당으로 받아 봅시다.
+	char* inputText = NULL;
+	inputText = (char*)malloc(sizeof(char) * 100);
+
+	TextStack* textStack = (TextStack*)malloc(sizeof(TextStack));
+
+	// 형식 입출력하기.
+	printf("회문 여부를 파악하고 싶은 문자열 입력 : ");
+	scanf("%[^\n]s", inputText);
+
+	for (int i = 0; *(inputText + i) != NULL; i++) {
+		printf("%c", *(inputText + i));
+	}
+
+	InitializingStack(textStack, inputText);
+	/*GettingPalindrome(&inputText);*/
+
+	printf("\n");
+	printf("%s", inputText);
+
+	// 동적 메모리 할당 해제 하기.
+	free(inputText);
+
+
 	return 0;
+}
+void InitializingStack(TextStack* tStack, char* text) {
+
+	int cnt = 0;
+	for (int i = 0; *(text + i) != NULL; i++) {
+		cnt++;
+	}
+	tStack->max = 0; // stack 초기화 시, 스택의 pointer는 0으로 초기화 함.
+	tStack->max = cnt; // stack의 용량은 입력된 문자열의 문자 수로 지정함.
+	printf(" : %d", tStack->max);
+}
+
+void GettingPalindrome(char* text) {
+	char a[] = "bbbb";
+	text = a;
 }

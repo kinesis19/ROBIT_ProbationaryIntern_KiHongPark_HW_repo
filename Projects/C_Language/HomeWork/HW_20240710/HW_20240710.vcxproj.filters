@@ -18,5 +18,8 @@
     <ClCompile Include="HW_001.c">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="HW_004.c">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
