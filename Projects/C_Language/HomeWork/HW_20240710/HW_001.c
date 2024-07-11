@@ -19,6 +19,7 @@ typedef struct _LinkedList {
 void Initializing_Node(LinkedList* list);
 void Inserting_Node(LinkedList* list, int num, int value);
 void Inserting_Node_Back(LinkedList* list, int value);
+void Inserting_Node_First(LinkedList* list, int value);
 void Printing_List(LinkedList* list);
 
 int main() {
@@ -53,7 +54,10 @@ int main() {
 			scanf("%d", &nodeValue);
 			Inserting_Node_Back(linkedList, nodeValue);
 		}else if (strcmp(inputText, "insert_first") == 0) {
-
+			int nodeValue;
+			printf("[SYSTEM]원하는 노드의 값을 입력하세요. : ");
+			scanf("%d", &nodeValue);
+			Inserting_Node_First(linkedList, nodeValue);
 		}else if (strcmp(inputText, "delete") == 0) {
 
 		}else if (strcmp(inputText, "delete_first") == 0) {
@@ -90,10 +94,6 @@ void Inserting_Node(LinkedList* list, int num, int value) {
 
 	// 노드 추가하기.
 	node->data = value; // 노드의 값은 입력 받은 value로 지정하기.
-
-
-	//node->next = list->head; // 현재 노드의 뒤에 올 노드의 주소를 머리로 지정하기
-	//list->head = node;
 	list->size++;
 	
 	// Debugging:
@@ -113,42 +113,30 @@ void Inserting_Node_Back(LinkedList* list, int value) {
 
 		list->data[list->size - 1] = node->data;
 	}
+}
 
 
-	// Node 선언 및 동적할당함.
-	//Node* node = (Node*)malloc(sizeof(node));
+void Inserting_Node_First(LinkedList* list, int value) {
+	list->size++;
+	if (0 < list->size) { // stack의 용량 범위 이내라면 push를 진행함.
+		Node* node = (Node*)malloc(sizeof(node));
 
-	//// 노드 추가하기.
-	//node->data = value; // 노드의 값은 입력 받은 value로 지정하기.
-	//node->next = NULL; // 마지막 노드 뒤에는 따라오는 노드가 없음.
-	//
-	//if (list->size == 0) {
-	//	list->head = node;
-	//	list->cur = node;
-	//}else{
-	//	for (int i = 0; i < list->size; i++) {
-	//		printf("%d\n", list->head->data);
-	//		list->head->next = node;
-	//		list->head = list->head->next;
-	//		printf("%d\n\n", list->head->data);
-	//	}
-	//	list->head = node;
-	//}
-	//list->tail = node;
-	//list->size++;
+		node->data = value;
+		node->next = NULL;
 
-	// Debugging:
-	printf("\n\n현재 노드의 수 : %d개, 입력된 값 : %d, 머리 : %d\n\n", list->size, list->data[list->size - 1], list->head->data);
+		list->head = node;
+
+		for (int i = 0; i < list->size - 1; i++) {
+			list->data[list->size - i - 1] = list->data[list->size - i - 2];
+		}
+		list->data[0] = node->data;
+	}
 }
 
 
 
 void Printing_List(LinkedList* list) {
-	Node* ptr = list->head;
-	Node* tPtr = list->tail;
-	Node* current = list->cur;
-	
-	
+
 	printf("NULL");
 	for (int i = 0; i < list->size; i++) {
 		int value = list->data[i];
