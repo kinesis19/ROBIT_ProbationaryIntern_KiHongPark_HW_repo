@@ -11,7 +11,7 @@ typedef struct _Node {
 typedef struct _Stack {
 	Node* top;
 	Node* cur;
-	int* data[10];
+	int* data[100];
 	int size;
 }Stack;
 
@@ -116,7 +116,7 @@ int Getting_Top(Stack* tStack) {
 	if (tStack->size == 0) {
 		return 0; // top에 노드가 없는 상태 일때는 0을 반환하여 정해진 문구를 출력함.
 	}else{
-		return tStack->top->data; // top에 위치한 값 반환하기.
+		return tStack->data[tStack->size]; // top에 위치한 값 반환하기.
 	}
 }
 
@@ -130,14 +130,10 @@ int Checking_isEmpty(Stack* tStack) {
 	}
 }
 
-
-
-
-
 void Printing_List(Stack* tStack) {
 
 	if (tStack->size == 0) {
-		printf("현재 스택에 내부에는 노드가 없습니다.\n\n");
+		printf("현재 Stack에 data가 없습니다.\n\n");
 	}else{
 		printf("[   스택   ]\n");
 		printf("i----------i\n");
