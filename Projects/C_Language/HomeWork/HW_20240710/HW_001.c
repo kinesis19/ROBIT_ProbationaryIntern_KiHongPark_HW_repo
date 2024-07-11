@@ -10,6 +10,8 @@ typedef struct _Node {
 
 typedef struct _LinkedList {
 	Node* head;
+	Node* cur;
+	Node* tail;
 	int size;
 }LinkedList;
 
@@ -75,6 +77,8 @@ int main() {
 void Initializing_Node(LinkedList* list) {
 	// 노드들의 앞 부분인 head는 NULL로 초기화 함.
 	list->head = NULL;
+	list->cur = NULL;
+	list->tail = NULL;
 	// 사용하는 노드가 없으므로, 노드의 집합인 list의 size 값도 0으로 초기화 함.
 	list->size = 0;
 }
@@ -85,8 +89,10 @@ void Inserting_Node(LinkedList* list, int num, int value) {
 
 	// 노드 추가하기.
 	node->data = value; // 노드의 값은 입력 받은 value로 지정하기.
-	node->next = list->head; // 현재 노드의 뒤에 올 노드의 주소를 머리로 지정하기
-	list->head = node;
+
+
+	//node->next = list->head; // 현재 노드의 뒤에 올 노드의 주소를 머리로 지정하기
+	//list->head = node;
 	list->size++;
 	
 	// Debugging:
@@ -100,23 +106,36 @@ void Inserting_Node_Back(LinkedList* list, int value) {
 
 	// 노드 추가하기.
 	node->data = value; // 노드의 값은 입력 받은 value로 지정하기.
-	node->next = list->head; // 현재 노드의 뒤에 올 노드의 주소를 머리로 지정하기
-	list->head = node;
+	node->next = list->head; // 마지막 노드 뒤에는 따라오는 노드가 없음.
+	
+	if (list->size == 0) {
+		list->head = node;
+	}
+
+	list->tail = node;
+	list->cur = node;
 	list->size++;
 
 	// Debugging:
-	printf("\n\n현재 노드의 수 : %d개, 입력된 값 : %d\n\n", list->size, node->data);
+	printf("\n\n현재 노드의 수 : %d개, 입력된 값 : %d, 머리 : %d, 마지막 : %d\n\n", list->size, node->data, list->head->data, list->tail->data);
 }
 
 
 
 void Printing_List(LinkedList* list) {
 	Node* ptr = list->head;
-	while (ptr != NULL) {
+	Node* tPtr = list->tail;
+	Node* current = list->cur;
+	
+
+	for (; list->head != NULL; list->head = list->head->next) {
 		printf("%d ->", ptr->data);
 		ptr = ptr->next;
 	}
-	printf("NULL");
+
+	printf("\n\nHead : %d , Tail : %d", ptr->data, tPtr->data);
+
+	printf("NULL\n");
 }
 
 
