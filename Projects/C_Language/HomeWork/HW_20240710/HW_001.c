@@ -14,7 +14,8 @@ typedef struct _LinkedList {
 }LinkedList;
 
 void Initializing_Node(LinkedList* list);
-void Inserting_Node(LinkedList* list, int num);
+void Inserting_Node(LinkedList* list, int num, int value);
+void Printing_List(LinkedList* list);
 
 int main() {
 	// LinkedList 선언 및 동적할당함.
@@ -32,14 +33,25 @@ int main() {
 		scanf("%s", inputText);
 
 		if(strcmp(inputText, "insert") == 0){
-			int numLocation;
-			printf("[SYSTEM]원하는 위치를 입력하세요. 위치 선택 (%d ~ %d) : ", 0, 1);
+			int numLocation, nodeValue;
+			printf("[SYSTEM]원하는 위치를 입력하세요. 위치 선택 (%d ~ %d) : ", 0, linkedList->size);
 			scanf("%d", &numLocation);
-			Inserting_Node(linkedList, numLocation);
-			printf("%d\n\n", linkedList->head->data);
+			if (0 <= numLocation && numLocation <= linkedList->size) {
+				printf("[SYSTEM]원하는 노드의 값을 입력하세요. : ");
+				scanf("%d", &nodeValue);
+				Inserting_Node(linkedList, numLocation, nodeValue);
+			}else{
+				printf("[SYSTEM]정해진 범위 내에서 생성해야 합니다.\n\n");
+			}
+
+			// 삽입하기.
+			/*Inserting_Node(linkedList, 1);*/
+
+			/*printf("%d\n\n", linkedList->head->data);*/
+			
 
 		}else if (strcmp(inputText, "insert_back") == 0) {
-			printf("nnnnnnnn");
+
 		}else if (strcmp(inputText, "insert_first") == 0) {
 
 		}else if (strcmp(inputText, "delete") == 0) {
@@ -53,7 +65,7 @@ int main() {
 		}else if (strcmp(inputText, "get_length") == 0) {
 
 		}else if (strcmp(inputText, "print_list") == 0) {
-
+			Printing_List(linkedList);
 		}else if (strcmp(inputText, "reverse") == 0) {
 
 		}
@@ -62,8 +74,6 @@ int main() {
 
 	/*printf("%d", linkedList->head);*/
 
-	// 삽입하기.
-	Inserting_Node(linkedList, 1);
 	
 	return 0;
 }
@@ -75,14 +85,48 @@ void Initializing_Node(LinkedList* list) {
 	list->size = 0;
 }
 
-void Inserting_Node(LinkedList* list, int num) {
+void Inserting_Node(LinkedList* list, int num, int value) {
 	// Node 선언 및 동적할당함.
 	Node* node = (Node*)malloc(sizeof(node));
 
-	node->data = num;
-	list->head = node;
+	if (list->head == NULL) {
+		node->next = NULL;
+	}
 
+	node->data = value;
+	node->next = list->head;
+	list->head = node;
 	list->size++;
 	
+	// Debugging:
 	printf("\n\n현재 노드의 수 : %d개, 입력된 값 : %d\n\n",list->size ,node->data);
 }
+
+
+
+void Printing_List(LinkedList* list) {
+	Node* ptr = list->head;
+	while (ptr != NULL) {
+		printf("%d ->", ptr->data);
+		ptr = ptr->next;
+	}
+	printf("NULL");
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
