@@ -20,6 +20,7 @@ void Engueuing(Queue* sQueue, int num);
 void Dequeuing(Queue* sQueue);
 void Printing_Size(Queue* sQueue);
 int Getting_Front(Queue* sQueue);
+int Getting_Rear(Queue* sQueue);
 int Checking_isEmpty(Queue* sQueue);
 void Printing_List(Queue* sQueue);
 
@@ -52,10 +53,16 @@ int main() {
 		}else if (strcmp(inputText, "size") == 0) {
 			Printing_Size(queue);
 		}else if (strcmp(inputText, "front") == 0) {
-			if (Getting_Front(queue) != -999) {
+			if (Getting_Front(queue) != NULL) {
 				printf("front에 위치한 값은 %d입니다.\n\n", Getting_Front(queue));
 			}else{
 				printf("front에 위치한 값이 없습니다.\n\n");
+			}
+		}else if (strcmp(inputText, "rear") == 0) {
+			if (Getting_Rear(queue) != NULL) {
+				printf("rear에 위치한 값은 %d입니다.\n\n", Getting_Rear(queue));
+			}else{
+				printf("rear에 위치한 값이 없습니다.\n\n");
 			}
 		}else if (strcmp(inputText, "isEmpty") == 0) {
 
@@ -117,7 +124,16 @@ int Getting_Front(Queue* sQueue) {
 	if (0 < sQueue->size) {
 		return sQueue->data[0];
 	}else{
-		return -999;
+		return NULL;
+	}
+}
+
+
+int Getting_Rear(Queue* sQueue) {
+	if (0 != sQueue->size) {
+		return sQueue->data[sQueue->size - 1];
+	}else{
+		return NULL;
 	}
 }
 
