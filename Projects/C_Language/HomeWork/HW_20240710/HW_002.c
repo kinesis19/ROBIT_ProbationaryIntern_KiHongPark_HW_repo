@@ -19,6 +19,7 @@ void InitializingStack(Stack* tStack); // Stack 초기화 함수.
 void PushingStack(Stack* tStack, int num);
 void PoppingStack(Stack* tStack);
 void Printing_Size(Stack* tStack);
+int Getting_Top(Stack* tStack);
 void Printing_List(Stack* tStack);
 
 int main() {
@@ -48,6 +49,13 @@ int main() {
 			PoppingStack(stack);
 		}else if (strcmp(inputText, "size") == 0) {
 			Printing_Size(stack);
+		}else if (strcmp(inputText, "top") == 0) {
+			if (Getting_Top(stack) == 0) {
+				printf("현재 top에 위치한 값은 없습니다.\n\n");
+			}else{
+				printf("현재 top에 위치한 값은 %d입니다.\n\n", Getting_Top(stack));
+			}
+			
 		}else if (strcmp(inputText, "printStack") == 0) {
 			Printing_List(stack);
 		}
@@ -86,7 +94,7 @@ void PoppingStack(Stack* tStack) {
 	if (tStack->size == 0) {
 		printf("Stack이 비었습니다.\n");
 	}else{
-		printf("%d가 pop되었습니다.\n\n", tStack->data[tStack->size]);
+		printf("%d이(가) pop되었습니다.\n\n", tStack->data[tStack->size]);
 		tStack->data[tStack->size] = NULL;
 		tStack->size--;
 	}
@@ -97,6 +105,13 @@ void Printing_Size(Stack* tStack) {
 }
 
 
+int Getting_Top(Stack* tStack) {
+	if (tStack->size == 0) {
+		return 0; // top에 노드가 없는 상태 일때는 0을 반환하여 정해진 문구를 출력함.
+	}else{
+		return tStack->top->data; // top에 위치한 값 반환하기.
+	}
+}
 
 
 
