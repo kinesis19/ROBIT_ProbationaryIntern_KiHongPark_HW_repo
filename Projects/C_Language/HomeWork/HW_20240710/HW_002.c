@@ -20,6 +20,7 @@ void PushingStack(Stack* tStack, int num);
 void PoppingStack(Stack* tStack);
 void Printing_Size(Stack* tStack);
 int Getting_Top(Stack* tStack);
+int Checking_isEmpty(Stack* tStack);
 void Printing_List(Stack* tStack);
 
 int main() {
@@ -55,7 +56,13 @@ int main() {
 			}else{
 				printf("현재 top에 위치한 값은 %d입니다.\n\n", Getting_Top(stack));
 			}
-			
+		}else if (strcmp(inputText, "isEmpty") == 0) {
+			if (Checking_isEmpty(stack) == 1) {
+				printf("현재 Stack에 데이터가 없는 상태 입니다.\n\n");
+			}else{
+				printf("현재 Stack에 데이터가 있는 상태 입니다.\n\n");
+			}
+
 		}else if (strcmp(inputText, "printStack") == 0) {
 			Printing_List(stack);
 		}
@@ -110,6 +117,16 @@ int Getting_Top(Stack* tStack) {
 		return 0; // top에 노드가 없는 상태 일때는 0을 반환하여 정해진 문구를 출력함.
 	}else{
 		return tStack->top->data; // top에 위치한 값 반환하기.
+	}
+}
+
+int Checking_isEmpty(Stack* tStack) {
+	
+	//true값과 false값을 반환하라고 하였으므로, 각각 1과 0을 반환함.
+	if(tStack->size == 0){
+		return 1; 
+	}else{
+		return 0;
 	}
 }
 
