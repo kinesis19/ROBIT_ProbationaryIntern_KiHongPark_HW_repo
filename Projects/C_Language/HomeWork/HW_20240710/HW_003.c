@@ -65,7 +65,11 @@ int main() {
 				printf("rear에 위치한 값이 없습니다.\n\n");
 			}
 		}else if (strcmp(inputText, "isEmpty") == 0) {
-
+			if (Checking_isEmpty(queue) == 1) {
+				printf("Queue에 데이터가 있습니다.\n\n");
+			}else{
+				printf("Queue에 데이터가 없습니다.\n\n");
+			}
 		}else if (strcmp(inputText, "printQueue") == 0) {
 			Printing_List(queue);
 		}
@@ -128,7 +132,6 @@ int Getting_Front(Queue* sQueue) {
 	}
 }
 
-
 int Getting_Rear(Queue* sQueue) {
 	if (0 != sQueue->size) {
 		return sQueue->data[sQueue->size - 1];
@@ -137,7 +140,15 @@ int Getting_Rear(Queue* sQueue) {
 	}
 }
 
+int Checking_isEmpty(Queue* sQueue) {
 
+	if (sQueue->size != 0) {
+		return 1;
+	}else{
+		return 0;
+	}
+
+}
 
 
 
@@ -146,7 +157,7 @@ void Printing_List(Queue* sQueue) {
 	if (sQueue->size == 0) {
 		printf("현재 Queue에 data가 없습니다.\n\n");
 	}else {
-		printf("[   큐    ]\n");
+		printf("[    큐    ]\n");
 		printf("i----------i\n");
 		for (int i = 0; i < sQueue->size; i++) {
 			printf("I %5d    I\n", sQueue->data[i]);
