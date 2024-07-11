@@ -22,7 +22,9 @@ typedef struct _StudentList {
 	int size;
 }StudentList;
 
-void InitializingStudentList(StudentList* stdList);
+void InitializingStudentList(StudentList* stdList); // StudentList 초기화 함수.
+void AddingStudent(StudentList* stdList);
+
 
 int main() {
 	// StudentList 동적할당 하기.
@@ -46,10 +48,17 @@ int main() {
 		printf("[SYSTEM]명령어를 입력하세요 : ");
 		scanf("%s", inputCommand);
 
-		int tempNum;
 		if(strcmp(inputCommand, "add") == 0){
-			/*printf("[SYSTEM]추가할 학생의 번호를 입력하세요 : ");
-			scanf("%d", &tempNum);*/
+			int num;
+			char name[20] = { '\0', }, adrCountry[20] = { '\0', }, adrState[20] = { '\0', }, adrCity[20] = { '\0', }, adrTown[20] = { '\0', };
+			double grade;
+
+			printf("[SYSTEM]추가할 학생의 번호를 입력하세요 : ");
+			scanf("%d", &num);
+			printf("[SYSTEM]추가할 학생의 이름을 입력하세요 : ");
+			scanf("%s", &name);
+			printf("[SYSTEM]추가할 학생의 이름을 입력하세요 : ");
+			scanf("%s", &name);
 
 		}else if (strcmp(inputCommand, "delete") == 0) {
 
@@ -66,10 +75,6 @@ int main() {
 
 	}
 
-
-
-
-
 	// 동적할당 해제.
 	free(studentList);
 
@@ -77,7 +82,12 @@ int main() {
 }
 
 void InitializingStudentList(StudentList* stdList){
+	stdList->size = 0;
+	stdList->top = -1; // Stack의 top의 초기 상태는 -1 상태임.
+	stdList->cur = NULL;
+}
 
+void AddingStudent(StudentList* stdList) {
 
 }
 
