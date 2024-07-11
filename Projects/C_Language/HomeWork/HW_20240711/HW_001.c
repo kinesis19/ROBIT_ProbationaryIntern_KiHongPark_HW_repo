@@ -23,13 +23,13 @@ typedef struct _StudentList {
 }StudentList;
 
 void Initializing_StudentList(StudentList* stdList); // StudentList 초기화 함수.
-void Adding_Student(StudentList* stdList);
-void ExceptionHandling_Adding(char type);
+void Adding_Student(StudentList* stdList); // 학생 추가 함수.
+int Discriminating_Adding(int type, int value); // 학생을 추가할 때 사용자로부터 입력 받은 값이 정해진 type과 동일한지 검사하기.
 
 
 int main() {
 	// StudentList 동적할당 하기.
-	StudentList* studentList = (StudentList*)malloc(sizeof(studentList));
+	StudentList* studentList = (StudentList*)malloc(sizeof(StudentList));
 	// 사용자의 명령어(입력값) 동적할당 하기.
 	char* inputCommand = (char*)malloc(sizeof(char) * 20);
 
@@ -72,7 +72,7 @@ int main() {
 	}
 
 	// 동적할당 해제.
-	free(studentList);
+	/*free(studentList);*/
 
 	return 0;
 }
@@ -88,9 +88,14 @@ void Adding_Student(StudentList* stdList) {
 	char name[20] = { '\0', }, adrCountry[100] = { '\0', }, adrDo[100] = { '\0', }, adrSi[100] = { '\0', }, adrGu[100] = { '\0', };
 	double grade;
 
-	printf("[SYSTEM]추가할 학생의 번호를 입력하세요 : ");
+	printf("[SYSTEM]추가할 학생의 번호를 입력하세요(1부터 ~ 100사이) : ");
 	scanf("%d", &num);
 	// 예외처리 함수 호출하기. -> num이 숫자인지 아닌지.
+	if (1 > num || num > 100) {
+			printf("범위 외에 있는 숫자 혹은 올바르지 않은 Type은 입력할 수 없습니다.\n");
+			return 0;
+	}
+
 	printf("[SYSTEM]추가할 학생의 이름을 입력하세요 : ");
 	scanf(" %[^\n]s", &name);
 	// 예외처리 함수 호출하기. -> name이 문자(열)인지 아닌지.
@@ -112,3 +117,23 @@ void Adding_Student(StudentList* stdList) {
 	printf("%d, %s, %s, %s, %s, %s, %.1lf\n\n", num, name, adrCountry, adrDo, adrSi, adrGu, grade);
 }
 
+int Discriminating_Adding(int type, int value) {
+	/*
+	* type 값 정리
+	* 1 : int Type, 2 : double Type, 3 : char Type (문자열)
+	*/
+
+	if (type == 1) {
+		if (1 <= value && value <= 100) {
+			return 1;
+		}else{
+			return 0;
+		}
+	}
+
+
+
+
+	return 0;
+
+}
