@@ -5,11 +5,11 @@
 // 학생 구조체
 typedef struct _Student {
 	int number; // 번호
-	char name[100]; // 이름
-	char adrCountry[100]; // 국가
-	char adrDo[100]; // 도
-	char adrSi[100]; // 시
-	char adrGu[100]; // 구
+	char* name; // 이름
+	char* adrCountry; // 국가
+	char* adrDo; // 도
+	char* adrSi; // 시
+	char* adrGu; // 구
 	double grade; // 성적
 	struct _Student* next; // 다음 학생의 주소
 }Student;
@@ -55,6 +55,7 @@ int main() {
 
 		if(strcmp(inputCommand, "add") == 0){
 			Adding_Student(studentList);
+			printf("%d", studentList->top->number);
 		}else if (strcmp(inputCommand, "delete") == 0) {
 
 		}else if (strcmp(inputCommand, "search") == 0) {
@@ -84,9 +85,12 @@ void Initializing_StudentList(StudentList* stdList){
 
 void Adding_Student(StudentList* stdList) {
 	int num;
-	char name[20] = { '\0', }, adrCountry[100] = { '\0', }, adrDo[100] = { '\0', }, adrSi[100] = { '\0', }, adrGu[100] = { '\0', };
+	char name[100] = { '\0', }, adrCountry[100] = { '\0', }, adrDo[100] = { '\0', }, adrSi[100] = { '\0', }, adrGu[100] = { '\0', };
 	double grade;
 
+	Student* student = (Student*)malloc(sizeof(Student));
+
+	stdList->size++;
 	printf("[SYSTEM]추가할 학생의 번호를 입력하세요(1부터 ~ 100사이) : ");
 	scanf("%d", &num);
 	// 임시로 구현한 예외처리.
@@ -96,24 +100,41 @@ void Adding_Student(StudentList* stdList) {
 		scanf("%d", &num);
 		getchar();
 	}
+	student->number = num;
 	// 예외처리 함수 호출하기. -> num이 숫자인지 아닌지.
+
 	printf("[SYSTEM]추가할 학생의 이름을 입력하세요 : ");
 	scanf(" %[^\n]s", &name);
+	student->name = name;
 	// 예외처리 함수 호출하기. -> name이 문자(열)인지 아닌지.
+
 	printf("[SYSTEM]추가할 학생의 거주하고 있는 국가를 입력하세요 : ");
 	scanf(" %[^\n]s", &adrCountry);
+	student->adrCountry = adrCountry;
 	// 예외처리 함수 호출하기. -> addCountry가 문자(열)인지 아닌지.
+
 	printf("[SYSTEM]추가할 학생의 거주하고 있는 도를 입력하세요 : ");
 	scanf(" %[^\n]s", &adrDo);
+	student->adrDo = adrDo;
 	// 예외처리 함수 호출하기. -> adrDo가 문자(열)인지 아닌지.
+
 	printf("[SYSTEM]추가할 학생의 거주하고 있는 시를 입력하세요 : ");
 	scanf(" %[^\n]s", &adrSi);
+	student->adrSi = adrSi;
 	// 예외처리 함수 호출하기. -> adrSi가 문자(열)인지 아닌지.
+
 	printf("[SYSTEM]추가할 학생의 거주하고 있는 구를 입력하세요 : ");
 	scanf(" %[^\n]s", &adrGu);
+	student->adrGu = adrGu;
 	// 예외처리 함수 호출하기. -> adrGu가 문자(열)인지 아닌지.
+
 	printf("[SYSTEM]추가할 학생의 성적을 입력하세요 : ");
 	scanf(" %lf", &grade);
+	student->grade = grade;
 	// 예외처리 함수 호출하기. -> grade가 숫자인지 아닌지.
-	printf("%d, %s, %s, %s, %s, %s, %.1lf\n\n", num, name, adrCountry, adrDo, adrSi, adrGu, grade);
+	
+	student->next = NULL;
+	stdList->top = student;
+
+	printf("%d, %s, %s, %s, %s, %s, %.1lf\n\n", student->number, student->name, student->adrCountry, student->adrDo, student->adrSi, student->adrGu, student->grade);
 }
