@@ -75,23 +75,20 @@ void PushingStack(Stack* tStack, int num) {
 		tStack->data[tStack->size] = node->data;
 	}
 
-	printf("data value : %d\n\n", tStack->top->data);
+	/*printf("data value : %d\n\n", tStack->top->data);*/
 }
 
 void Printing_List(Stack* tStack) {
 
-
-	printf("data value : %d, %d\n\n", tStack->data[tStack->size-1], tStack->data[tStack->size]);
-
 	if (tStack->size == 0) {
 		printf("현재 스택에 내부에는 노드가 없습니다.\n\n");
 	}else{
-		printf("i-----i\n");
+		printf("[   스택   ]\n");
+		printf("i----------i\n");
 		for (int i = 0; i < tStack->size; i++) {
-			printf("%d\n", tStack->data[tStack->size - i]);
-			/*tStack->top->next = list->head->next;*/
+			printf("I %5d    I\n", tStack->data[tStack->size - i]);
 		}
-		printf("------");
+		printf("I----------I");
 	}
 
 	
