@@ -1,6 +1,7 @@
 #define _CRT_SECURE_NO_WARNINGS
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 typedef struct _Node {
 	int data;
@@ -11,7 +12,8 @@ typedef struct _Stack {
 	Node* top;
 	int size;
 }Stack;
-
+void InitializingStack(Stack* tStack); // Stack 초기화 함수.
+void PushingStack(Stack* tStack, int num);
 
 int main() {
 	
@@ -19,6 +21,50 @@ int main() {
 	Stack* stack = (Stack*)malloc(sizeof(stack));
 
 
+	char* inputText = (char*)malloc(sizeof(char) * 20);
+	InitializingStack(stack);
+	printf("[SYSTEM]스택이 초기화 되었습니다.\n");
+	while (1){
+		printf("\n\n[SYSTEM]사용 가능한 명령어 모음\n\n");
+		printf("\t1. push\t2.pop\t  3.size\n");
+		printf("\t4. top\t5.isEmpty 6.printStack\n\n");
+		printf("[SYSTEM]명령을 입력하세요 : ");
+		scanf("%s", inputText);
 
 
+		int tempNum;
+		if(strcmp(inputText, "push") == 0){
+			printf("[SYSTEM]push할 값을 입력하세요 : ");
+			scanf("%d", &tempNum);
+			PushingStack(stack, tempNum); // stack은 Call by ref로, tempNum은 Call by Value로 보냄.
+		}else if (strcmp(inputText, "insert_back") == 0) {
+
+		}
+
+	}
+
+
+
+}
+
+void InitializingStack(Stack* tStack) {
+
+	tStack->size = 0;
+
+}
+
+
+
+void PushingStack(Stack* tStack, int num) {
+
+	tStack->size++;
+	if (0 < tStack->size) { // stack의 용량 범위 이내라면 push를 진행함.
+		Node* node = (Node*)malloc(sizeof(node));
+		node->data = num;
+		node->next = NULL;
+
+		tStack->top = node;
+	}
+
+	printf("data value : %d\n\n", tStack->top->data);
 }
