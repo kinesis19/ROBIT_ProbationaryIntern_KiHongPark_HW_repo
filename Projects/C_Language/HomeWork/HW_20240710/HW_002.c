@@ -10,10 +10,14 @@ typedef struct _Node {
 
 typedef struct _Stack {
 	Node* top;
+	Node* cur;
+	int* data[10];
 	int size;
 }Stack;
+
 void InitializingStack(Stack* tStack); // Stack 초기화 함수.
 void PushingStack(Stack* tStack, int num);
+void Printing_List(Stack* tStack);
 
 int main() {
 	
@@ -24,6 +28,7 @@ int main() {
 	char* inputText = (char*)malloc(sizeof(char) * 20);
 	InitializingStack(stack);
 	printf("[SYSTEM]스택이 초기화 되었습니다.\n");
+
 	while (1){
 		printf("\n\n[SYSTEM]사용 가능한 명령어 모음\n\n");
 		printf("\t1. push\t2.pop\t  3.size\n");
@@ -37,20 +42,19 @@ int main() {
 			printf("[SYSTEM]push할 값을 입력하세요 : ");
 			scanf("%d", &tempNum);
 			PushingStack(stack, tempNum); // stack은 Call by ref로, tempNum은 Call by Value로 보냄.
-		}else if (strcmp(inputText, "insert_back") == 0) {
-
+		}else if (strcmp(inputText, "printStack") == 0) {
+			Printing_List(stack);
 		}
 
 	}
-
-
 
 }
 
 void InitializingStack(Stack* tStack) {
 
 	tStack->size = 0;
-
+	tStack->top = -1; // Stack의 top의 초기 상태는 -1 상태임.
+	tStack->cur = NULL;
 }
 
 
@@ -60,11 +64,36 @@ void PushingStack(Stack* tStack, int num) {
 	tStack->size++;
 	if (0 < tStack->size) { // stack의 용량 범위 이내라면 push를 진행함.
 		Node* node = (Node*)malloc(sizeof(node));
+
 		node->data = num;
 		node->next = NULL;
 
+		/*tStack->top++;*/
 		tStack->top = node;
+		tStack->cur = node;
+
+		tStack->data[tStack->size] = node->data;
 	}
 
 	printf("data value : %d\n\n", tStack->top->data);
+}
+
+void Printing_List(Stack* tStack) {
+
+
+	printf("data value : %d, %d\n\n", tStack->data[tStack->size-1], tStack->data[tStack->size]);
+
+	if (tStack->size == 0) {
+		printf("현재 스택에 내부에는 노드가 없습니다.\n\n");
+	}else{
+		printf("i-----i\n");
+		for (int i = 0; i < tStack->size; i++) {
+			printf("%d\n", tStack->data[tStack->size - i]);
+			/*tStack->top->next = list->head->next;*/
+		}
+		printf("------");
+	}
+
+	
+
 }
