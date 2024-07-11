@@ -12,6 +12,7 @@ typedef struct _LinkedList {
 	Node* head;
 	Node* cur;
 	Node* tail;
+	int* data[100];
 	int size;
 }LinkedList;
 
@@ -101,30 +102,43 @@ void Inserting_Node(LinkedList* list, int num, int value) {
 
 void Inserting_Node_Back(LinkedList* list, int value) {
 
-	// Node 선언 및 동적할당함.
-	Node* node = (Node*)malloc(sizeof(node));
-
-	// 노드 추가하기.
-	node->data = value; // 노드의 값은 입력 받은 value로 지정하기.
-	node->next = NULL; // 마지막 노드 뒤에는 따라오는 노드가 없음.
-	
-	if (list->size == 0) {
-		list->head = node;
-		list->cur = node;
-	}else{
-		for (int i = 0; i < list->size; i++) {
-			printf("%d\n", list->head->data);
-			list->head->next = node;
-			list->head = list->head->next;
-			printf("%d\n\n", list->head->data);
-		}
-		list->head = node;
-	}
-	list->tail = node;
 	list->size++;
+	if (0 < list->size) { // stack의 용량 범위 이내라면 push를 진행함.
+		Node* node = (Node*)malloc(sizeof(node));
+
+		node->data = value;
+		node->next = NULL;
+
+		list->head = node;
+
+		list->data[list->size - 1] = node->data;
+	}
+
+
+	// Node 선언 및 동적할당함.
+	//Node* node = (Node*)malloc(sizeof(node));
+
+	//// 노드 추가하기.
+	//node->data = value; // 노드의 값은 입력 받은 value로 지정하기.
+	//node->next = NULL; // 마지막 노드 뒤에는 따라오는 노드가 없음.
+	//
+	//if (list->size == 0) {
+	//	list->head = node;
+	//	list->cur = node;
+	//}else{
+	//	for (int i = 0; i < list->size; i++) {
+	//		printf("%d\n", list->head->data);
+	//		list->head->next = node;
+	//		list->head = list->head->next;
+	//		printf("%d\n\n", list->head->data);
+	//	}
+	//	list->head = node;
+	//}
+	//list->tail = node;
+	//list->size++;
 
 	// Debugging:
-	printf("\n\n현재 노드의 수 : %d개, 입력된 값 : %d, 머리 : %d, 마지막 : %d\n\n", list->size, node->data, list->head->data, list->tail->data);
+	printf("\n\n현재 노드의 수 : %d개, 입력된 값 : %d, 머리 : %d\n\n", list->size, list->data[list->size - 1], list->head->data);
 }
 
 
@@ -134,13 +148,10 @@ void Printing_List(LinkedList* list) {
 	Node* tPtr = list->tail;
 	Node* current = list->cur;
 	
-
+	
 	printf("NULL");
 	for (int i = 0; i < list->size; i++) {
-		printf("<-%d", current->data);
-		current = list->head->next;
+		int value = list->data[i];
+		printf("<-%d", value);
 	}
-
-	/*printf("\n\nHead : %d , Tail : %d", ptr->data, tPtr->data);*/
-
 }
