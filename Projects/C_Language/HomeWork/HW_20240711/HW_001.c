@@ -2,42 +2,41 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-// 주소 구조체
-typedef struct _Address {
-	char* country[20]; // 국가
-	char* state[20]; // 도
-	char* city[20]; // 시
-	char* town[20]; // 구
-}Address;
 // 학생 구조체
 typedef struct _Student {
-	int* number;
-	char* name;
-	Address* adr;
-	int* list;
+	int number; // 번호
+	char name[20]; // 이름
+	char adrCountry[20]; // 국가
+	char adrState[20]; // 도
+	char adrCity[20]; // 시
+	char adrTown[20]; // 구
+	double grade; // 성적
+	struct _Student* next; // 다음 학생의 주소
 }Student;
 
-void Initializing(Student* std);
+// 학생 리스트
+typedef struct _StudentList {
+	Student* top;
+	Student* cur;
+	int* data[100];
+	int size;
+}StudentList;
+
+void InitializingStudentList(StudentList* stdList);
 
 int main() {
 
-	Student* student = (Student*)malloc(sizeof(student));
+	StudentList* studentList = (StudentList*)malloc(sizeof(studentList));
 
-	Initializing(student);
+	InitializingStudentList(studentList);
 
-	if (student->adr == NULL) {
-		printf("NULL상태.");
-	}
-
-	free(student);
+	free(studentList);
 
 	return 0;
 }
 
-void Initializing(Student* std) {
+void InitializingStudentList(StudentList* stdList){
 
-	std->number = 0;
-	std->name = " ";
-	std->adr = NULL;
-	std->list = NULL;
+
 }
+
