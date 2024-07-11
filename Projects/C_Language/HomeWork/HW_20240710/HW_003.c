@@ -50,7 +50,7 @@ int main() {
 		}else if (strcmp(inputText, "Dequeue") == 0) {
 			Dequeuing(queue);
 		}else if (strcmp(inputText, "size") == 0) {
-
+			Printing_Size(queue);
 		}else if (strcmp(inputText, "top") == 0) {
 
 		}else if (strcmp(inputText, "isEmpty") == 0) {
@@ -102,6 +102,10 @@ void Dequeuing(Queue* sQueue) {
 		sQueue->size--;
 	}
 
+}
+
+void Printing_Size(Queue* sQueue) {
+	printf("큐의 size는 %d입니다.\n\n", sQueue->size);
 }
 
 
