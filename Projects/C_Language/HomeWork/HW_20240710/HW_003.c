@@ -19,7 +19,7 @@ void InitializingQueue(Queue* sQueue); // Queue 초기화 함수.
 void Engueuing(Queue* sQueue, int num);
 void Dequeuing(Queue* sQueue);
 void Printing_Size(Queue* sQueue);
-int Getting_Top(Queue* sQueue);
+int Getting_Front(Queue* sQueue);
 int Checking_isEmpty(Queue* sQueue);
 void Printing_List(Queue* sQueue);
 
@@ -51,8 +51,12 @@ int main() {
 			Dequeuing(queue);
 		}else if (strcmp(inputText, "size") == 0) {
 			Printing_Size(queue);
-		}else if (strcmp(inputText, "top") == 0) {
-
+		}else if (strcmp(inputText, "front") == 0) {
+			if (Getting_Front(queue) != -999) {
+				printf("front에 위치한 값은 %d입니다.\n\n", Getting_Front(queue));
+			}else{
+				printf("front에 위치한 값이 없습니다.\n\n");
+			}
 		}else if (strcmp(inputText, "isEmpty") == 0) {
 
 		}else if (strcmp(inputText, "printQueue") == 0) {
@@ -106,6 +110,15 @@ void Dequeuing(Queue* sQueue) {
 
 void Printing_Size(Queue* sQueue) {
 	printf("큐의 size는 %d입니다.\n\n", sQueue->size);
+}
+
+int Getting_Front(Queue* sQueue) {
+
+	if (0 < sQueue->size) {
+		return sQueue->data[0];
+	}else{
+		return -999;
+	}
 }
 
 
