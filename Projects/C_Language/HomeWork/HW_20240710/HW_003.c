@@ -31,12 +31,13 @@ int main() {
 
 	char* inputText = (char*)malloc(sizeof(char) * 20);
 	InitializingQueue(queue);
-	printf("[SYSTEM]스택이 초기화 되었습니다.\n");
+	printf("[SYSTEM]큐가 초기화 되었습니다.\n");
 
 	while (1){
 		printf("\n\n[SYSTEM]사용 가능한 명령어 모음\n\n");
-		printf("\t1. push\t2.pop\t  3.size\n");
-		printf("\t4. top\t5.isEmpty 6.prinsQueue\n\n");
+		printf("\t1. Enqueue\t2.Dequeue\t  3.size\n");
+		printf("\t4. front\t5.rear\t\t  6.isEmpty\n");
+		printf("\t7. printQueue\n\n");
 		printf("[SYSTEM]명령을 입력하세요 : ");
 		scanf("%s", inputText);
 
@@ -45,28 +46,25 @@ int main() {
 		if(strcmp(inputText, "push") == 0){
 			printf("[SYSTEM]push할 값을 입력하세요 : ");
 			scanf("%d", &tempNum);
-			PushingQueue(queue, tempNum); // Queue은 Call by ref로, tempNum은 Call by Value로 보냄.
 		}else if (strcmp(inputText, "pop") == 0) {
-			PoppingQueue(queue);
+
 		}else if (strcmp(inputText, "size") == 0) {
-			Printing_Size(queue);
+
 		}else if (strcmp(inputText, "top") == 0) {
-			if (Getting_Top(queue) == 0) {
-				printf("현재 top에 위치한 값은 없습니다.\n\n");
-			}else{
-				printf("현재 top에 위치한 값은 %d입니다.\n\n", Getting_Top(queue));
-			}
+
 		}else if (strcmp(inputText, "isEmpty") == 0) {
-			if (Checking_isEmpty(queue) == 1) {
-				printf("현재 Queue에 데이터가 없는 상태 입니다.\n\n");
-			}else{
-				printf("현재 Queue에 데이터가 있는 상태 입니다.\n\n");
-			}
 
 		}else if (strcmp(inputText, "prinsQueue") == 0) {
-			Printing_List(Queue);
+
 		}
 
 	}
 
+}
+
+void InitializingQueue(Queue* sQueue) {
+
+	sQueue->size = 0;
+	sQueue->top = 0; // Queue의 초기 상태는 0임.
+	sQueue->cur = NULL;
 }
