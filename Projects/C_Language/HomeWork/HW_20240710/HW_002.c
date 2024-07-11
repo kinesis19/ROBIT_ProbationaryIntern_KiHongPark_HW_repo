@@ -17,6 +17,7 @@ typedef struct _Stack {
 
 void InitializingStack(Stack* tStack); // Stack 초기화 함수.
 void PushingStack(Stack* tStack, int num);
+void PoppingStack(Stack* tStack);
 void Printing_List(Stack* tStack);
 
 int main() {
@@ -42,6 +43,8 @@ int main() {
 			printf("[SYSTEM]push할 값을 입력하세요 : ");
 			scanf("%d", &tempNum);
 			PushingStack(stack, tempNum); // stack은 Call by ref로, tempNum은 Call by Value로 보냄.
+		}else if (strcmp(inputText, "pop") == 0) {
+			PoppingStack(stack);
 		}else if (strcmp(inputText, "printStack") == 0) {
 			Printing_List(stack);
 		}
@@ -56,8 +59,6 @@ void InitializingStack(Stack* tStack) {
 	tStack->top = -1; // Stack의 top의 초기 상태는 -1 상태임.
 	tStack->cur = NULL;
 }
-
-
 
 void PushingStack(Stack* tStack, int num) {
 
@@ -74,8 +75,20 @@ void PushingStack(Stack* tStack, int num) {
 
 		tStack->data[tStack->size] = node->data;
 	}
+}
 
-	/*printf("data value : %d\n\n", tStack->top->data);*/
+
+void PoppingStack(Stack* tStack) {
+
+	if (tStack->size == 0) {
+		printf("Stack이 비었습니다.\n");
+	}else{
+		printf("%d가 pop되었습니다.\n\n", tStack->data[tStack->size]);
+		tStack->data[tStack->size] = NULL;
+		tStack->size--;
+	}
+
+
 }
 
 void Printing_List(Stack* tStack) {
@@ -90,7 +103,4 @@ void Printing_List(Stack* tStack) {
 		}
 		printf("I----------I");
 	}
-
-	
-
 }
