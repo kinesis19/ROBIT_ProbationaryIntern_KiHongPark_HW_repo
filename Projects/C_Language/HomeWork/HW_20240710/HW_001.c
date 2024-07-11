@@ -20,6 +20,7 @@ void Initializing_Node(LinkedList* list);
 void Inserting_Node(LinkedList* list, int num, int value);
 void Inserting_Node_Back(LinkedList* list, int value);
 void Inserting_Node_First(LinkedList* list, int value);
+void Deleting_Node_First(LinkedList* list, int value);
 void Printing_List(LinkedList* list);
 
 int main() {
@@ -132,8 +133,6 @@ void Inserting_Node_First(LinkedList* list, int value) {
 		list->data[0] = node->data;
 	}
 }
-
-
 
 void Printing_List(LinkedList* list) {
 
