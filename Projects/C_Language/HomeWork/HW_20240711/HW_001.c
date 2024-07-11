@@ -25,9 +25,11 @@ typedef struct _StudentList {
 
 void Initializing_StudentList(StudentList* stdList); // StudentList 초기화 함수.
 void Adding_Student(StudentList* stdList); // 학생 추가 함수.
-void Printing_StudentList(StudentList* stdList);
-int Getting_IsitNumber(char* text, int cnt);
-int Changing_StringToInt(char* text);
+void Deleting_Student(StudentList* stdList); // 학생 삭제 함수.
+
+void Printing_StudentList(StudentList* stdList); // 전체 학생 출력 함수.
+int Getting_IsitNumber(char* text, int cnt); // 입력된 값이 숫자인지 아닌지 판별하는 함수.
+int Changing_StringToInt(char* text); // 입력된 문자열 값을 int Type으로 return 하는 함수.
 
 
 int main() {
@@ -60,7 +62,7 @@ int main() {
 		if(strcmp(inputCommand, "add") == 0){
 			Adding_Student(studentList);
 		}else if (strcmp(inputCommand, "delete") == 0) {
-
+			Deleting_Student(studentList);
 		}else if (strcmp(inputCommand, "search") == 0) {
 
 		}else if (strcmp(inputCommand, "sort") == 0) {
@@ -218,6 +220,14 @@ void Adding_Student(StudentList* stdList) {
 
 	stdList->size++;
 }
+
+void Deleting_Student(StudentList* stdList) {
+
+	printf("아아 삭제됨.");
+
+}
+
+
 
 void Printing_StudentList(StudentList* stdList) {
 	
