@@ -232,6 +232,9 @@ void Deleting_Student(StudentList* stdList) {
 void Printing_StudentList(StudentList* stdList) {
 	
 	Student* current = stdList->head;
+	if (stdList->head == NULL) {
+		printf("[SYSTEM]현재 학생이 없습니다.");
+	}
 
 	for (int i = 0; i < stdList->size; i++) {
 		printf("[%d번째] 번호 : %d | 이름 :  %s | 국가 : %s | 도 : %s | 시 : %s | 구 : %s | 등급 : %d |\n", i, current->number, current->name, current->adrCountry, current->adrDo, current->adrSi, current->adrGu, current->grade);
