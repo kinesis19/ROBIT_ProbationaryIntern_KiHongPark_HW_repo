@@ -17,7 +17,7 @@ typedef struct _Queue {
 
 void InitializingQueue(Queue* sQueue); // Queue 초기화 함수.
 void Engueuing(Queue* sQueue, int num);
-void PoppingQueue(Queue* sQueue);
+void Dequeuing(Queue* sQueue);
 void Printing_Size(Queue* sQueue);
 int Getting_Top(Queue* sQueue);
 int Checking_isEmpty(Queue* sQueue);
@@ -47,8 +47,8 @@ int main() {
 			printf("[SYSTEM]Enqueue할 값을 입력하세요 : ");
 			scanf("%d", &tempNum);
 			Engueuing(queue, tempNum);
-		}else if (strcmp(inputText, "pop") == 0) {
-
+		}else if (strcmp(inputText, "Dequeue") == 0) {
+			Dequeuing(queue);
 		}else if (strcmp(inputText, "size") == 0) {
 
 		}else if (strcmp(inputText, "top") == 0) {
@@ -80,11 +80,6 @@ void Engueuing(Queue* sQueue, int num) {
 		node->data = num;
 		node->next = NULL;
 
-		//if (sQueue->size == 1) { // Queue의 0번째 index
-		//	sQueue->front = node;
-		//}
-
-
 		sQueue->front = node;
 		sQueue->data[sQueue->size - 1] = node->data;
 
@@ -93,6 +88,24 @@ void Engueuing(Queue* sQueue, int num) {
 	printf("%d\n\n", sQueue->data[sQueue->size - 1]);
 
 }
+
+void Dequeuing(Queue* sQueue) {
+
+	if (sQueue->size == 0) {
+		printf("Queue가 비었습니다.\n\n");
+	}else{
+		printf("%d이(가) Dequeue 되었습니다.\n\n", sQueue->data[0]);
+
+		for (int i = 0; i < sQueue->size - 1; i++) {
+			sQueue->data[i] = sQueue->data[i + 1];
+		}
+		sQueue->size--;
+	}
+
+}
+
+
+
 
 
 void Printing_List(Queue* sQueue) {
