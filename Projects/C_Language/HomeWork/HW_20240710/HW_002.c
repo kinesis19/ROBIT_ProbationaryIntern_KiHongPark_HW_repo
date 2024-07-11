@@ -18,6 +18,7 @@ typedef struct _Stack {
 void InitializingStack(Stack* tStack); // Stack 초기화 함수.
 void PushingStack(Stack* tStack, int num);
 void PoppingStack(Stack* tStack);
+void Printing_Size(Stack* tStack);
 void Printing_List(Stack* tStack);
 
 int main() {
@@ -45,6 +46,8 @@ int main() {
 			PushingStack(stack, tempNum); // stack은 Call by ref로, tempNum은 Call by Value로 보냄.
 		}else if (strcmp(inputText, "pop") == 0) {
 			PoppingStack(stack);
+		}else if (strcmp(inputText, "size") == 0) {
+			Printing_Size(stack);
 		}else if (strcmp(inputText, "printStack") == 0) {
 			Printing_List(stack);
 		}
@@ -87,9 +90,17 @@ void PoppingStack(Stack* tStack) {
 		tStack->data[tStack->size] = NULL;
 		tStack->size--;
 	}
-
-
 }
+
+void Printing_Size(Stack* tStack) {
+	printf("스택의 size는 %d입니다.\n\n", tStack->size);
+}
+
+
+
+
+
+
 
 void Printing_List(Stack* tStack) {
 
