@@ -106,14 +106,21 @@ void Inserting_Node_Back(LinkedList* list, int value) {
 
 	// 노드 추가하기.
 	node->data = value; // 노드의 값은 입력 받은 value로 지정하기.
-	node->next = list->head; // 마지막 노드 뒤에는 따라오는 노드가 없음.
+	node->next = NULL; // 마지막 노드 뒤에는 따라오는 노드가 없음.
 	
 	if (list->size == 0) {
 		list->head = node;
+		list->cur = node;
+	}else{
+		for (int i = 0; i < list->size; i++) {
+			printf("%d\n", list->head->data);
+			list->head->next = node;
+			list->head = list->head->next;
+			printf("%d\n\n", list->head->data);
+		}
+		list->head = node;
 	}
-
 	list->tail = node;
-	list->cur = node;
 	list->size++;
 
 	// Debugging:
@@ -128,30 +135,12 @@ void Printing_List(LinkedList* list) {
 	Node* current = list->cur;
 	
 
-	for (; list->head != NULL; list->head = list->head->next) {
-		printf("%d ->", ptr->data);
-		ptr = ptr->next;
+	printf("NULL");
+	for (int i = 0; i < list->size; i++) {
+		printf("<-%d", current->data);
+		current = list->head->next;
 	}
 
-	printf("\n\nHead : %d , Tail : %d", ptr->data, tPtr->data);
+	/*printf("\n\nHead : %d , Tail : %d", ptr->data, tPtr->data);*/
 
-	printf("NULL\n");
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
