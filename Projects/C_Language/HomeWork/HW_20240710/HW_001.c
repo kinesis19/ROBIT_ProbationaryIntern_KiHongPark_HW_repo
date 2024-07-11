@@ -89,12 +89,13 @@ void Inserting_Node(LinkedList* list, int num, int value) {
 	// Node 선언 및 동적할당함.
 	Node* node = (Node*)malloc(sizeof(node));
 
-	if (list->head == NULL) {
+	/*if (list->head == NULL) {
 		node->next = NULL;
-	}
+	}*/
 
-	node->data = value;
-	node->next = list->head;
+	// 노드 추가하기.
+	node->data = value; // 노드의 값은 입력 받은 value로 지정하기.
+	node->next = list->head; // 현재 노드의 뒤에 올 노드의 주소를 머리로 지정하기
 	list->head = node;
 	list->size++;
 	
