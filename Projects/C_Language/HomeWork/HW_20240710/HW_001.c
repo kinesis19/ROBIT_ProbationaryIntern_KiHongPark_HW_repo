@@ -15,6 +15,7 @@ typedef struct _LinkedList {
 
 void Initializing_Node(LinkedList* list);
 void Inserting_Node(LinkedList* list, int num, int value);
+void Inserting_Node_First(LinkedList* list, int value);
 void Printing_List(LinkedList* list);
 
 int main() {
@@ -43,17 +44,13 @@ int main() {
 			}else{
 				printf("[SYSTEM]정해진 범위 내에서 생성해야 합니다.\n\n");
 			}
-
-			// 삽입하기.
-			/*Inserting_Node(linkedList, 1);*/
-
-			/*printf("%d\n\n", linkedList->head->data);*/
-			
-
 		}else if (strcmp(inputText, "insert_back") == 0) {
 
 		}else if (strcmp(inputText, "insert_first") == 0) {
-
+			int nodeValue;
+			printf("[SYSTEM]원하는 노드의 값을 입력하세요. : ");
+			scanf("%d", &nodeValue);
+			Inserting_Node_First(linkedList, nodeValue);
 		}else if (strcmp(inputText, "delete") == 0) {
 
 		}else if (strcmp(inputText, "delete_first") == 0) {
@@ -89,10 +86,6 @@ void Inserting_Node(LinkedList* list, int num, int value) {
 	// Node 선언 및 동적할당함.
 	Node* node = (Node*)malloc(sizeof(node));
 
-	/*if (list->head == NULL) {
-		node->next = NULL;
-	}*/
-
 	// 노드 추가하기.
 	node->data = value; // 노드의 값은 입력 받은 value로 지정하기.
 	node->next = list->head; // 현재 노드의 뒤에 올 노드의 주소를 머리로 지정하기
@@ -101,6 +94,21 @@ void Inserting_Node(LinkedList* list, int num, int value) {
 	
 	// Debugging:
 	printf("\n\n현재 노드의 수 : %d개, 입력된 값 : %d\n\n",list->size ,node->data);
+}
+
+void Inserting_Node_First(LinkedList* list, int value) {
+
+	// Node 선언 및 동적할당함.
+	Node* node = (Node*)malloc(sizeof(node));
+
+	// 노드 추가하기.
+	node->data = value; // 노드의 값은 입력 받은 value로 지정하기.
+	node->next = list->head; // 현재 노드의 뒤에 올 노드의 주소를 머리로 지정하기
+	list->head = node;
+	list->size++;
+
+	// Debugging:
+	printf("\n\n현재 노드의 수 : %d개, 입력된 값 : %d\n\n", list->size, node->data);
 }
 
 
