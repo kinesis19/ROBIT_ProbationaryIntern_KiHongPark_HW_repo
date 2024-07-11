@@ -25,11 +25,52 @@ typedef struct _StudentList {
 void InitializingStudentList(StudentList* stdList);
 
 int main() {
-
+	// StudentList 동적할당 하기.
 	StudentList* studentList = (StudentList*)malloc(sizeof(studentList));
+	// 사용자의 명령어(입력값) 동적할당 하기.
+	char* inputCommand = (char*)malloc(sizeof(char) * 20);
+
 
 	InitializingStudentList(studentList);
+	printf("[SYSTEM]출석부가 초기화 되었습니다.\n\n");
 
+	while (1){
+		printf("|---------------------------------------------|\n");
+		printf("|     [로빛 19기 수습단원 출석부 시스템]      |\n");
+		printf("|---------------------------------------------|\n");
+		printf("|           사용 가능한 명령어 모음           |\n");
+		printf("|---------------------------------------------|\n");
+		printf("|  1. add         2.delete          3.search  |\n");
+		printf("|  4. sort        5.SaveAndLoad     6.Exit    |\n");
+		printf("|---------------------------------------------|\n\n\n");
+		printf("[SYSTEM]명령어를 입력하세요 : ");
+		scanf("%s", inputCommand);
+
+		int tempNum;
+		if(strcmp(inputCommand, "add") == 0){
+			/*printf("[SYSTEM]추가할 학생의 번호를 입력하세요 : ");
+			scanf("%d", &tempNum);*/
+
+		}else if (strcmp(inputCommand, "delete") == 0) {
+
+		}else if (strcmp(inputCommand, "search") == 0) {
+
+		}else if (strcmp(inputCommand, "sort") == 0) {
+
+		}else if (strcmp(inputCommand, "SaveAndLoad") == 0) {
+
+
+		}else if (strcmp(inputCommand, "Exit") == 0) {
+
+		}
+
+	}
+
+
+
+
+
+	// 동적할당 해제.
 	free(studentList);
 
 	return 0;
