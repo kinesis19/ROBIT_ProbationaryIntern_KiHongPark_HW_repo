@@ -9,14 +9,14 @@ typedef struct _Node {
 }Node;
 
 typedef struct _Queue {
-	Node* top;
+	Node* front;
 	Node* cur;
 	int* data[100];
 	int size;
 }Queue;
 
 void InitializingQueue(Queue* sQueue); // Queue 초기화 함수.
-void PushingQueue(Queue* sQueue, int num);
+void Engueuing(Queue* sQueue, int num);
 void PoppingQueue(Queue* sQueue);
 void Printing_Size(Queue* sQueue);
 int Getting_Top(Queue* sQueue);
@@ -43,9 +43,10 @@ int main() {
 
 
 		int tempNum;
-		if(strcmp(inputText, "push") == 0){
-			printf("[SYSTEM]push할 값을 입력하세요 : ");
+		if(strcmp(inputText, "Enqueue") == 0){
+			printf("[SYSTEM]Enqueue할 값을 입력하세요 : ");
 			scanf("%d", &tempNum);
+			Engueuing(queue, tempNum);
 		}else if (strcmp(inputText, "pop") == 0) {
 
 		}else if (strcmp(inputText, "size") == 0) {
@@ -54,8 +55,8 @@ int main() {
 
 		}else if (strcmp(inputText, "isEmpty") == 0) {
 
-		}else if (strcmp(inputText, "prinsQueue") == 0) {
-
+		}else if (strcmp(inputText, "printQueue") == 0) {
+			Printing_List(queue);
 		}
 
 	}
@@ -65,6 +66,45 @@ int main() {
 void InitializingQueue(Queue* sQueue) {
 
 	sQueue->size = 0;
-	sQueue->top = 0; // Queue의 초기 상태는 0임.
+	sQueue->front = 0; // Queue의 초기 상태는 0임.
 	sQueue->cur = NULL;
+}
+
+void Engueuing(Queue* sQueue, int num) {
+
+	sQueue->size++;
+
+	if (0 < sQueue->size) { // 큐의 용량 범위 내라면 Enqueue를 진행함.
+		Node* node = (Node*)malloc(sizeof(node));
+
+		node->data = num;
+		node->next = NULL;
+
+		//if (sQueue->size == 1) { // Queue의 0번째 index
+		//	sQueue->front = node;
+		//}
+
+
+		sQueue->front = node;
+		sQueue->data[sQueue->size - 1] = node->data;
+
+	}
+
+	printf("%d\n\n", sQueue->data[sQueue->size - 1]);
+
+}
+
+
+void Printing_List(Queue* sQueue) {
+
+	if (sQueue->size == 0) {
+		printf("현재 Queue에 data가 없습니다.\n\n");
+	}else {
+		printf("[   큐    ]\n");
+		printf("i----------i\n");
+		for (int i = 0; i < sQueue->size; i++) {
+			printf("I %5d    I\n", sQueue->data[i]);
+		}
+		printf("I----------I");
+	}
 }
