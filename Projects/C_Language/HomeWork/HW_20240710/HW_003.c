@@ -99,9 +99,6 @@ void Engueuing(Queue* sQueue, int num) {
 		sQueue->data[sQueue->size - 1] = node->data;
 
 	}
-
-	printf("%d\n\n", sQueue->data[sQueue->size - 1]);
-
 }
 
 void Dequeuing(Queue* sQueue) {
