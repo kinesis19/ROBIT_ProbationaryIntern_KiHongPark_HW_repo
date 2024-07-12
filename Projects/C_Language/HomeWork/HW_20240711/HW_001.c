@@ -126,7 +126,7 @@ void Adding_Student(StudentList* stdList) {
 
 	char text[100];
 	int cntNum = 0, cntGrade = 0;
-	printf("[SYSTEM]추가할 학생의 번호를 입력하세요(1부터 ~ 100사이) : ");
+	printf("[SYSTEM]추가할 학생의 번호를 입력하세요. : ");
 	scanf("%s", text);
 
 	for (int i = 0; text[cntNum] != '\0'; i++) {
@@ -142,7 +142,7 @@ void Adding_Student(StudentList* stdList) {
 	}
 	student->number = Changing_StringToInt(text);
 
-	printf("[SYSTEM]추가할 학생의 이름을 입력하세요 : ");
+	printf("[SYSTEM]추가할 학생의 이름을 입력하세요. : ");
 	scanf(" %[^\n]s", &name);
 	int cntName = 0;
 	for (int i = 0; name[cntName] != '\0'; i++) {
@@ -153,7 +153,7 @@ void Adding_Student(StudentList* stdList) {
 		student->name[i] = name[i];
 	}
 
-	printf("[SYSTEM]추가할 학생의 거주하고 있는 국가를 입력하세요 : ");
+	printf("[SYSTEM]추가할 학생의 거주하고 있는 국가를 입력하세요. : ");
 	scanf(" %[^\n]s", &adrCountry);
 	int cntCountry = 0;
 	for (int i = 0; adrCountry[cntCountry] != '\0'; i++) {
@@ -164,7 +164,7 @@ void Adding_Student(StudentList* stdList) {
 		student->adrCountry[i] = adrCountry[i];
 	}
 
-	printf("[SYSTEM]추가할 학생의 거주하고 있는 도를 입력하세요 : ");
+	printf("[SYSTEM]추가할 학생의 거주하고 있는 도를 입력하세요. : ");
 	scanf(" %[^\n]s", &adrDo);
 	int cntDo = 0;
 	for (int i = 0; adrDo[cntDo] != '\0'; i++) {
@@ -175,7 +175,7 @@ void Adding_Student(StudentList* stdList) {
 		student->adrDo[i] = adrDo[i];
 	}
 
-	printf("[SYSTEM]추가할 학생의 거주하고 있는 시를 입력하세요 : ");
+	printf("[SYSTEM]추가할 학생의 거주하고 있는 시를 입력하세요. : ");
 	scanf(" %[^\n]s", &adrSi);
 	int cntSi = 0;
 	for (int i = 0; adrSi[cntSi] != '\0'; i++) {
@@ -186,7 +186,7 @@ void Adding_Student(StudentList* stdList) {
 		student->adrSi[i] = adrSi[i];
 	}
 
-	printf("[SYSTEM]추가할 학생의 거주하고 있는 구를 입력하세요 : ");
+	printf("[SYSTEM]추가할 학생의 거주하고 있는 구를 입력하세요. : ");
 	scanf(" %[^\n]s", &adrGu);
 	int cntGu = 0;
 	for (int i = 0; adrGu[cntGu] != '\0'; i++) {
@@ -197,13 +197,13 @@ void Adding_Student(StudentList* stdList) {
 		student->adrGu[i] = adrGu[i];
 	}
 
-	printf("[SYSTEM]추가할 학생의 성적을 입력하세요 : ");
+	printf("[SYSTEM]추가할 학생의 등급을 입력하세요. : ");
 	scanf("%s", text);
 	for (int i = 0; text[cntGrade] != '\0'; i++) {
 		cntGrade++;
 	}
 	while (!Getting_IsitNumber(text, cntGrade)) {
-		printf("숫자만 입력하세요 : ");
+		printf("숫자만 입력하세요. : ");
 		scanf("%s", text);
 		cntGrade = 0;
 		for (int i = 0; text[cntGrade] != '\0'; i++) {
@@ -241,7 +241,7 @@ void Deleting_Student(StudentList* stdList) {
 
 	char text[100];
 	int cntNum = 0, cntGrade = 0;
-	printf("[SYSTEM]삭제를 희망하는 학생의 번호를 입력하세요 : ");
+	printf("[SYSTEM]삭제를 희망하는 학생의 번호를 입력하세요. : ");
 	scanf("%s", text);
 
 	for (int i = 0; text[cntNum] != '\0'; i++) {
@@ -257,19 +257,19 @@ void Deleting_Student(StudentList* stdList) {
 	}
 	num = Changing_StringToInt(text);
 
-	printf("[SYSTEM]삭제를 희망하는 학생의 이름을 입력하세요 : ");
+	printf("[SYSTEM]삭제를 희망하는 학생의 이름을 입력하세요. : ");
 	scanf(" %[^\n]s", &name);
 
-	printf("[SYSTEM]삭제를 희망하는 학생의 거주하고 있는 국가를 입력하세요 : ");
+	printf("[SYSTEM]삭제를 희망하는 학생의 거주하고 있는 국가를 입력하세요. : ");
 	scanf(" %[^\n]s", &adrCountry);
 
-	printf("[SYSTEM]삭제를 희망하는 학생의 거주하고 있는 도를 입력하세요 : ");
+	printf("[SYSTEM]삭제를 희망하는 학생의 거주하고 있는 도를 입력하세요. : ");
 	scanf(" %[^\n]s", &adrDo);
 
-	printf("[SYSTEM]삭제를 희망하는 학생의 거주하고 있는 시를 입력하세요 : ");
+	printf("[SYSTEM]삭제를 희망하는 학생의 거주하고 있는 시를 입력하세요. : ");
 	scanf(" %[^\n]s", &adrSi);
 
-	printf("[SYSTEM]삭제를 희망하는 학생의 거주하고 있는 구를 입력하세요 : ");
+	printf("[SYSTEM]삭제를 희망하는 학생의 거주하고 있는 구를 입력하세요. : ");
 	scanf(" %[^\n]s", &adrGu);
 
 	printf("[SYSTEM]삭제를 희망하는 학생의 성적을 입력하세요 : ");
@@ -309,7 +309,7 @@ void Deleting_Student(StudentList* stdList) {
 		for (int i = 0; i < duplicatedCnt; i++) {
 			printf("%d ", i);
 		}
-		printf("\n삭제할 학생의 index를 입력하세요 : ");
+		printf("\n삭제할 학생의 index를 입력하세요. : ");
 		int deleteIdx;
 		scanf("%d", &deleteIdx);
 		current = stdList->duplicatedList[deleteIdx]; // 제거할 Student의 위치 가리키기.
@@ -377,7 +377,7 @@ void Searching_Student(StudentList* stdList) {
 		// StudentList에 있는 Student 수 만큼 for문 돌리기.
 		for (int i = 0; i < stdList->size; i++) {
 			if (current->number == num) { // StudentList 내부에 있는 Student의 배열에서 Student의 number가 num과 같다면 출력하기.
-				printf("[출석부-%d번째] 번호 : %d, 이름 :  %s, 국가 : %s, 도 : %s, 시 : %s, 구 : %s, 등급 : %d.\n", i, current->number, current->name, current->adrCountry, current->adrDo, current->adrSi, current->adrGu, current->grade);
+				printf("[출석부-%d번째] <번호 : %d>, 이름 :  %s, 국가 : %s, 도 : %s, 시 : %s, 구 : %s, 등급 : %d.\n", i, current->number, current->name, current->adrCountry, current->adrDo, current->adrSi, current->adrGu, current->grade);
 				cnt++;
 			}
 			current = current->next; // 다음 Student를 참조하기.
@@ -393,29 +393,99 @@ void Searching_Student(StudentList* stdList) {
 
 		// StudentList에 있는 Student 수 만큼 for문 돌리기.
 		for (int i = 0; i < stdList->size; i++) {
-			if (strcmp(targetText, current->name) == 0) { // StudentList 내부에 있는 Student의 배열에서 Student의 number가 num과 같다면 출력하기.
-				printf("[출석부-%d번째] 번호 : %d, 이름 :  %s, 국가 : %s, 도 : %s, 시 : %s, 구 : %s, 등급 : %d.\n", i, current->number, current->name, current->adrCountry, current->adrDo, current->adrSi, current->adrGu, current->grade);
+			if (strcmp(targetText, current->name) == 0) {
+				printf("[출석부-%d번째] 번호 : %d, <이름 :  %s>, 국가 : %s, 도 : %s, 시 : %s, 구 : %s, 등급 : %d.\n", i, current->number, current->name, current->adrCountry, current->adrDo, current->adrSi, current->adrGu, current->grade);
 				cnt++;
 			}
-			current = current->next; // 다음 Student를 참조하기.
+			current = current->next; 
 		}
-		if (cnt == 0) { // Exception handling: 해당 번호를 가진 Student가 없을 때.
+		if (cnt == 0) { 
 			printf("[SYSTEM]해당 이름을 가진 학생은 없습니다.");
 		}
 	}else if (strcmp(text, "country") == 0) {
-		printf("country 입력됨.");
+		int cnt = 0;
+		char targetText[100];
+		printf("[SYSTEM]찾고 싶은 학생의 출신 국가를 입력하세요. : ");
+		scanf("%s", &targetText);
 
+		// StudentList에 있는 Student 수 만큼 for문 돌리기.
+		for (int i = 0; i < stdList->size; i++) {
+			if (strcmp(targetText, current->adrCountry) == 0) {
+				printf("[출석부-%d번째] 번호 : %d, 이름 :  %s, <국가 : %s>, 도 : %s, 시 : %s, 구 : %s, 등급 : %d.\n", i, current->number, current->name, current->adrCountry, current->adrDo, current->adrSi, current->adrGu, current->grade);
+				cnt++;
+			}
+			current = current->next;
+		}
+		if (cnt == 0) {
+			printf("[SYSTEM]해당 국가의 출신인 학생은 없습니다.");
+		}
 	}else if (strcmp(text, "do") == 0) {
-		printf("do 입력됨.");
+		int cnt = 0;
+		char targetText[100];
+		printf("[SYSTEM]찾고 싶은 학생이 거주하고 있는 도를 입력하세요. : ");
+		scanf("%s", &targetText);
 
+		// StudentList에 있는 Student 수 만큼 for문 돌리기.
+		for (int i = 0; i < stdList->size; i++) {
+			if (strcmp(targetText, current->adrDo) == 0) {
+				printf("[출석부-%d번째] 번호 : %d, 이름 :  %s, 국가 : %s, <도 : %s>, 시 : %s, 구 : %s, 등급 : %d.\n", i, current->number, current->name, current->adrCountry, current->adrDo, current->adrSi, current->adrGu, current->grade);
+				cnt++;
+			}
+			current = current->next;
+		}
+		if (cnt == 0) {
+			printf("[SYSTEM]해당 지역에 거주하고 있는 학생은 없습니다.");
+		}
 	}else if (strcmp(text, "si") == 0) {
-		printf("si 입력됨.");
+		int cnt = 0;
+		char targetText[100];
+		printf("[SYSTEM]찾고 싶은 학생이 거주하고 있는 시를 입력하세요. : ");
+		scanf("%s", &targetText);
 
+		// StudentList에 있는 Student 수 만큼 for문 돌리기.
+		for (int i = 0; i < stdList->size; i++) {
+			if (strcmp(targetText, current->adrSi) == 0) {
+				printf("[출석부-%d번째] 번호 : %d, 이름 :  %s, 국가 : %s, 도 : %s, <시 : %s>, 구 : %s, 등급 : %d.\n", i, current->number, current->name, current->adrCountry, current->adrDo, current->adrSi, current->adrGu, current->grade);
+				cnt++;
+			}
+			current = current->next;
+		}
+		if (cnt == 0) {
+			printf("[SYSTEM]해당 지역에 거주하고 있는 학생은 없습니다.");
+		}
 	}else if (strcmp(text, "gu") == 0) {
-		printf("gu 입력됨.");
+		int cnt = 0;
+		char targetText[100];
+		printf("[SYSTEM]찾고 싶은 학생이 거주하고 있는 구를 입력하세요. : ");
+		scanf("%s", &targetText);
 
+		// StudentList에 있는 Student 수 만큼 for문 돌리기.
+		for (int i = 0; i < stdList->size; i++) {
+			if (strcmp(targetText, current->adrGu) == 0) {
+				printf("[출석부-%d번째] 번호 : %d, 이름 :  %s, 국가 : %s, 도 : %s, 시 : %s, <구 : %s>, 등급 : %d.\n", i, current->number, current->name, current->adrCountry, current->adrDo, current->adrSi, current->adrGu, current->grade);
+				cnt++;
+			}
+			current = current->next;
+		}
+		if (cnt == 0) {
+			printf("[SYSTEM]해당 지역에 거주하고 있는 학생은 없습니다.");
+		}
 	}else if (strcmp(text, "grade") == 0) {
-		printf("grade 입력됨.");
+		int targetGrade, cnt = 0;
+		printf("[SYSTEM]찾고 싶은 학생의 등급을 입력하세요. : ");
+		scanf("%d", &targetGrade);
+
+		// StudentList에 있는 Student 수 만큼 for문 돌리기.
+		for (int i = 0; i < stdList->size; i++) {
+			if (targetGrade == current->grade) {
+				printf("[출석부-%d번째] 번호 : %d, 이름 :  %s, 국가 : %s, 도 : %s, 시 : %s, 구 : %s, <등급 : %d>.\n", i, current->number, current->name, current->adrCountry, current->adrDo, current->adrSi, current->adrGu, current->grade);
+				cnt++;
+			}
+			current = current->next;
+		}
+		if (cnt == 0) {
+			printf("[SYSTEM]해당 등급의 학생은 없습니다.");
+		}
 
 	}
 
