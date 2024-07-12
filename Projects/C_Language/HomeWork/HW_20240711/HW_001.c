@@ -27,6 +27,7 @@ typedef struct _StudentList {
 void Initializing_StudentList(StudentList* stdList); // StudentList 초기화 함수.
 void Adding_Student(StudentList* stdList); // 학생 추가 함수.
 void Deleting_Student(StudentList* stdList); // 학생 삭제 함수.
+void Searching_Student(StudentList* stdList); // 학생 검색 함수.
 
 void Printing_StudentList(StudentList* stdList); // 전체 학생 출력 함수.
 int Getting_IsitNumber(char* text, int cnt); // 입력된 값이 숫자인지 아닌지 판별하는 함수.
@@ -65,7 +66,7 @@ int main() {
 		}else if (strcmp(inputCommand, "delete") == 0) {
 			Deleting_Student(studentList);
 		}else if (strcmp(inputCommand, "search") == 0) {
-
+			Searching_Student(studentList);
 		}else if (strcmp(inputCommand, "sort") == 0) {
 
 		}else if (strcmp(inputCommand, "SaveAndLoad") == 0) {
@@ -340,6 +341,12 @@ void Deleting_Student(StudentList* stdList) {
 
 	stdList->size--;
 	printf("[SYSTEM]해당 학생이 삭제되었습니다.");
+
+}
+
+void Searching_Student(StudentList* stdList) {
+
+	printf("검색!");
 
 }
 
