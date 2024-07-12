@@ -29,7 +29,8 @@ void Adding_Student(StudentList* stdList); // 학생 추가 함수.
 void Deleting_Student(StudentList* stdList); // 학생 삭제 함수.
 void Searching_Student(StudentList* stdList); // 학생 검색 함수.
 void Sorting_Student(StudentList* stdList); // 학생 정렬 함수.
-void SavingAndLoadFile(StudentList* stdList); // 파일 저장 및 불러오기 함수.
+void Saving_File(StudentList* stdList); // 파일 저장하는 함수.
+void Loading_File(StudentList* stdList); // 파일 불러오는 함수.
 
 void Swapping_Value(Student* std1, Student* std2); // 학생 정렬 함수에서 사용하는 학생의 값들을 서로 변경하는 함수.
 
@@ -60,7 +61,8 @@ int main() {
 		printf("|           사용 가능한 명령어 모음           |\n");
 		printf("|---------------------------------------------|\n");
 		printf("|  1.add         2.delete           3.search  |\n");
-		printf("|  4.sort        5.SaveAndLoad      6.exit    |\n");
+		printf("|  4.sort        5.save             6.load    |\n");
+		printf("|  7.exit                                     |\n");
 		printf("|---------------------------------------------|\n\n\n");
 		printf("[SYSTEM]명령어를 입력하세요 : ");
 		scanf("%s", inputCommand);
@@ -73,8 +75,10 @@ int main() {
 			Searching_Student(studentList);
 		}else if (strcmp(inputCommand, "sort") == 0) {
 			Sorting_Student(studentList);
-		}else if (strcmp(inputCommand, "SaveAndLoad") == 0) {
-			SavingAndLoadFile(studentList);
+		}else if (strcmp(inputCommand, "save") == 0) {
+			Saving_File(studentList);
+		}else if (strcmp(inputCommand, "load") == 0) {
+			Loading_File(studentList);
 		}else if (strcmp(inputCommand, "exit") == 0) {
 			printf("[SYSTEM]프로그램을 종료합니다.");
 			break;
@@ -646,25 +650,89 @@ void Swapping_Value(Student* std1, Student* std2) {
 }
 
 
-void SavingAndLoadFile(StudentList* stdList) {
+void Saving_File(StudentList* stdList) {
+
 
 	FILE* studentFile;
 	studentFile = fopen("StudentList.txt", "w");
+	printf("%d", stdList->size);
+	if (stdList->size == 0) {
+		printf("[SYSTEM]학생이 추가되지 않아, 빈 파일이 저장되었습니다.\n");
+		// StudentList 사이즈 저장하기.
+		fprintf(studentFile, "StudentList Size : %d\n", stdList->size); // Load할 때 사용할 것.
+		fclose(studentFile);
+		return;
+	}
+
+	// StudentList 사이즈 저장하기.
+	fprintf(studentFile, "StudentList Size : %d\n", stdList->size);
 
 	// StudentList에 있는 Student의 개수 만큼 저장하기.
 	for (int i = 0; i < stdList->size; i++) {
 		Student* student = stdList->students[i];
-		fprintf(studentFile, "출석부-%d번째, 번호 : %d, 이름 : %s, 국가 : %s, 도 : %s, 시 : %s, 구 : %s, 등급 : %d\n", i, student->number, student->name, student->adrCountry, student->adrDo, student->adrSi, student->adrGu, student->grade);
+		fprintf(studentFile, "출석부-%d\n번째\n번호 : %d\n이름 : %s\n국가 : %s\n도 : %s\n시 : %s\n구 : %s\n등급 : %d\n", i, student->number, student->name, student->adrCountry, student->adrDo, student->adrSi, student->adrGu, student->grade);
+	}
+
+	fclose(studentFile);
+	printf("[SYSTEM]파일이 정상적으로 저장되었습니다!");
+
+}
+
+void Loading_File(StudentList* stdList) {
+
+	FILE* studentFile;
+	studentFile = fopen("StudentList.txt", "r");
+
+	if (studentFile == NULL) { // 파일이 없을 경우.
+		printf("[SYSTEM]파일이 존재하지 않습니다.\n");
+		return;
+	}
+
+	Initializing_StudentList(stdList);
+
+	fscanf(studentFile, "StudentList Size : %d\n", &stdList->size);
+	
+	if (stdList->size == 0) {
+		printf("[SYSTEM]읽어들일 수 있는 파일이 없습니다.\n");
+		fclose(studentFile);
+		return;
+	}
+
+	
+
+	// StudentList에 있는 Student의 개수 만큼 불러오기.
+	for (int i = 0; i < stdList->size; i++) {
+		// 파일에서 불러온 값들 동적할당하기.
+		Student* student = (Student*)malloc(sizeof(Student));
+
+		student->name = (char*)malloc(100 * sizeof(char));
+		student->adrCountry = (char*)malloc(100 * sizeof(char));
+		student->adrDo = (char*)malloc(100 * sizeof(char));
+		student->adrSi = (char*)malloc(100 * sizeof(char));
+		student->adrGu = (char*)malloc(100 * sizeof(char));
+		// 저장 형식을 준수하여 값을 불러옴.
+		fscanf(studentFile, "출석부-%d\n번째\n번호 : %d\n이름 : %s\n국가 : %s\n도 : %s\n시 : %s\n구 : %s\n등급 : %d\n", &i, &student->number, student->name, student->adrCountry, student->adrDo, student->adrSi, student->adrGu, &student->grade);
+		printf("출석부-%d번째, 번호 : %d, 이름 : %s, 국가 : %s, 도 : %s, 시 : %s, 구 : %s, 등급 : %d\n\n\n", i, student->number, student->name, student->adrCountry, student->adrDo, student->adrSi, student->adrGu, student->grade);
+
+
+		student->next = NULL;
+
+		if (stdList->head == NULL) { // StudnetList에 Student가 없을 때만 실행 => 첫 번째 Student 추가시만 실행.
+			stdList->head = student;
+			stdList->tail = student;
+		}else{
+			stdList->tail->next = student;
+			stdList->tail = student;
+		}
+
+		stdList->students[i] = student;
 	}
 
 
 	fclose(studentFile);
-
-	printf("File Save Success!");
+	printf("[SYSTEM]파일을 정상적으로 불러왔습니다!");
 
 }
-
-
 
 
 void Printing_StudentList(StudentList* stdList) {
@@ -672,7 +740,7 @@ void Printing_StudentList(StudentList* stdList) {
 	Student* current = stdList->head;
 	if (stdList->head == NULL || stdList->size == 0) {
 		printf("[SYSTEM]현재 학생이 없습니다.");
-		return 0;
+		return;
 	}
 
 	printf("\n\n|---------------------------------------------|\n");

@@ -1,1 +1,19 @@
-출석부-0번째, 번호 : 1, 이름 : Hong2, 국가 : Korea, 도 : GG, 시 : AA, 구 : BB, 등급 : 10
+StudentList Size : 2
+출석부-0
+번째
+번호 : 1
+이름 : hong2
+국가 : korea
+도 : gg
+시 : aa
+구 : bb
+등급 : 1
+출석부-1
+번째
+번호 : 2
+이름 : nami
+국가 : japan
+도 : ghh
+시 : ee
+구 : 3
+등급 : 4
