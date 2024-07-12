@@ -285,24 +285,20 @@ void Deleting_Student(StudentList* stdList) {
 	grade = Changing_StringToInt(text);
 
 	Student* current = stdList->head; // 전체 student를 돌아가면서 일치하는 삭제할 값이 있나 확인하는 용도.
-	Student* cursor = NULL;
+	Student* cursor = NULL; // 전체 student 리스트에서 현재 Student를 확인하는 용도.
 
 	for (int i = 0; i < stdList->size; i++) {
 		// 삭제를 희망하는 학생이 학생 리스트에 있는지 확인하기.
 		if (current->number == num && strcmp(current->name, name) == 0 && strcmp(current->adrCountry, adrCountry) == 0 && strcmp(current->adrDo, adrDo) == 0 && strcmp(current->adrSi, adrSi) == 0 && strcmp(current->adrGu, adrGu) == 0 && current->grade == grade) {
-			printf("1차\n");
-			if (cursor == NULL) {
-				printf("2차\n");
+
+			if (cursor == NULL) { // 첫번째 학생인 경우.
 				stdList->head = current->next;
-				if (stdList->head == NULL) {
-					printf("3차\n");
+				if (stdList->head == NULL) { // Student List가 비어있는 경우.
 					stdList->tail = NULL;
 				}
 			}else{
-				printf("4차\n");
 				cursor->next = current->next;
 				if (current == stdList->tail) {
-					printf("5차\n");
 					stdList->tail = cursor;
 				}
 			}
