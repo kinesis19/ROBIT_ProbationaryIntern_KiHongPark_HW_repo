@@ -19,7 +19,8 @@ typedef struct _StudentList {
 	Student* head;
 	Student* cur;
 	Student* tail;
-	Student* students[100];
+	Student* students[100]; // 학생 저장용.
+	Student* duplicatedList[100]; // 중복된 학생의 index 저장용.
 	int size;
 }StudentList;
 
@@ -210,6 +211,8 @@ void Adding_Student(StudentList* stdList) {
 	}
 	student->grade = Changing_StringToInt(text);
 
+	student->next = NULL;
+
 	if (stdList->head == NULL) { // StudnetList에 Student가 없을 때만 실행 => 첫 번째 Student 추가시만 실행.
 		stdList->head = student;
 		stdList->tail = student;
@@ -287,31 +290,71 @@ void Deleting_Student(StudentList* stdList) {
 	Student* current = stdList->head; // 전체 student를 돌아가면서 일치하는 삭제할 값이 있나 확인하는 용도.
 	Student* cursor = NULL; // 전체 student 리스트에서 현재 Student를 확인하는 용도.
 
+	int duplicatedCnt = 0; // StudentList에서 Student가 얼마나 중복되었는지 파악하기 위한 변수.
+	int idxDList = 0; // duplicatedList에 중복된 값을 넣기 위한 index. (i가 아닌 idxDList를 index로 사용하여 중복된 배열들의 0부터 ~ 마지막까지만 참조하게 구현함.)
 	for (int i = 0; i < stdList->size; i++) {
 		// 삭제를 희망하는 학생이 학생 리스트에 있는지 확인하기.
 		if (current->number == num && strcmp(current->name, name) == 0 && strcmp(current->adrCountry, adrCountry) == 0 && strcmp(current->adrDo, adrDo) == 0 && strcmp(current->adrSi, adrSi) == 0 && strcmp(current->adrGu, adrGu) == 0 && current->grade == grade) {
+			duplicatedCnt++;
+			stdList->duplicatedList[idxDList] = current; // 조건을 만족한 학생은 중복된 학생 리스트에 저장함.
+			idxDList++;
+			//if (cursor == NULL) { // 첫번째 학생인 경우.
+			//	stdList->head = current->next;
+			//	if (stdList->head == NULL) { // Student List가 비어있는 경우.
+			//		stdList->tail = NULL;
+			//	}
+			//}else{
+			//	cursor->next = current->next;
+			//	if (current == stdList->tail) {
+			//		stdList->tail = cursor;
+			//	}
+			//}
 
-			if (cursor == NULL) { // 첫번째 학생인 경우.
-				stdList->head = current->next;
-				if (stdList->head == NULL) { // Student List가 비어있는 경우.
-					stdList->tail = NULL;
-				}
-			}else{
-				cursor->next = current->next;
-				if (current == stdList->tail) {
-					stdList->tail = cursor;
-				}
-			}
-
-			stdList->size--;
-			printf("[SYSTEM]해당 학생이 삭제되었습니다.");
-			return;
+			//stdList->size--;
+			//printf("[SYSTEM]해당 학생이 삭제되었습니다.");
+			//return;
 		}
-		cursor = current;
+		/*cursor = current;*/
 		current = current->next;
 	}
 
-	printf("[SYSTEM]해당 조건에 맞는 학생을 찾을 수 없습니다.");
+	// 중복된 학생이 있는 경우 선택하여 삭제하기.
+	if (duplicatedCnt > 1) { // StudentList 내부에 중복된 Student가 있을 경우
+		printf("중복된 학생의 index : ");
+		for (int i = 0; i < duplicatedCnt; i++) {
+			printf("%d ", i);
+		}
+		printf("\n삭제할 학생의 index를 입력하세요 : ");
+		int deleteIdx;
+		scanf("%d", &deleteIdx);
+		current = stdList->duplicatedList[deleteIdx];
+
+	}else if(duplicatedCnt == 1){ // StudentList에서 Student가 중복되지 않은 상태일 때.
+		current = stdList->duplicatedList[0];
+	}else{
+		printf("[SYSTEM]해당 조건에 맞는 학생을 찾을 수 없습니다.");
+		return;
+	}
+	
+	if (current == stdList->head) { // 첫번째 학생인 경우.
+		stdList->head = current->next;
+		if (stdList->head == NULL) { // Student List가 비어있는 경우.
+			stdList->tail = NULL;
+		}
+	}else{
+		cursor = stdList->head;
+		while (cursor->next != current) {
+			cursor = cursor->next;
+		}
+		cursor->next = current->next;
+
+		if (current == stdList->tail) {
+			stdList->tail = cursor;
+		}
+	}
+
+	stdList->size--;
+	printf("[SYSTEM]해당 학생이 삭제되었습니다.");
 
 }
 
