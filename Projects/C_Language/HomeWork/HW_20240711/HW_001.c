@@ -296,29 +296,13 @@ void Deleting_Student(StudentList* stdList) {
 		// 삭제를 희망하는 학생이 학생 리스트에 있는지 확인하기.
 		if (current->number == num && strcmp(current->name, name) == 0 && strcmp(current->adrCountry, adrCountry) == 0 && strcmp(current->adrDo, adrDo) == 0 && strcmp(current->adrSi, adrSi) == 0 && strcmp(current->adrGu, adrGu) == 0 && current->grade == grade) {
 			duplicatedCnt++;
-			stdList->duplicatedList[idxDList] = current; // 조건을 만족한 학생은 중복된 학생 리스트에 저장함.
+			stdList->duplicatedList[idxDList] = current; // 조건을 만족한 student는 중복된 duplicatedList에 저장함.
 			idxDList++;
-			//if (cursor == NULL) { // 첫번째 학생인 경우.
-			//	stdList->head = current->next;
-			//	if (stdList->head == NULL) { // Student List가 비어있는 경우.
-			//		stdList->tail = NULL;
-			//	}
-			//}else{
-			//	cursor->next = current->next;
-			//	if (current == stdList->tail) {
-			//		stdList->tail = cursor;
-			//	}
-			//}
-
-			//stdList->size--;
-			//printf("[SYSTEM]해당 학생이 삭제되었습니다.");
-			//return;
 		}
-		/*cursor = current;*/
 		current = current->next;
 	}
 
-	// 중복된 학생이 있는 경우 선택하여 삭제하기.
+	// 중복된 Student가 있는 경우 선택하여 삭제하기.
 	if (duplicatedCnt > 1) { // StudentList 내부에 중복된 Student가 있을 경우
 		printf("중복된 학생의 index : ");
 		for (int i = 0; i < duplicatedCnt; i++) {
@@ -327,28 +311,29 @@ void Deleting_Student(StudentList* stdList) {
 		printf("\n삭제할 학생의 index를 입력하세요 : ");
 		int deleteIdx;
 		scanf("%d", &deleteIdx);
-		current = stdList->duplicatedList[deleteIdx];
+		current = stdList->duplicatedList[deleteIdx]; // 제거할 Student의 위치 가리키기.
 
 	}else if(duplicatedCnt == 1){ // StudentList에서 Student가 중복되지 않은 상태일 때.
 		current = stdList->duplicatedList[0];
 	}else{
-		printf("[SYSTEM]해당 조건에 맞는 학생을 찾을 수 없습니다.");
+		printf("[SYSTEM]해당 학생을 찾을 수 없습니다.");
 		return;
 	}
 	
+	// Student 삭제하기.
 	if (current == stdList->head) { // 첫번째 학생인 경우.
 		stdList->head = current->next;
 		if (stdList->head == NULL) { // Student List가 비어있는 경우.
 			stdList->tail = NULL;
 		}
-	}else{
+	}else{ // 첫 번째 학생이 아닌 경우. (두 번째, 세 번째 ... n번째)
 		cursor = stdList->head;
-		while (cursor->next != current) {
+		while (cursor->next != current) {  
 			cursor = cursor->next;
 		}
-		cursor->next = current->next;
+		cursor->next = current->next; // 가리키는 Student를 넘기기.
 
-		if (current == stdList->tail) {
+		if (current == stdList->tail) { // 삭제할 Student가 마지막 Student인 경우.
 			stdList->tail = cursor;
 		}
 	}
