@@ -30,6 +30,9 @@ void Deleting_Student(StudentList* stdList); // 학생 삭제 함수.
 void Searching_Student(StudentList* stdList); // 학생 검색 함수.
 void Sorting_Student(StudentList* stdList); // 학생 정렬 함수.
 
+
+void Swapping_Value(Student* std1, Student* std2); // 학생 정렬 함수에서 사용하는 학생의 값들을 서로 변경하는 함수.
+
 void Printing_StudentList(StudentList* stdList); // 전체 학생 출력 함수.
 int Getting_IsitNumber(char* text, int cnt); // 입력된 값이 숫자인지 아닌지 판별하는 함수.
 int Changing_StringToInt(char* text); // 입력된 문자열 값을 int Type으로 return 하는 함수.
@@ -519,28 +522,65 @@ void Sorting_Student(StudentList* stdList) {
 	// 번호 기준 오름차순으로 정렬하기.
 	if (strcmp(text, "number") == 0) {
 		// StudentList에 있는 Student 수 만큼 for문 돌리기.
-		for (int i = 0; i < stdList->size; i++) {
-			for (int j = 0; j < stdList->size; j++) {
-				if (stdList->students[i]->number < stdList->students[j]->number) {
-					printf("%d > %d\n", stdList->students[i]->number, stdList->students[j]->number);
-					int temp;
-					temp = stdList->students[i]->number;
-					stdList->students[i]->number = stdList->students[j]->number;
-					stdList->students[j]->number = temp;
-					printf("%d > %d\n", stdList->students[i]->number, stdList->students[j]->number);
+		for (int i = 0; i < stdList->size - 1; i++) {
+			for (int j = 0; j < stdList->size - 1; j++) {
+				if (stdList->students[j]->number > stdList->students[j + 1]->number) {
+					Swapping_Value(stdList->students[j], stdList->students[j + 1]);
+					//int tempNum, tempGrade;
+					//char* tempName, *tempCountry, *tempDo, *tempSi, *tempGu;
+
+					//// number 변경하기.
+					//tempNum = stdList->students[i]->number;
+					//stdList->students[i]->number = stdList->students[j]->number;
+					//stdList->students[j]->number = tempNum;
+
+					//// name 변경하기.
+					//tempName = stdList->students[i]->name;
+					//stdList->students[i]->name = stdList->students[j]->name;
+					//stdList->students[j]->name = tempName;
+
+					//// Country 변경하기.
+					//tempCountry = stdList->students[i]->adrCountry;
+					//stdList->students[i]->adrCountry = stdList->students[j]->adrCountry;
+					//stdList->students[j]->adrCountry = tempCountry;
+
+					//// Do 변경하기.
+					//tempDo = stdList->students[i]->adrDo;
+					//stdList->students[i]->adrDo = stdList->students[j]->adrDo;
+					//stdList->students[j]->adrDo = tempDo;
+
+					//// Si 변경하기.
+					//tempSi = stdList->students[i]->adrSi;
+					//stdList->students[i]->adrSi = stdList->students[j]->adrSi;
+					//stdList->students[j]->adrSi = tempSi;
+
+					//// Gu 변경하기.
+					//tempGu = stdList->students[i]->adrGu;
+					//stdList->students[i]->adrGu = stdList->students[j]->adrGu;
+					//stdList->students[j]->adrGu = tempGu;
+
+					//// grade 변경하기.
+					//tempGrade = stdList->students[i]->grade;
+					//stdList->students[i]->grade = stdList->students[j]->grade;
+					//stdList->students[j]->grade = tempGrade;
 				}
 			}
 		}
 
-
-		for (int j = 0; j < stdList->size; j++) {
-			printf("%d ", stdList->students[j]->number);
+	}else if (strcmp(text, "name") == 0) { // 이름 기준 오름차순으로 정렬하기.
+		// StudentList에 있는 Student 수 만큼 for문 돌리기.
+		for (int i = 0; i < stdList->size; i++) {
+			for (int j = 0; j < stdList->size; j++) {
+				if (stdList->students[i]->name[j] < stdList->students[j]->name[j]) {
+					printf("%c > %c\n", stdList->students[i]->name[j], stdList->students[j]->name[j]);
+					char temp;
+					temp = stdList->students[i]->name[j];
+					stdList->students[i]->name[j] = stdList->students[j]->name[j];
+					stdList->students[j]->name[j] = temp;
+					printf("%c > %c\n", stdList->students[i]->name[j], stdList->students[j]->name[j]);
+				}
+			}
 		}
-
-
-
-
-	}else if (strcmp(text, "name") == 0) {
 
 	}else if (strcmp(text, "country") == 0) {
 
@@ -555,7 +595,46 @@ void Sorting_Student(StudentList* stdList) {
 
 	}
 
+	printf("[SYSTEM]정렬이 완료되었습니다.");
 
+}
+
+void Swapping_Value(Student* std1, Student* std2) {
+
+	// number 변경하기.
+	int tempNum = std1->number;
+	std1->number = std2->number;
+	std2->number = tempNum;
+
+	// name 변경하기.
+	char* tempName = std1->name;
+	std1->name = std2->name;
+	std2->name = tempName;
+
+	// counrtry 변경하기.
+	char* tempCountry = std1->adrCountry;
+	std1->adrCountry = std2->adrCountry;
+	std2->adrCountry = tempCountry;
+
+	// do 변경하기.
+	char* tempDo = std1->adrDo;
+	std1->adrDo = std2->adrDo;
+	std2->adrDo = tempDo;
+
+	// si 변경하기.
+	char* tempSi = std1->adrSi;
+	std1->adrSi = std2->adrSi;
+	std2->adrSi = tempSi;
+
+	// gu 변경하기.
+	char* tempGu = std1->adrGu;
+	std1->adrGu = std2->adrGu;
+	std2->adrGu = tempGu;
+
+	// grade 변경하기.
+	char* tempGrade = std1->grade;
+	std1->grade = std2->grade;
+	std2->grade = tempGrade;
 }
 
 
