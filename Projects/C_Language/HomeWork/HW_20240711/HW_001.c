@@ -523,76 +523,84 @@ void Sorting_Student(StudentList* stdList) {
 	if (strcmp(text, "number") == 0) {
 		// StudentList에 있는 Student 수 만큼 for문 돌리기.
 		for (int i = 0; i < stdList->size - 1; i++) {
-			for (int j = 0; j < stdList->size - 1; j++) {
+			for (int j = 0; j < stdList->size - 1 - i; j++) {
 				if (stdList->students[j]->number > stdList->students[j + 1]->number) {
 					Swapping_Value(stdList->students[j], stdList->students[j + 1]);
-					//int tempNum, tempGrade;
-					//char* tempName, *tempCountry, *tempDo, *tempSi, *tempGu;
-
-					//// number 변경하기.
-					//tempNum = stdList->students[i]->number;
-					//stdList->students[i]->number = stdList->students[j]->number;
-					//stdList->students[j]->number = tempNum;
-
-					//// name 변경하기.
-					//tempName = stdList->students[i]->name;
-					//stdList->students[i]->name = stdList->students[j]->name;
-					//stdList->students[j]->name = tempName;
-
-					//// Country 변경하기.
-					//tempCountry = stdList->students[i]->adrCountry;
-					//stdList->students[i]->adrCountry = stdList->students[j]->adrCountry;
-					//stdList->students[j]->adrCountry = tempCountry;
-
-					//// Do 변경하기.
-					//tempDo = stdList->students[i]->adrDo;
-					//stdList->students[i]->adrDo = stdList->students[j]->adrDo;
-					//stdList->students[j]->adrDo = tempDo;
-
-					//// Si 변경하기.
-					//tempSi = stdList->students[i]->adrSi;
-					//stdList->students[i]->adrSi = stdList->students[j]->adrSi;
-					//stdList->students[j]->adrSi = tempSi;
-
-					//// Gu 변경하기.
-					//tempGu = stdList->students[i]->adrGu;
-					//stdList->students[i]->adrGu = stdList->students[j]->adrGu;
-					//stdList->students[j]->adrGu = tempGu;
-
-					//// grade 변경하기.
-					//tempGrade = stdList->students[i]->grade;
-					//stdList->students[i]->grade = stdList->students[j]->grade;
-					//stdList->students[j]->grade = tempGrade;
 				}
 			}
 		}
 
 	}else if (strcmp(text, "name") == 0) { // 이름 기준 오름차순으로 정렬하기.
 		// StudentList에 있는 Student 수 만큼 for문 돌리기.
-		for (int i = 0; i < stdList->size; i++) {
-			for (int j = 0; j < stdList->size; j++) {
-				if (stdList->students[i]->name[j] < stdList->students[j]->name[j]) {
-					printf("%c > %c\n", stdList->students[i]->name[j], stdList->students[j]->name[j]);
-					char temp;
-					temp = stdList->students[i]->name[j];
-					stdList->students[i]->name[j] = stdList->students[j]->name[j];
-					stdList->students[j]->name[j] = temp;
-					printf("%c > %c\n", stdList->students[i]->name[j], stdList->students[j]->name[j]);
+		for (int i = 0; i < stdList->size - 1; i++) {
+			for (int j = 0; j < stdList->size - 1 - i; j++) {
+				/*
+				* strcmp return value.
+				* value < 0 : string1이 string2보다 작음. -> 내림차순 정렬에 사용하기 좋음.
+				* value == 0 : string1과 string2가 같음.
+				* value > 0 : string1이 string2보다 큼. -> 오름차순 정렬에 사용하기 좋음.
+				* e.x)
+				* 'c', 'a', 'b' 입력.
+				* 1. 'c'와 'a' 비교 -> value > 0
+				* 'a', 'c', 'b'. (변경 전의 케이스는 주석에서 생략함.)
+				* 2. 'c'와 'b' 비교 -> value > 0
+				* 'a', 'b', 'c'. -> 오름차순 정렬 완료.
+				*/
+				if (strcmp(stdList->students[j]->name, stdList->students[j + 1]->name) > 0) {
+					Swapping_Value(stdList->students[j], stdList->students[j + 1]);
 				}
 			}
 		}
 
 	}else if (strcmp(text, "country") == 0) {
+		// StudentList에 있는 Student 수 만큼 for문 돌리기.
+		for (int i = 0; i < stdList->size - 1; i++) {
+			for (int j = 0; j < stdList->size - 1 - i; j++) {
+				if (strcmp(stdList->students[j]->adrCountry, stdList->students[j + 1]->adrCountry) > 0) {
+					Swapping_Value(stdList->students[j], stdList->students[j + 1]);
+				}
+			}
+		}
 
 	}else if (strcmp(text, "do") == 0) {
+		// StudentList에 있는 Student 수 만큼 for문 돌리기.
+		for (int i = 0; i < stdList->size - 1; i++) {
+			for (int j = 0; j < stdList->size - 1 - i; j++) {
+				if (strcmp(stdList->students[j]->adrDo, stdList->students[j + 1]->adrDo) > 0) {
+					Swapping_Value(stdList->students[j], stdList->students[j + 1]);
+				}
+			}
+		}
 
 	}else if (strcmp(text, "si") == 0) {
+		// StudentList에 있는 Student 수 만큼 for문 돌리기.
+		for (int i = 0; i < stdList->size - 1; i++) {
+			for (int j = 0; j < stdList->size - 1 - i; j++) {
+				if (strcmp(stdList->students[j]->adrSi, stdList->students[j + 1]->adrSi) > 0) {
+					Swapping_Value(stdList->students[j], stdList->students[j + 1]);
+				}
+			}
+		}
 
 	}else if (strcmp(text, "gu") == 0) {
+		// StudentList에 있는 Student 수 만큼 for문 돌리기.
+		for (int i = 0; i < stdList->size - 1; i++) {
+			for (int j = 0; j < stdList->size - 1 - i; j++) {
+				if (strcmp(stdList->students[j]->adrGu, stdList->students[j + 1]->adrGu) > 0) {
+					Swapping_Value(stdList->students[j], stdList->students[j + 1]);
+				}
+			}
+		}
 
 	}else if (strcmp(text, "grade") == 0) {
-
-
+		// StudentList에 있는 Student 수 만큼 for문 돌리기.
+		for (int i = 0; i < stdList->size - 1; i++) {
+			for (int j = 0; j < stdList->size - 1 - i; j++) {
+				if (stdList->students[j]->grade > stdList->students[j + 1]->grade) {
+					Swapping_Value(stdList->students[j], stdList->students[j + 1]);
+				}
+			}
+		}
 	}
 
 	printf("[SYSTEM]정렬이 완료되었습니다.");
@@ -636,8 +644,6 @@ void Swapping_Value(Student* std1, Student* std2) {
 	std1->grade = std2->grade;
 	std2->grade = tempGrade;
 }
-
-
 
 
 void Printing_StudentList(StudentList* stdList) {
