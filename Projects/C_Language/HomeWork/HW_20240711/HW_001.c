@@ -55,8 +55,8 @@ int main() {
 		printf("|---------------------------------------------|\n");
 		printf("|           사용 가능한 명령어 모음           |\n");
 		printf("|---------------------------------------------|\n");
-		printf("|  1. add         2.delete          3.search  |\n");
-		printf("|  4. sort        5.SaveAndLoad     6.exit    |\n");
+		printf("|  1.add         2.delete           3.search  |\n");
+		printf("|  4.sort        5.SaveAndLoad      6.exit    |\n");
 		printf("|---------------------------------------------|\n\n\n");
 		printf("[SYSTEM]명령어를 입력하세요 : ");
 		scanf("%s", inputCommand);
@@ -346,7 +346,51 @@ void Deleting_Student(StudentList* stdList) {
 
 void Searching_Student(StudentList* stdList) {
 
-	printf("검색!");
+	if (stdList->head == NULL || stdList->size == 0) {
+		printf("[SYSTEM]현재 학생이 없으므로, 검색을 할 수 없습니다.");
+		return 0;
+	}
+
+	printf("\n\n|---------------------------------------------|\n");
+	printf("|     [로빛 19기 수습단원 출석부 시스템]      |\n");
+	printf("|---------------------------------------------|\n");
+	printf("|                 검색 카테고리               |\n");
+	printf("|---------------------------------------------|\n");
+	printf("|  1.number         2.name       3.country    |\n");
+	printf("|  4.do             5.si         6.gu         |\n");
+	printf("|  7.grade                                    |\n");
+	printf("|---------------------------------------------|\n");
+
+	char text[100];
+	printf("[SYSTEM]검색할 카테고리를 입력하세요. : ");
+	scanf("%s", &text);
+
+
+	if (strcmp(text, "number") == 0) {
+		printf("number 입력됨.");
+	}else if (strcmp(text, "name") == 0) {
+		printf("name 입력됨.");
+
+	}else if (strcmp(text, "country") == 0) {
+		printf("country 입력됨.");
+
+	}else if (strcmp(text, "do") == 0) {
+		printf("do 입력됨.");
+
+	}else if (strcmp(text, "si") == 0) {
+		printf("si 입력됨.");
+
+	}else if (strcmp(text, "gu") == 0) {
+		printf("gu 입력됨.");
+
+	}else if (strcmp(text, "grade") == 0) {
+		printf("grade 입력됨.");
+
+	}
+
+
+
+
 
 }
 
