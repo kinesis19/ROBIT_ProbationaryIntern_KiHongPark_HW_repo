@@ -515,9 +515,45 @@ void Sorting_Student(StudentList* stdList) {
 	char text[100];
 	printf("[SYSTEM]정렬할 카테고리를 입력하세요. : ");
 	scanf("%s", &text);
+	
+	// 번호 기준 오름차순으로 정렬하기.
+	if (strcmp(text, "number") == 0) {
+		// StudentList에 있는 Student 수 만큼 for문 돌리기.
+		for (int i = 0; i < stdList->size; i++) {
+			for (int j = 0; j < stdList->size; j++) {
+				if (stdList->students[i]->number < stdList->students[j]->number) {
+					printf("%d > %d\n", stdList->students[i]->number, stdList->students[j]->number);
+					int temp;
+					temp = stdList->students[i]->number;
+					stdList->students[i]->number = stdList->students[j]->number;
+					stdList->students[j]->number = temp;
+					printf("%d > %d\n", stdList->students[i]->number, stdList->students[j]->number);
+				}
+			}
+		}
+
+
+		for (int j = 0; j < stdList->size; j++) {
+			printf("%d ", stdList->students[j]->number);
+		}
 
 
 
+
+	}else if (strcmp(text, "name") == 0) {
+
+	}else if (strcmp(text, "country") == 0) {
+
+	}else if (strcmp(text, "do") == 0) {
+
+	}else if (strcmp(text, "si") == 0) {
+
+	}else if (strcmp(text, "gu") == 0) {
+
+	}else if (strcmp(text, "grade") == 0) {
+
+
+	}
 
 
 }
