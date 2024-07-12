@@ -648,7 +648,19 @@ void Swapping_Value(Student* std1, Student* std2) {
 
 void SavingAndLoadFile(StudentList* stdList) {
 
-	printf("File Save and Load Success!");
+	FILE* studentFile;
+	studentFile = fopen("StudentList.txt", "w");
+
+	// StudentList에 있는 Student의 개수 만큼 저장하기.
+	for (int i = 0; i < stdList->size; i++) {
+		Student* student = stdList->students[i];
+		fprintf(studentFile, "출석부-%d번째, 번호 : %d, 이름 : %s, 국가 : %s, 도 : %s, 시 : %s, 구 : %s, 등급 : %d\n", i, student->number, student->name, student->adrCountry, student->adrDo, student->adrSi, student->adrGu, student->grade);
+	}
+
+
+	fclose(studentFile);
+
+	printf("File Save Success!");
 
 }
 
