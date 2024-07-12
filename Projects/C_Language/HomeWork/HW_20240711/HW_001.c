@@ -19,7 +19,7 @@ typedef struct _StudentList {
 	Student* head;
 	Student* cur;
 	Student* tail;
-	int* data[100];
+	Student* students[100];
 	int size;
 }StudentList;
 
@@ -218,12 +218,104 @@ void Adding_Student(StudentList* stdList) {
 		stdList->tail = student;
 	}
 
+	stdList->students[stdList->size] = student;
 	stdList->size++;
 }
 
 void Deleting_Student(StudentList* stdList) {
 
-	printf("아아 삭제됨.");
+	if (stdList->head == NULL || stdList->size == 0) {
+		printf("[SYSTEM]학생이 존재하지 않아 삭제할 수 없습니다.");
+		return 0;
+	}
+
+	Printing_StudentList(stdList);
+	
+	int num, grade;
+	char name[100] = { '\0', }, adrCountry[100] = { '\0', }, adrDo[100] = { '\0', }, adrSi[100] = { '\0', }, adrGu[100] = { '\0', };
+
+
+	char text[100];
+	int cntNum = 0, cntGrade = 0;
+	printf("[SYSTEM]삭제를 희망하는 학생의 번호를 입력하세요 : ");
+	scanf("%s", text);
+
+	for (int i = 0; text[cntNum] != '\0'; i++) {
+		cntNum++;
+	}
+	while (!Getting_IsitNumber(text, cntNum)) {
+		printf("숫자만 입력하세요 : ");
+		scanf("%s", text);
+		cntNum = 0;
+		for (int i = 0; text[cntNum] != '\0'; i++) {
+			cntNum++;
+		}
+	}
+	num = Changing_StringToInt(text);
+
+	printf("[SYSTEM]삭제를 희망하는 학생의 이름을 입력하세요 : ");
+	scanf(" %[^\n]s", &name);
+
+	printf("[SYSTEM]삭제를 희망하는 학생의 거주하고 있는 국가를 입력하세요 : ");
+	scanf(" %[^\n]s", &adrCountry);
+
+	printf("[SYSTEM]삭제를 희망하는 학생의 거주하고 있는 도를 입력하세요 : ");
+	scanf(" %[^\n]s", &adrDo);
+
+	printf("[SYSTEM]삭제를 희망하는 학생의 거주하고 있는 시를 입력하세요 : ");
+	scanf(" %[^\n]s", &adrSi);
+
+	printf("[SYSTEM]삭제를 희망하는 학생의 거주하고 있는 구를 입력하세요 : ");
+	scanf(" %[^\n]s", &adrGu);
+
+	printf("[SYSTEM]삭제를 희망하는 학생의 성적을 입력하세요 : ");
+	scanf("%s", text);
+
+	for (int i = 0; text[cntGrade] != '\0'; i++) {
+		cntGrade++;
+	}
+	while (!Getting_IsitNumber(text, cntGrade)) {
+		printf("숫자만 입력하세요 : ");
+		scanf("%s", text);
+		cntGrade = 0;
+		for (int i = 0; text[cntGrade] != '\0'; i++) {
+			cntGrade++;
+		}
+	}
+	grade = Changing_StringToInt(text);
+
+	Student* current = stdList->head; // 전체 student를 돌아가면서 일치하는 삭제할 값이 있나 확인하는 용도.
+	Student* cursor = NULL;
+
+	for (int i = 0; i < stdList->size; i++) {
+		// 삭제를 희망하는 학생이 학생 리스트에 있는지 확인하기.
+		if (current->number == num && strcmp(current->name, name) == 0 && strcmp(current->adrCountry, adrCountry) == 0 && strcmp(current->adrDo, adrDo) == 0 && strcmp(current->adrSi, adrSi) == 0 && strcmp(current->adrGu, adrGu) == 0 && current->grade == grade) {
+			printf("1차\n");
+			if (cursor == NULL) {
+				printf("2차\n");
+				stdList->head = current->next;
+				if (stdList->head == NULL) {
+					printf("3차\n");
+					stdList->tail = NULL;
+				}
+			}else{
+				printf("4차\n");
+				cursor->next = current->next;
+				if (current == stdList->tail) {
+					printf("5차\n");
+					stdList->tail = cursor;
+				}
+			}
+
+			stdList->size--;
+			printf("[SYSTEM]해당 학생이 삭제되었습니다.");
+			return;
+		}
+		cursor = current;
+		current = current->next;
+	}
+
+	printf("[SYSTEM]해당 조건에 맞는 학생을 찾을 수 없습니다.");
 
 }
 
@@ -232,13 +324,20 @@ void Deleting_Student(StudentList* stdList) {
 void Printing_StudentList(StudentList* stdList) {
 	
 	Student* current = stdList->head;
-	if (stdList->head == NULL) {
+	if (stdList->head == NULL || stdList->size == 0) {
 		printf("[SYSTEM]현재 학생이 없습니다.");
+		return 0;
 	}
 
+	printf("\n\n|---------------------------------------------|\n");
+	printf("|          [로빛 19기 수습단원 출석부]        |\n");
+	printf("|---------------------------------------------|\n");
+	printf("|                 현재 인원 명단              |\n");
+	printf("|---------------------------------------------|\n");
 	for (int i = 0; i < stdList->size; i++) {
-		printf("[%d번째] 번호 : %d | 이름 :  %s | 국가 : %s | 도 : %s | 시 : %s | 구 : %s | 등급 : %d |\n", i, current->number, current->name, current->adrCountry, current->adrDo, current->adrSi, current->adrGu, current->grade);
+		printf("[%d번째] 번호 : %d|\t이름 :  %s|\t국가 : %s|\t도 : %s|\t시 : %s|\t구 : %s|\t등급 : %d\t|\n", i, current->number, current->name, current->adrCountry, current->adrDo, current->adrSi, current->adrGu, current->grade);
 		current = current->next;
 	}
+	printf("|---------------------------------------------|\n\n\n");
 
 }
