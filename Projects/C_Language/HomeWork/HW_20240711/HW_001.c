@@ -28,6 +28,7 @@ void Initializing_StudentList(StudentList* stdList); // StudentList 초기화 함수.
 void Adding_Student(StudentList* stdList); // 학생 추가 함수.
 void Deleting_Student(StudentList* stdList); // 학생 삭제 함수.
 void Searching_Student(StudentList* stdList); // 학생 검색 함수.
+void Sorting_Student(StudentList* stdList); // 학생 정렬 함수.
 
 void Printing_StudentList(StudentList* stdList); // 전체 학생 출력 함수.
 int Getting_IsitNumber(char* text, int cnt); // 입력된 값이 숫자인지 아닌지 판별하는 함수.
@@ -68,7 +69,7 @@ int main() {
 		}else if (strcmp(inputCommand, "search") == 0) {
 			Searching_Student(studentList);
 		}else if (strcmp(inputCommand, "sort") == 0) {
-
+			Sorting_Student(studentList);
 		}else if (strcmp(inputCommand, "SaveAndLoad") == 0) {
 
 
@@ -489,11 +490,38 @@ void Searching_Student(StudentList* stdList) {
 
 	}
 
+}
+
+void Sorting_Student(StudentList* stdList) {
+
+	Student* student = (Student*)malloc(sizeof(Student));
+	Student* current = stdList->head;
+
+	if (stdList->head == NULL || stdList->size == 0) {
+		printf("[SYSTEM]현재 학생이 없으므로, 정렬을 할 수 없습니다.");
+		return 0;
+	}
+
+	printf("\n\n|---------------------------------------------|\n");
+	printf("|     [로빛 19기 수습단원 출석부 시스템]      |\n");
+	printf("|---------------------------------------------|\n");
+	printf("|                 정렬 카테고리               |\n");
+	printf("|---------------------------------------------|\n");
+	printf("|  1.number         2.name       3.country    |\n");
+	printf("|  4.do             5.si         6.gu         |\n");
+	printf("|  7.grade                                    |\n");
+	printf("|---------------------------------------------|\n");
+
+	char text[100];
+	printf("[SYSTEM]정렬할 카테고리를 입력하세요. : ");
+	scanf("%s", &text);
+
 
 
 
 
 }
+
 
 
 
