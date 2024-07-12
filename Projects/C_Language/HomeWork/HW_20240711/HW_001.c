@@ -370,25 +370,38 @@ void Searching_Student(StudentList* stdList) {
 
 
 	if (strcmp(text, "number") == 0) {
-		int num, numCnt = 0;
+		int num, cnt = 0;
 		printf("[SYSTEM]찾고 싶은 학생의 번호를 입력하세요. : ");
 		scanf("%d", &num);
 
 		// StudentList에 있는 Student 수 만큼 for문 돌리기.
 		for (int i = 0; i < stdList->size; i++) {
 			if (current->number == num) { // StudentList 내부에 있는 Student의 배열에서 Student의 number가 num과 같다면 출력하기.
-				printf("[%d번째] 번호 : %d, 이름 :  %s, 국가 : %s, 도 : %s, 시 : %s, 구 : %s, 등급 : %d.\n", i, current->number, current->name, current->adrCountry, current->adrDo, current->adrSi, current->adrGu, current->grade);
-				numCnt++;
+				printf("[출석부-%d번째] 번호 : %d, 이름 :  %s, 국가 : %s, 도 : %s, 시 : %s, 구 : %s, 등급 : %d.\n", i, current->number, current->name, current->adrCountry, current->adrDo, current->adrSi, current->adrGu, current->grade);
+				cnt++;
 			}
-			current = current->next;
+			current = current->next; // 다음 Student를 참조하기.
 		}
-		if (numCnt == 0) { // Exception handling: 해당 번호를 가진 Student가 없을 때.
+		if (cnt == 0) { // Exception handling: 해당 번호를 가진 Student가 없을 때.
 			printf("[SYSTEM]해당 번호를 가진 학생은 없습니다.");
 		}
-
 	}else if (strcmp(text, "name") == 0) {
-		printf("name 입력됨.");
+		int cnt = 0;
+		char targetText[100];
+		printf("[SYSTEM]찾고 싶은 학생의 이름을 입력하세요. : ");
+		scanf("%s", &targetText);
 
+		// StudentList에 있는 Student 수 만큼 for문 돌리기.
+		for (int i = 0; i < stdList->size; i++) {
+			if (strcmp(targetText, current->name) == 0) { // StudentList 내부에 있는 Student의 배열에서 Student의 number가 num과 같다면 출력하기.
+				printf("[출석부-%d번째] 번호 : %d, 이름 :  %s, 국가 : %s, 도 : %s, 시 : %s, 구 : %s, 등급 : %d.\n", i, current->number, current->name, current->adrCountry, current->adrDo, current->adrSi, current->adrGu, current->grade);
+				cnt++;
+			}
+			current = current->next; // 다음 Student를 참조하기.
+		}
+		if (cnt == 0) { // Exception handling: 해당 번호를 가진 Student가 없을 때.
+			printf("[SYSTEM]해당 이름을 가진 학생은 없습니다.");
+		}
 	}else if (strcmp(text, "country") == 0) {
 		printf("country 입력됨.");
 
@@ -428,7 +441,7 @@ void Printing_StudentList(StudentList* stdList) {
 	printf("|                 현재 인원 명단              |\n");
 	printf("|---------------------------------------------|\n");
 	for (int i = 0; i < stdList->size; i++) {
-		printf("[%d번째] 번호 : %d, 이름 :  %s, 국가 : %s, 도 : %s, 시 : %s, 구 : %s, 등급 : %d.\n", i, current->number, current->name, current->adrCountry, current->adrDo, current->adrSi, current->adrGu, current->grade);
+		printf("[출석부-%d번째] 번호 : %d, 이름 :  %s, 국가 : %s, 도 : %s, 시 : %s, 구 : %s, 등급 : %d.\n", i, current->number, current->name, current->adrCountry, current->adrDo, current->adrSi, current->adrGu, current->grade);
 		current = current->next;
 	}
 	printf("|---------------------------------------------|\n\n\n");
