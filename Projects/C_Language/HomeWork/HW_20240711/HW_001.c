@@ -29,7 +29,7 @@ void Adding_Student(StudentList* stdList); // 학생 추가 함수.
 void Deleting_Student(StudentList* stdList); // 학생 삭제 함수.
 void Searching_Student(StudentList* stdList); // 학생 검색 함수.
 void Sorting_Student(StudentList* stdList); // 학생 정렬 함수.
-
+void SavingAndLoadFile(StudentList* stdList); // 파일 저장 및 불러오기 함수.
 
 void Swapping_Value(Student* std1, Student* std2); // 학생 정렬 함수에서 사용하는 학생의 값들을 서로 변경하는 함수.
 
@@ -74,10 +74,10 @@ int main() {
 		}else if (strcmp(inputCommand, "sort") == 0) {
 			Sorting_Student(studentList);
 		}else if (strcmp(inputCommand, "SaveAndLoad") == 0) {
-
-
+			SavingAndLoadFile(studentList);
 		}else if (strcmp(inputCommand, "exit") == 0) {
-
+			printf("[SYSTEM]프로그램을 종료합니다.");
+			break;
 		}else if (strcmp(inputCommand, "print") == 0) { // Debugging:
 			Printing_StudentList(studentList);
 		}
@@ -644,6 +644,15 @@ void Swapping_Value(Student* std1, Student* std2) {
 	std1->grade = std2->grade;
 	std2->grade = tempGrade;
 }
+
+
+void SavingAndLoadFile(StudentList* stdList) {
+
+	printf("File Save and Load Success!");
+
+}
+
+
 
 
 void Printing_StudentList(StudentList* stdList) {
