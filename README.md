@@ -21,7 +21,7 @@ Other Style : Google Style Guid를 준수하되, 아직 파악하지 못 한 가
 🔨(hammer): 개발 스크립트 추가 / 업데이트<br>
 📦(package) : 컴파일된 파일 추가<br>
 🐛(bug) : 버그 수정<br>
-♻️(recycle) : 리팩토링
+♻️(recycle) : 리팩토링<br>
 📝(memo) : 문서 추가 / 업데이트<br>
 💄(lipstick) : UI 개선<br>
 🚚(truck) : 파일 / 경로 / 이름 변경<br>
