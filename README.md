@@ -1,5 +1,56 @@
 # ROBIT_Intern_KiHongPark_HW_repo
 ## Name
-#### Ki Hong Park
+#### Ki Hong Park (Kinesis Akashic)
 ## Department
 #### DIVISION OF ROBOTICS
+
+
+---
+
+## Commit Rule
+Base Rule : [gitmoji](https://gitmoji.dev/) <br>
+Other Rule : 개인적으로 규칙을 정의함.<br>
+Coding Style : [Google-StyleGuid-Cpp](https://google.github.io/styleguide/cppguide.html)<br>
+Other Style : Google Style Guid를 준수하되, 아직 파악하지 못 한 가이드는 개인 스타일로 코드를 작성함.<br>
+
+
+### Gitmoji
+✨(sparkles): 새 기능 추가<br>
+🚀(rocket): 성능 개선<br>
+🔧(wrench): 구성 파일 추가 / 업데이트<br>
+🔨(hammer): 개발 스크립트 추가 / 업데이트<br>
+📦(package) : 컴파일된 파일 추가<br>
+🐛(bug) : 버그 수정<br>
+♻️(recycle) : 리팩토링
+📝(memo) : 문서 추가 / 업데이트<br>
+💄(lipstick) : UI 개선<br>
+🚚(truck) : 파일 / 경로 / 이름 변경<br>
+
+### Commit Title
+Create : 새 파일이나 프로젝트를 생성할 때 🔨, 🎉<br>
+Add : 새 기능이나 파일을 추가할 때 ✨<br>
+Delete : 파일이나 기능을 삭제할 때 🔥<br>
+Update : 기능을 개선하거나 중요한 변경을 할 때 🚀<br>
+Modify : 기존 기능의 작은 수정이나 리팩토링 🔧, ♻️<br>
+Fix : 버그 수정 🐛<br>
+
+### Commit Message
+변경된 사항에 대한 간략한 메시지를 남깁니다.<br>
+
+### Commit File
+to (FileName).c : 새로운 함수를 파일에 추가한 경우<br>
+in (FileName).c : 특정 함수 내의 로직을 수정한 경우<br>
+
+
+### Commit Format
+
+(Gitmoji) (Commit Title) (Commit Message) (Commit File)
+
+### Others
+
+gitmoji를 우선으로 작성하고, Commit Title에 할당된 gitmoji는 달라도 됨.<br>
+Example Case #1: Update Script -> 🔧 Update system in main.c<br>
+
+기능 수정 범위:<br> 
+Modify(소규모) < Update(대규모)<br>
+기능 수정의 규모가 작으면 Modify를, 규모가 크면 Update를 사용하기.
