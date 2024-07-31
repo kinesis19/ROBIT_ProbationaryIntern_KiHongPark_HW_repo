@@ -63,12 +63,40 @@ int main(void) {
 
 // <기능5> : LED 좌측으로 이동하기.
 ISR(INT2_vect){
-	PORTA = ~PORTA;
-	_delay_ms(500);
+	PORTA = 0b11111110;
+	_delay_ms(100);
+	PORTA = 0b11111101;
+	_delay_ms(100);
+	PORTA = 0b11111011;
+	_delay_ms(100);
+	PORTA = 0b11110111;
+	_delay_ms(100);
+	PORTA = 0b11101111;
+	_delay_ms(100);
+	PORTA = 0b11011111;
+	_delay_ms(100);
+	PORTA = 0b10111111;
+	_delay_ms(100);
+	PORTA = 0b01111111;
+	_delay_ms(100);
 }
 
 // <기능6> : LED 우측으로 이동하기.
 ISR(INT3_vect){
-	PORTA = ~PORTA;
-	_delay_ms(500);
+	PORTA = 0b01111111;
+	_delay_ms(100);
+	PORTA = 0b10111111;
+	_delay_ms(100);
+	PORTA = 0b11011111;
+	_delay_ms(100);
+	PORTA = 0b11101111;
+	_delay_ms(100);
+	PORTA = 0b11110111;
+	_delay_ms(100);
+	PORTA = 0b11111011;
+	_delay_ms(100);
+	PORTA = 0b11111101;
+	_delay_ms(100);
+	PORTA = 0b11111110;
+	_delay_ms(100);
 }
