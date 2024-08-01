@@ -59,7 +59,7 @@ int main(void){
     }
 }
 
-// <기능1>
+// <기능2>
 ISR(INT0_vect){
 	
 	PORTA = 0b11111000;
@@ -88,7 +88,7 @@ ISR(INT0_vect){
 }
 
 
-// <기능2> : INT1 발생시 LED 3개씩 좌측 이동 X 2
+// <기능3> : INT1 발생시 LED 3개씩 좌측 이동 X 2
 ISR(INT1_vect){
 	PORTA = 0b00011111;
 	_delay_ms(500);
@@ -112,6 +112,50 @@ ISR(INT1_vect){
 	_delay_ms(500);
 	PORTA = 0b11000111;
 	_delay_ms(500);
+}
+
+// <기능4> : INT2 발생시 LED1개 좌측 이동 후 우측 이동
+ISR(INT2_vect){
+	
+	int tempPORTA = PORTA;
+	
+	// 우측 이동하기.
+	PORTA = 0b11111110;
+	_delay_ms(100);
+	PORTA = 0b11111101;
+	_delay_ms(100);
+	PORTA = 0b11111011;
+	_delay_ms(100);
+	PORTA = 0b11110111;
+	_delay_ms(100);
+	PORTA = 0b11101111;
+	_delay_ms(100);
+	PORTA = 0b11011111;
+	_delay_ms(100);
+	PORTA = 0b10111111;
+	_delay_ms(100);
+	PORTA = 0b01111111;
+	_delay_ms(100);
+	
+	// 좌측 이동하기.
+
+	PORTA = 0b01111111;
+	_delay_ms(100);
+	PORTA = 0b10111111;
+	_delay_ms(100);
+	PORTA = 0b11011111;
+	_delay_ms(100);
+	PORTA = 0b11101111;
+	_delay_ms(100);
+	PORTA = 0b11110111;
+	_delay_ms(100);
+	PORTA = 0b11111011;
+	_delay_ms(100);
+	PORTA = 0b11111101;
+	_delay_ms(100);
+	PORTA = 0b11111110;
+	_delay_ms(100);
+
 }
 
 // <기능 5> : 2진 카운터 초기화 하기.
