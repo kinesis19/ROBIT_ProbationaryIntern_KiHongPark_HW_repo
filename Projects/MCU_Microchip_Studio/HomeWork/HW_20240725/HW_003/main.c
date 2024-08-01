@@ -87,6 +87,33 @@ ISR(INT0_vect){
 	
 }
 
+
+// <기능2> : INT1 발생시 LED 3개씩 좌측 이동 X 2
+ISR(INT1_vect){
+	PORTA = 0b00011111;
+	_delay_ms(500);
+	PORTA = 0b10001111;
+	_delay_ms(500);
+	PORTA = 0b11000111;
+	_delay_ms(500);
+	PORTA = 0b11100011;
+	_delay_ms(500);
+	PORTA = 0b11110001;
+	_delay_ms(500);
+	PORTA = 0b11111000;
+	_delay_ms(500);
+	PORTA = 0b01111100;
+	_delay_ms(500);
+	PORTA = 0b00111110;
+	_delay_ms(500);
+	PORTA = 0b00011111;
+	_delay_ms(500);
+	PORTA = 0b10001111;
+	_delay_ms(500);
+	PORTA = 0b11000111;
+	_delay_ms(500);
+}
+
 // <기능 5> : 2진 카운터 초기화 하기.
 ISR(INT3_vect){
 	cnt = 0xFF; // 1111 1111(led 모두 끄기)
