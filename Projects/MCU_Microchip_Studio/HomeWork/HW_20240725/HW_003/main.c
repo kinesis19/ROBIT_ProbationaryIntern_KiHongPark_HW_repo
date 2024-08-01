@@ -9,7 +9,7 @@
  * [Ext Interrupt]
  * 2. INT0 발생시 LED 3개씩 우측 이동 X 2
  * 3. INT1 발생시 LED 3개씩 좌측 이동 X 2
- * 4.  INT2 발생시 LED1개 좌측 이동 후 우측 이동
+ * 4. INT2 발생시 LED1개 좌측 이동 후 우측 이동
  * 5. INT3 발생시 2진 카운터 초기화
  */ 
 
@@ -19,13 +19,19 @@
 #include <avr/interrupt.h>
 
 
+// 전역 변수 선언하기 (interrupt와 main에서 공유하기 위함).
+unsigned int cnt = 0xFF;
+
 int main(void){
 	// 레지스터 선언하기.
 	DDRA = 0xFF;
 	PORTA = 0xFF;
 	
-	// 변수 선언하기.
-	unsigned int cnt = 0xFF;
+	
+	EIMSK = 0b00001111;
+	EICRA = 0b10101010;
+	
+	sei();
 	
 	// #Debugging:
 	//buff = buff << 1;
@@ -53,3 +59,10 @@ int main(void){
     }
 }
 
+// <기능 5> : 2진 카운터 초기화 하기.
+ISR(INT3_vect){
+	cnt = 0xFF; // 1111 1111(led 모두 끄기)
+	unsigned int cnt = 0xFF; // 1111 1111(led 모두 끄기)
+	PORTA = 0xFF;
+	_delay_ms(100);
+}
