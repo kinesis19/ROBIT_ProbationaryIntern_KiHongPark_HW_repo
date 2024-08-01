@@ -25,9 +25,7 @@ int main(void){
 	PORTA = 0xFF;
 	
 	// 변수 선언하기.
-	unsigned char buff = 0b11111110; // 1111 1110 -> Active-Low 방식일 때는 1111 1110으로 표기.
-	unsigned int ledIdx = 0; // 2진 카운터를 위한 led의 index 현재값.
-	unsigned int ledMaxIdx = 0; // 2진 카운터를 위한 led index의 최대값.
+	unsigned int cnt = 0xFF;
 	
 	// #Debugging:
 	//buff = buff << 1;
@@ -40,24 +38,18 @@ int main(void){
 	
 	// #End
 	
-	
-	
     while (1) {
+		PORTA = cnt;
+		cnt--;
 		
-		for(int i = 0; i < ledMaxIdx; i++){
+		if(cnt < 0){ // Active-Low : 0000 0000 (led가 모두 켜졌을 떄,)
+			cnt = 0xFF; // 1111 1111(led 모두 끄기)
+			PORTA = 0xFF;
 			_delay_ms(100);
-			buff = buff << 1;
-			PORTA = buff;
-		}
-		
-		ledMaxIdx++;
-		buff = 0xFF;
-		if(ledMaxIdx > 4){
-			ledMaxIdx = 0;
 		}
 		
 		_delay_ms(100);
-		PORTA = buff;
+		
     }
 }
 
