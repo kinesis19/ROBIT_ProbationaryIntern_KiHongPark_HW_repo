@@ -33,17 +33,6 @@ int main(void){
 	
 	sei();
 	
-	// #Debugging:
-	//buff = buff << 1;
-	//PORTA  = buff;
-	//
-	//_delay_ms(1000);
-	//
-	//buff = buff << 1;
-	//PORTA  = buff;
-	
-	// #End
-	
     while (1) {
 		PORTA = cnt;
 		cnt--;
