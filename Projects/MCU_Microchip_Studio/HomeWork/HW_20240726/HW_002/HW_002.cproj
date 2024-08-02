@@ -116,7 +116,7 @@
     <Compile Include="LCD_Text.h">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="main.c">
+    <Compile Include="HW_002.c">
       <SubType>compile</SubType>
     </Compile>
   </ItemGroup>
