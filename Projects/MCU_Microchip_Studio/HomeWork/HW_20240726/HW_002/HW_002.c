@@ -15,6 +15,7 @@
 #include <avr/io.h>
 #include <util/delay.h>
 #include <avr/interrupt.h>
+#include <math.h>
 #include "LCD_Text.h"
 
 int main(void){
@@ -44,12 +45,50 @@ int main(void){
 		
 		while((ADCSRA&0x10) == 0){
 			adcValue = ADC;
-			int adcValueVoltage = (5 / 1024) * adcValue;
+			/*
+			* 전압 구하기.
+			* 전압은 실수형으로 구해야 함. -> lcdNumber()는 3번째 파라미터로 정수 Type의 값을 받아 들임.
+			* 실수로 구한 값을 문자열로 처리하여 lcdString()로 띄우면 될 것 같음.
+			* 실수로 구한 값에 소수점을 파악하여 소수점 이하 n자리까지만 출력 되도록 구해야 할 듯.
+			*/
+			double adcValueVoltage = (5.0 / 1024) * adcValue; // 실수(double) Type의 voltage 구하기.
+			char strVoltage[10] = "";
+			int strIdx = 0;
+			while (1){
+				
+				int num = floor(adcValueVoltage); // adcValueVoltage의 소수점 앞 부분.
+				
+				// 문자열 출력 범위를 넘어가면 종료하기.
+				if(strIdx > 8){
+					strVoltage[strIdx] = 86; // "V" 추가하기.
+					break;
+				}
+				
+				if(strIdx == 1){ // voltage의 최초값은 : 0V, 최대값은 5V임. 정수 앞 부분은 무조건 한 자리 밖에 못 와서 index의 수동 타겟팅하여 소수점을 표기함.
+					strVoltage[strIdx] = 46; // "." 추가하기.
+					adcValueVoltage = adcValueVoltage * 10;
+					strIdx++;
+					continue;
+				}
+				
+				// 소수점 앞 부분이 10 이상일 때,
+				if(num > 9){
+					adcValueVoltage = adcValueVoltage / 10;
+				}else{
+					strVoltage[strIdx] = num + 48;
+					adcValueVoltage = adcValueVoltage - num;
+					adcValueVoltage = adcValueVoltage * 10;
+					strIdx++;
+				}
+				
+			}
+			
+			
 			// <2번 기능>
 			lcdNumber(1, 0, adcValue); 
 			// <3번 기능>
-			lcdNumber(1, 6, adcValueVoltage); // adcVaulue는 네 칸을 확보하므로, 가독성을 위해 한 칸 공백 후 6칸부터 전압을 표시함.
-			_delay_ms(100); // lcd 초기화를 진행하여 값의 변화에 따라 ldc에 출력함.
+			lcdString(1, 6, strVoltage); // adcVaulue는 네 칸을 확보하므로, 가독성을 위해 한 칸 공백 후 6칸부터 전압을 표시함.
+			_delay_ms(100); // lcd 초기화를 진행하여 값의 변화에 따라 lcd에 출력함.
 			lcdClear();
 			
 			// <1번 기능>
