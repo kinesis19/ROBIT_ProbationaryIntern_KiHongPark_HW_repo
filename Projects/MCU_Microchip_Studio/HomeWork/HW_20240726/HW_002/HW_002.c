@@ -59,16 +59,19 @@ int main(void){
 				int num = floor(adcValueVoltage); // adcValueVoltage의 소수점 앞 부분.
 				
 				// 문자열 출력 범위를 넘어가면 종료하기.
-				if(strIdx > 8){
-					strVoltage[strIdx] = 86; // "V" 추가하기.
-					break;
-				}
+				//if(strIdx > 8){
+					//strVoltage[strIdx] = 86; // "V" 추가하기.
+					//break;
+				//}
 				
 				if(strIdx == 1){ // voltage의 최초값은 : 0V, 최대값은 5V임. 정수 앞 부분은 무조건 한 자리 밖에 못 와서 index의 수동 타겟팅하여 소수점을 표기함.
 					strVoltage[strIdx] = 46; // "." 추가하기.
 					adcValueVoltage = adcValueVoltage * 10;
 					strIdx++;
 					continue;
+				}else if(strIdx == 4){ // 소수점 올리기.
+					strVoltage[strIdx] = 86; // "V" 추가하기.
+					break;
 				}
 				
 				// 소수점 앞 부분이 10 이상일 때,
@@ -82,7 +85,6 @@ int main(void){
 				}
 				
 			}
-			
 			
 			// <2번 기능>
 			lcdNumber(1, 0, adcValue); 
