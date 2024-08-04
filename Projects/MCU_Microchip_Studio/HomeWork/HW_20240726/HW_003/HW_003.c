@@ -26,77 +26,115 @@ int main(void) {
 	// 레지스터 선언하기
 	DDRD = 0x00; // 입력모드
 	
-	EIMSK = 0b00001111;
-	EICRA = 0xFF; // 0b11111111와 동일함.
-	
 	// 변수 선언하기
 	unsigned int numA = 1, numB = 1, numC = 0;
 	unsigned int operator = 0;
 	
-	sei();
-	
-	lcdInit();	
+	lcdInit();
 	lcdClear();
-	
 	
     while (1) {
 		if(!(PIND & (1 << PIND0))) {
 			numA++;
 			
-			lcdString(0, 0, "NUM1");
+			lcdClear();
+			lcdString(0, 0, "NUM1 is Add 1");
 			lcdNumber(1, 0, numA);
 			
-			_delay_ms(10000);
+			_delay_ms(1000);
 			
 		}else if(!(PIND & (1 << PIND1))) {
 			if(operator < 3){
 				operator++;
 			}else{
-				operator--;
-			}		
+				operator = 0;
+			}
+			
+			lcdClear();
+			if(operator == 0){
+				lcdString(0, 0, "Plus Mode");
+			}else if(operator == 1){
+				lcdString(0, 0, "Minus Mode");
+			}else if(operator == 2){
+				lcdString(0, 0, "Multiply Mode");
+			}else if(operator == 3){
+				lcdString(0, 0, "Division Mode");
+			}
+			
+			_delay_ms(1000);
 		
 		}else if(!(PIND & (1 << PIND2))) {
 			numB++;
-			lcdString(0, 0, "NUM2");
+			lcdClear();
+			lcdString(0, 0, "NUM2 is Minus 1");
 			lcdNumber(1, 0, numB);
 			
-			_delay_ms(10000);
+			_delay_ms(1000);
 		}else if(!(PIND & (1 << PIND3))) {
 			
-			//char resultLine[16] = "";
-			//char tempStr1[16] = "";
-			//char tempStr2[16] = "";
-			//char tempStr3[16] = "";
-			//char tempStr4[16] = "";
-			//char tempStr5[16] = "";
-			//
-			//if(operator == 0){
-				//numC = numA + numB;
-				//
-				//sprintf(tempStr1, "%d", numA);
-				//strcpy(tempStr2, "+");
-				//sprintf(tempStr3, "%d", numB);
-				//strcpy(tempStr4, "=");
-				//sprintf(tempStr5, "%d", numC);
-				//strcat(resultLine, tempStr1);
-				//strcat(resultLine, tempStr2);
-				//strcat(resultLine, tempStr3);
-				//strcat(resultLine, tempStr4);
-				//strcat(resultLine, tempStr5);
-				//
-			//}else if(operator == 1){
-				//numC = numA - numB;
-			//}else if(operator == 2){
-				//numC = numA * numB;
-			//}else if(operator == 3){
-				//numC = numA / numB;
-			//}
+			char resultLine[16] = "";
+			char tempStr1[16] = "";
+			char tempStr2[16] = "";
+			char tempStr3[16] = "";
+			char tempStr4[16] = "";
+			char tempStr5[16] = "";
 			
-			//lcdString(0, 0, resultLine);
-			lcdString(0, 0, "HEEEEEEEY!");
-			lcdNumber(1, 0, numA);
+			if(operator == 0){
+				numC = numA + numB;
+				sprintf(tempStr1, "%d", numA);
+				strcpy(tempStr2, "+");
+				sprintf(tempStr3, "%d", numB);
+				strcpy(tempStr4, "=");
+				sprintf(tempStr5, "%d", numC);
+				strcat(resultLine, tempStr1);
+				strcat(resultLine, tempStr2);
+				strcat(resultLine, tempStr3);
+				strcat(resultLine, tempStr4);
+				strcat(resultLine, tempStr5);
+				
+			}else if(operator == 1){
+				numC = numA - numB;
+				sprintf(tempStr1, "%d", numA);
+				strcpy(tempStr2, "-");
+				sprintf(tempStr3, "%d", numB);
+				strcpy(tempStr4, "=");
+				sprintf(tempStr5, "%d", numC);
+				strcat(resultLine, tempStr1);
+				strcat(resultLine, tempStr2);
+				strcat(resultLine, tempStr3);
+				strcat(resultLine, tempStr4);
+				strcat(resultLine, tempStr5);
+			}else if(operator == 2){
+				numC = numA * numB;
+				sprintf(tempStr1, "%d", numA);
+				strcpy(tempStr2, "*");
+				sprintf(tempStr3, "%d", numB);
+				strcpy(tempStr4, "=");
+				sprintf(tempStr5, "%d", numC);
+				strcat(resultLine, tempStr1);
+				strcat(resultLine, tempStr2);
+				strcat(resultLine, tempStr3);
+				strcat(resultLine, tempStr4);
+				strcat(resultLine, tempStr5);
+			}else if(operator == 3){
+				numC = numA / numB;
+				sprintf(tempStr1, "%d", numA);
+				strcpy(tempStr2, "/");
+				sprintf(tempStr3, "%d", numB);
+				strcpy(tempStr4, "=");
+				sprintf(tempStr5, "%d", numC);
+				strcat(resultLine, tempStr1);
+				strcat(resultLine, tempStr2);
+				strcat(resultLine, tempStr3);
+				strcat(resultLine, tempStr4);
+				strcat(resultLine, tempStr5);
+			}
+			
+			lcdClear();
+			lcdString(0, 0, resultLine);
 		}
 		
     }
 	
 }
+
