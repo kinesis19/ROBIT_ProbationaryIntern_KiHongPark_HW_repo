@@ -477,6 +477,11 @@ FodyWeavers.xsd
 # JetBrains Rider
 *.sln.iml
 
+# Kinesis's custom .gitignore
+# 1. Inventor OldVersions 반영 무시하기
+[Oo]ldVersions/ 
+
+
 ### VisualStudio Patch ###
 # Additional files built by Visual Studio
 
