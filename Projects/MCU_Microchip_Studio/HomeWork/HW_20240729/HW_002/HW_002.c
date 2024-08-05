@@ -17,78 +17,86 @@
 #include <avr/interrupt.h>
 #include "LCD_Text.h"
 
-//unsigned char data, receive;
-//
-//ISR(USART0_RX_vect){
-	//receive = 1;
-	//data = UDR0;
-//}
-//
-//
-//ISR(USART0_UDRE_vect){
-	//if(receive == 1){
-		//UDR0 = '_';
-		//while((UCSR0A&0x20) == 0);
-		//UDR0 = 'o';
-		//while((UCSR0A&0x20 == 0));
-		//UDR0 = 'k';
-		//
-		//receive = 0;
-	//}
-	//UCSR0B = 0x98;
-//}
-
+unsigned char Uart_Getch(void);
+void Uart_Putch(unsigned char PutData);
 
 int main(void) {
 	
-	DDRA = 0xFF;
-	DDRF = 0x00;
-	DDRB = 0xFF;
+	UBRR0L = 103;
+	UBRR0H = 0;
+	UCSR0A = 0x20;
+	UCSR0B = 0x98;
+	UCSR0C = 0x06;
 	
-	PORTA = 0xFF;
-	PORTB = 0x00;
-	
-	ADMUX = 0x40;
-	ADCSRA = 0x87;
-	
-	//UCSR0A = 0x00;
-	//UCSR0B = 0x98;
-	//UCSR0C = 0x06;
-	//UBRR0H = 0x00;
-	//UBRR0L = 0xCF;
-	
+	DDRE = 0x02;
 	
 	sei();
 	
-	lcdInit();
-	lcdClear();
+	while (1) {	
+		//char recvData = Uart_Getch();
+		Uart_Putch('H');
+		_delay_ms(1000);
+	}	
 	
-    while (1) {
-		
-		//if(data == 'y'){
-			//PORTB = 0xFF;
-			//UCSR0B = 0xB8;
+	//DDRA = 0xFF;
+	//DDRF = 0x00;
+	//DDRB = 0xFF;
+	//
+	//PORTA = 0xFF;
+	//PORTB = 0x00;
+	//
+	//ADMUX = 0x40;
+	//ADCSRA = 0x87;
+	//
+	////UCSR0A = 0x00;
+	////UCSR0B = 0x98;
+	////UCSR0C = 0x06;
+	////UBRR0H = 0x00;
+	////UBRR0L = 0xCF;
+	//
+	//
+	//sei();
+	//
+	//lcdInit();
+	//lcdClear();
+	//
+    //while (1) {
+		//
+		////if(data == 'y'){
+			////PORTB = 0xFF;
+			////UCSR0B = 0xB8;
+		////}
+		////if(data = 'n'){
+			////PORTB = 0x00;
+			////UCSR0B = 0xB8;
+		////}
+		//
+		//unsigned int adcValue = 0;
+	    //unsigned char channel = 0x00;
+		//
+		//ADMUX = 0x40 | channel;
+		//ADCSRA |= 0x40;
+		//
+		//while((ADCSRA&0x10) == 0) {
+			//adcValue = ADC;
+			//
 		//}
-		//if(data = 'n'){
-			//PORTB = 0x00;
-			//UCSR0B = 0xB8;
-		//}
-		
-		unsigned int adcValue = 0;
-	    unsigned char channel = 0x00;
-		
-		ADMUX = 0x40 | channel;
-		ADCSRA |= 0x40;
-		
-		while((ADCSRA&0x10) == 0) {
-			adcValue = ADC;
-			
-		}
-		
-		lcdClear();
-		lcdString(0, 0, "ADC Value : ");
-		lcdNumber(0, 12, adcValue);
-		_delay_ms(100);
-		
-    }
+		//
+		//lcdClear();
+		//lcdString(0, 0, "ADC Value : ");
+		//lcdNumber(0, 12, adcValue);
+		//_delay_ms(100);
+		//
+    //}
+}
+
+
+unsigned char Uart_Getch(void){
+	while(!(UCSR0A & (1 << RXC0)));
+	return UDR0;
+}
+
+void Uart_Putch(unsigned char PutData){
+	while(!(UCSR0A & (1 << UDRE0)));
+	UDR0 = PutData;
 }
