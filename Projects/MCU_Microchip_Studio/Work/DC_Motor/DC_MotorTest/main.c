@@ -10,14 +10,12 @@
 #include <avr/interrupt.h>
 #include <util/delay.h>
 
-int main(void)
-{
+int main(void) {
 	DDRB = 0x6F;  // PB1, PB2 핀을 출력으로 설정하기(OC1A, OC1B).
 
-
-	TCCR1A = 0xA2;
-	TCCR1B = 0x1A;
-	TCCR1C = 0x00;
+	TCCR1A = 0xA2; // 0b10100010
+	TCCR1B = 0x1A; // 0b00011010
+	TCCR1C = 0x00; // 0b00000000
 
 	ICR1 = 399;
 	TCNT1 = 0x00;
@@ -25,15 +23,16 @@ int main(void)
 	sei();
 
 	while (1) {
+		
 		//1번 모터는 fast pwm 모드로 동작하기.
 		PORTB = (PORTB & 0xF0) | 0x05;
 		OCR1A = ICR1 * 0.5;
-		_delay_ms(100);
+		_delay_ms(500);
 
 
 		PORTB = (PORTB & 0xF0) | 0x0A;
 		OCR1A = ICR1 * 0.5;
-		_delay_ms(100);
+		_delay_ms(500);
 
 		//2번 모터는 correct PWM 모드로 동작하기.
 		// Phase Correct PWM 모드 설정 (2번 모터)
