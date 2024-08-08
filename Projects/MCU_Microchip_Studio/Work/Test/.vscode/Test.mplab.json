@@ -1,0 +1,28 @@
+{
+    "version": "1.1",
+    "configurations": [
+        {
+            "name": "default",
+            "id": "conf1",
+            "targetDevice": "ATmega128",
+            "packs": [
+                {
+                    "name": "ATmega_DFP",
+                    "vendor": "Microchip",
+                    "version": "3.2.269"
+                }
+            ],
+            "fileSet": "default",
+            "outputFiles": []
+        }
+    ],
+    "propertyGroups": [],
+    "fileSets": [
+        {
+            "name": "default",
+            "files": [
+                "main.c"
+            ]
+        }
+    ]
+}
