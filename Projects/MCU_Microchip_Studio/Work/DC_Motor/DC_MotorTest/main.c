@@ -9,6 +9,7 @@
 #include <avr/io.h>
 #include <avr/interrupt.h>
 #include <util/delay.h>
+#include "LCD_Text.h"
 
 void Initializing(void);
 
@@ -36,6 +37,9 @@ void Initializing(void){
 	TCNT1 = 0x00;
 	
 	sei();
+	
+	lcdInit();
+	lcdClear();
 }
 
 
@@ -43,32 +47,40 @@ void Initializing(void){
 // -----[Moving: Forward]-----
 ISR(INT0_vect){
 	PORTB = (PORTB & 0xF0) | 0x05;
-	OCR1A = ICR1 * 0.5;
-	OCR1B = ICR1 * 0.5;
-	_delay_ms(1000);	
+	OCR1A = ICR1 * 1;
+	OCR1B = ICR1 * 1;
+	
+	lcdClear();
+	lcdString(0, 0, "Moving Foward!");
 }
 
 // -----[Moving: Back]-----
 ISR(INT1_vect){
 	PORTB = (PORTB & 0xF0) | 0x0A;
-	OCR1A = ICR1 * 0.5;
-	OCR1B = ICR1 * 0.5;
-	_delay_ms(1000);
+	OCR1A = ICR1 * 1;
+	OCR1B = ICR1 * 1;
+	
+	lcdClear();
+	lcdString(0, 0, "Moving Back!");
 }
 
 
 // -----[Turning: Right]-----
 ISR(INT2_vect){
 	PORTB = (PORTB & 0xF0) | 0x05;
-	OCR1A = ICR1 * 0.5;
+	OCR1A = ICR1 * 1;
 	OCR1B = ICR1 * 0;
-	_delay_ms(1000);
+	
+	lcdClear();
+	lcdString(0, 0, "Turning Right!");
 }
 
 // -----[Turning: Left]-----
 ISR(INT3_vect){
 	PORTB = (PORTB & 0xF0) | 0x05;
 	OCR1A = ICR1 * 0;
-	OCR1B = ICR1 * 0.5;
-	_delay_ms(1000);
+	OCR1B = ICR1 * 1;
+	
+	lcdClear();
+	lcdString(0, 0, "Turning Left!!");
 }
