@@ -19,13 +19,15 @@
 
 void Detecting(void);
 
+unsigned int irSensorList[6] = {0, }; // IR Sensor의 ADC 값 저장 배열 선언하기.
+
 int main(void) {
-	
-	DDRA = 0xFF;
-	DDRF = 0x00; // Input Mode.
+	// -----[Register Setting]-----
+	DDRA = 0xFF; // LED Port를 Output Mode로 Setting하기.
+	DDRF = 0x00; // IR Sensor가 할당되어 있는 PORTF를 Input Mode로 Setting하기.
 	
 	ADMUX = 0x40;
-	ADCSRA = 0x87;
+	ADCSRA = 0x87; // ADC Enable 및 Prescaler를 128로 Setting하기.
 	
 	sei();
 	
@@ -34,22 +36,29 @@ int main(void) {
 	
 	while(1){
 		
-		unsigned int adcValue = 0;
-		unsigned char channel = 0x00;
+		int idx = 2; // PF2번부터 ADC 값을 할당하기 위해 idx를 2로 초기화 하기.
 		
-		ADMUX = 0x40 | channel;
-		ADCSRA |= 0x40;
-		
-		while((ADCSRA&0x10) == 0){ // ADC의 Interrupt가 없을 때,
-			adcValue = ADC;
+		// IR Sensor0부터 ~ 5까지의 ADC값 저장하기.
+		for(int i = 0; i < 6; i++){
+			ADMUX = (ADMUX & 0xF0) | idx; // ADMUX = (0x00 & 0xF0) | idx => idx가 2일 때, ADMUX = 0x00 | 2 = ADMUX = 0b00000000 | 0b00000010 => ADMUX = 0b00000010이 됨.
+			ADCSRA |= (1 << ADSC); // ADCSRA |= 0x40; -> (1 << ADSC)에서 ADSC는 Index6번째 비트를 담당함. 1 << ADSC) = 1 << 6 = 0b01000000.
 			
-			// <2번 기능>
-			lcdNumber(1, 0, adcValue);	
+			while(ADCSRA & (1 << ADSC)); // ADC가 return 될 때 까지 대기하기. Info) ADC 변환이 진행되면 ADSC는 1, 변환이 완료되면 0이 return되면서 while문을 탈출함.
+			
+			irSensorList[i] = ADC;
+			idx++;
 		}
 		
-		_delay_ms(50);
+		// 저장된 IR Sensor0부터 ~ 5까지의 ADC값 출력하기
+		for(int j = 0; j < 6; j++){
+			char label[4];
+			sprintf(label, "IR%d", j); // label에 몇 번째 IR Sensor인지 형식에 맞춰 저장하기.
+			lcdString(0, 0, label);
+			lcdNumber(1, 0, irSensorList[j]);
+			_delay_ms(500);
+			lcdClear();
+		}
 		
-		lcdClear();
 	}
 		
 	
