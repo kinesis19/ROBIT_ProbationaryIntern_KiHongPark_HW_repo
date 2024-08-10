@@ -1,3 +1,1 @@
-a
-name : 김땡땡
-age : 20
+compare match interrupt를 이용하여 원하는 시간 간격으로 원하는 동작을 control할 수 있습니다.

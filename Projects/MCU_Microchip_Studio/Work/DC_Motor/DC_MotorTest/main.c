@@ -65,22 +65,22 @@ ISR(INT1_vect){
 }
 
 
-// -----[Turning: Right]-----
+// -----[Turning: Left]-----
 ISR(INT2_vect){
 	PORTB = (PORTB & 0xF0) | 0x05;
 	OCR1A = ICR1 * 1;
 	OCR1B = ICR1 * 0;
 	
 	lcdClear();
-	lcdString(0, 0, "Turning Right!");
+	lcdString(0, 0, "Turning Left!");
 }
 
-// -----[Turning: Left]-----
+// -----[Turning: Right]-----
 ISR(INT3_vect){
 	PORTB = (PORTB & 0xF0) | 0x05;
 	OCR1A = ICR1 * 0;
 	OCR1B = ICR1 * 1;
 	
 	lcdClear();
-	lcdString(0, 0, "Turning Left!!");
+	lcdString(0, 0, "Turning Right!!");
 }
