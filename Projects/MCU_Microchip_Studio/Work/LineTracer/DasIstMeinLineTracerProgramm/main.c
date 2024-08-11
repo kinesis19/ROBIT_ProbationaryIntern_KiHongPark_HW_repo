@@ -24,6 +24,9 @@ void Motor_Turning_Left(void);
 void Motor_Turning_Right(void);
 
 unsigned int irSensorList[6] = {0, }; // IR Sensor의 ADC 값 저장 배열 선언하기.
+unsigned int irSensorListMax[6] = {0, };
+unsigned int irSensorListMin[6] = {1023, 1023, 1023, 1023, 1023, 1023};
+double irSensorListNormalization[6] = {0, };
 bool isStart = false;
 
 int main(void) {
@@ -35,7 +38,6 @@ int main(void) {
 			// Detecting: IR Sensor.
 			Detecting();
 			Motor_Control();
-			_delay_ms(100);
 			lcdClear();
 		}
 	}
@@ -73,32 +75,58 @@ void Detecting(void){
 	
 	// IR Sensor0부터 ~ 5까지의 ADC값 저장하기.
 	for(int i = 0; i < 6; i++){
-		ADMUX = (ADMUX & 0xF0) | idx; // ADMUX = (0x00 & 0xF0) | idx => idx가 2일 때, ADMUX = 0x00 | 2 = ADMUX = 0b00000000 | 0b00000010 => ADMUX = 0b00000010이 됨.
-		ADCSRA |= (1 << ADSC); // ADCSRA |= 0x40; -> (1 << ADSC)에서 ADSC는 Index6번째 비트를 담당함. 1 << ADSC) = 1 << 6 = 0b01000000.
-		
-		while(ADCSRA & (1 << ADSC)); // ADC가 return 될 때 까지 대기하기. Info) ADC 변환이 진행되면 ADSC는 1, 변환이 완료되면 0이 return되면서 while문을 탈출함.
+		ADMUX = (ADMUX & 0xF0) | idx;
+		ADCSRA |= (1 << ADSC);
+		while(!(ADCSRA & (1 << ADIF)));
 		
 		irSensorList[i] = ADC;
-				
+		
+		//lcdNumber(1, 0, irSensorList[i]);
 		idx++;
 	}
 	
-	lcdNumber(0, 0, irSensorList[0]);
-	lcdNumber(0, 4, irSensorList[1]);
-	lcdNumber(0, 8, irSensorList[2]);
-	lcdNumber(1, 0, irSensorList[3]);
-	lcdNumber(1, 4, irSensorList[4]);
-	lcdNumber(1, 8, irSensorList[5]);
+	// IR Sensor의 MIN, MAX 할당하기.
+	for(int i = 0; i < 6; i++){
+		if(irSensorList[i] < irSensorListMin[i]){
+			irSensorListMin[i] = irSensorList[i];
+		}
+		if(irSensorList[i] > irSensorListMax[i]){
+			irSensorListMax[i] = irSensorList[i];
+		}
+	}
+	
+	
+	for(int i = 0; i < 6; i++){
+		
+		irSensorListNormalization[i] = ((  (double)irSensorList[i] - irSensorListMin[i]) / (irSensorListMax[i] - irSensorListMin[i])) * 100;
+		
+		lcdNumber(0, 0, irSensorListNormalization[0]); // PF2 - IR2
+		lcdNumber(0, 4, irSensorListNormalization[1]); // PF3 - IR1
+		lcdNumber(0, 8, irSensorListNormalization[2]); // PF4 - IR0
+		lcdNumber(1, 0, irSensorListNormalization[3]); // PF5 - IR5
+		lcdNumber(1, 4, irSensorListNormalization[4]); // PF6 - IR4
+		lcdNumber(1, 8, irSensorListNormalization[5]); // PF7 - IR3
+		
+		//_delay_ms(100);		
+	}
 }
 
 void Motor_Control(void){
-	// 가중치 : +30
-	if(((irSensorList[0] < 162 && irSensorList[5] < 178) && (irSensorList[1] < 300 && irSensorList[2] < 284)) && (irSensorList[3] < 150 && irSensorList[4] < 144)){
+	
+	unsigned int cnt = 0;
+	for(int i = 0; i < 6; i++){
+		if(irSensorListNormalization[i] == 0){
+			cnt++;
+		}
+	}
+	if(cnt == 5){
 		Motor_Moving_Forward();
-	}else if(irSensorList[0] > 265){ // 가중치 : -30
-		Motor_Turning_Right();
-	}else if(irSensorList[5] > 218){ // 가중치 : -30
-		Motor_Turning_Left();
+	}else{
+		if((irSensorListNormalization[2] > 50 && irSensorListNormalization[1] > 50) && !(irSensorListNormalization[3] > 50 && irSensorListNormalization[4] > 50)){
+			Motor_Turning_Right();
+			}else if(!(irSensorListNormalization[2] > 50 && irSensorListNormalization[1] > 50) && (irSensorListNormalization[3] > 50 && irSensorListNormalization[4] > 50)){
+			Motor_Turning_Left();
+		}
 	}
 	
 }
@@ -107,26 +135,22 @@ void Motor_Moving_Forward(void){
 	PORTB = (PORTB & 0xF0) | 0x05;
 	OCR1A = ICR1 * 0.75;
 	OCR1B = ICR1 * 0.75;
-	_delay_ms(500);
 }
 
 void Motor_Moving_Backward(void){
 	PORTB = (PORTB & 0xF0) | 0x0A;
 	OCR1A = ICR1 * 0.75;
 	OCR1B = ICR1 * 0.75;
-	_delay_ms(500);
 }
 
 void Motor_Turning_Left(void){
 	PORTB = (PORTB & 0xF0) | 0x05;
 	OCR1A = ICR1 * 0.75;
 	OCR1B = ICR1 * 0;
-	_delay_ms(500);
 }
 
 void Motor_Turning_Right(void){
 	PORTB = (PORTB & 0xF0) | 0x05;
 	OCR1A = ICR1 * 0;
 	OCR1B = ICR1 * 0.75;
-	_delay_ms(500);
 }
