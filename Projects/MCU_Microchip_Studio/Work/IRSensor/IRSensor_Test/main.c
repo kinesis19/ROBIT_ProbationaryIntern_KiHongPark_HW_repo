@@ -43,7 +43,7 @@ int main(void) {
 			ADMUX = (ADMUX & 0xF0) | idx; // ADMUX = (0x00 & 0xF0) | idx => idx가 2일 때, ADMUX = 0x00 | 2 = ADMUX = 0b00000000 | 0b00000010 => ADMUX = 0b00000010이 됨.
 			ADCSRA |= (1 << ADSC); // ADCSRA |= 0x40; -> (1 << ADSC)에서 ADSC는 Index6번째 비트를 담당함. 1 << ADSC) = 1 << 6 = 0b01000000.
 			
-			while(ADCSRA & (1 << ADSC)); // ADC가 return 될 때 까지 대기하기. Info) ADC 변환이 진행되면 ADSC는 1, 변환이 완료되면 0이 return되면서 while문을 탈출함.
+			while(ADCSRA & (1 << ADIF)); // ADC가 return 될 때 까지 대기하기. Info) ADC 변환이 진행되면 ADSC는 1, 변환이 완료되면 0이 return되면서 while문을 탈출함.
 			
 			irSensorList[i] = ADC;
 			
@@ -57,12 +57,12 @@ int main(void) {
 			idx++;
 		}
 		
-		lcdNumber(0, 0, irSensorList[0]);
-		lcdNumber(0, 4, irSensorList[1]);
-		lcdNumber(0, 8, irSensorList[2]);
-		lcdNumber(1, 0, irSensorList[3]);
-		lcdNumber(1, 4, irSensorList[4]);
-		lcdNumber(1, 8, irSensorList[5]);
+		lcdNumber(0, 0, irSensorList[1]); // PF2
+		lcdNumber(0, 4, irSensorList[2]); // PF3
+		lcdNumber(0, 8, irSensorList[3]); // PF4
+		lcdNumber(1, 0, irSensorList[4]); // PF5
+		lcdNumber(1, 4, irSensorList[5]); // PF6
+		lcdNumber(1, 8, irSensorList[0]); // PF7
 		_delay_ms(100);
 		
 		
@@ -77,6 +77,4 @@ int main(void) {
 		//}
 		
 	}
-		
-	
 }
