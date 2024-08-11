@@ -15,11 +15,18 @@
 #include <util/delay.h>
 #include <avr/interrupt.h>
 #include <math.h>
+#include <stdbool.h>
+
 #include "LCD_Text.h"
 
 void Detecting(void);
 
-unsigned int irSensorList[6] = {0, }; // IR Sensor의 ADC 값 저장 배열 선언하기.
+unsigned int irSensorList[6] = {0, }; // IR Sensor의 ADC 값 저장 배열 선언하기.	
+unsigned int irSensorListMax[6] = {0, };
+unsigned int irSensorListMin[6] = {1023, 1023, 1023, 1023, 1023, 1023};
+unsigned int irSensorListNormalization[6] = {0, };
+bool isIRSensorInit = false;	
+	
 
 int main(void) {
 	// -----[Register Setting]-----
@@ -40,29 +47,56 @@ int main(void) {
 		
 		// IR Sensor0부터 ~ 5까지의 ADC값 저장하기.
 		for(int i = 0; i < 6; i++){
-			ADMUX = (ADMUX & 0xF0) | idx; // ADMUX = (0x00 & 0xF0) | idx => idx가 2일 때, ADMUX = 0x00 | 2 = ADMUX = 0b00000000 | 0b00000010 => ADMUX = 0b00000010이 됨.
-			ADCSRA |= (1 << ADSC); // ADCSRA |= 0x40; -> (1 << ADSC)에서 ADSC는 Index6번째 비트를 담당함. 1 << ADSC) = 1 << 6 = 0b01000000.
+			ADMUX = (ADMUX & 0xF0) | idx;
+			ADCSRA |= (1 << ADSC); 
+			while(ADCSRA & (1 << ADIF));
 			
-			while(ADCSRA & (1 << ADIF)); // ADC가 return 될 때 까지 대기하기. Info) ADC 변환이 진행되면 ADSC는 1, 변환이 완료되면 0이 return되면서 while문을 탈출함.
-			
-			irSensorList[i] = ADC;
-			
-			//char label[4];
-			//sprintf(label, "IR%d", i); // label에 몇 번째 IR Sensor인지 형식에 맞춰 저장하기.
-			//lcdString(0, 0, label);
-			//lcdNumber(1, 0, irSensorList[i]);
-			//_delay_ms(500);
-			lcdClear();
-			
+			irSensorList[i] = ADC;			
 			idx++;
 		}
 		
-		lcdNumber(0, 0, irSensorList[1]); // PF2
-		lcdNumber(0, 4, irSensorList[2]); // PF3
-		lcdNumber(0, 8, irSensorList[3]); // PF4
-		lcdNumber(1, 0, irSensorList[4]); // PF5
-		lcdNumber(1, 4, irSensorList[5]); // PF6
-		lcdNumber(1, 8, irSensorList[0]); // PF7
+		lcdNumber(1, 0, irSensorList[0]);
+		// IR Sensor의 MIN, MAX 할당하기
+		if(isIRSensorInit == false){
+			
+			for(int i = 0; i < 6; i++){
+				if(irSensorList[i] < irSensorListMin[i]){
+					irSensorListMin[i] = irSensorList[i];
+				}
+				if(irSensorList[i] > irSensorListMax[i]){
+					irSensorListMax[i] = irSensorList[i];
+				}
+			}
+			
+			isIRSensorInit = true;
+		}else{
+			for(int i = 0; i < 6; i++){
+				
+				irSensorListNormalization[i] = ((irSensorList[i] - irSensorListMin[i]) / (irSensorListMax[i] - irSensorListMin[i])) * 100;
+				
+			}
+		}
+		
+		lcdNumber(0, 0, irSensorListMin[0]);
+		lcdNumber(0, 4, irSensorListMax[0]);
+		//lcdNumber(1, 0, irSensorList[0]);
+		//lcdNumber(1, 4, irSensorListNormalization[0]);
+		
+		
+		//lcdNumber(0, 0, irSensorList[1]); // PF2
+		//lcdNumber(0, 4, irSensorList[2]); // PF3
+		//lcdNumber(0, 8, irSensorList[3]); // PF4
+		//lcdNumber(1, 0, irSensorList[4]); // PF5
+		//lcdNumber(1, 4, irSensorList[5]); // PF6
+		//lcdNumber(1, 8, irSensorList[0]); // PF7
+		
+		
+		//lcdNumber(0, 0, irSensorListNormalization[1]); // PF2
+		//lcdNumber(0, 4, irSensorListNormalization[2]); // PF3
+		//lcdNumber(0, 8, irSensorListNormalization[3]); // PF4
+		//lcdNumber(1, 0, irSensorListNormalization[4]); // PF5
+		//lcdNumber(1, 4, irSensorListNormalization[5]); // PF6
+		//lcdNumber(1, 8, irSensorListNormalization[0]); // PF7
 		_delay_ms(100);
 		
 		
