@@ -15,11 +15,9 @@
 #include <util/delay.h>
 #include <avr/interrupt.h>
 #include <math.h>
-#include <stdbool.h>
 
 #include "LCD_Text.h"
 
-void Detecting(void);
 
 unsigned int irSensorList[6] = {0, }; // IR Sensor의 ADC 값 저장 배열 선언하기.	
 unsigned int irSensorListMax[6] = {0, };
