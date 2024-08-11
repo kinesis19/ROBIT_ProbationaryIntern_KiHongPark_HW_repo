@@ -11,6 +11,7 @@
 #include <avr/interrupt.h>
 #include <math.h>
 #include <util/delay.h>
+#include <stdbool.h>
 
 #include "LCD_Text.h"
 
@@ -23,18 +24,25 @@ void Motor_Turning_Left(void);
 void Motor_Turning_Right(void);
 
 unsigned int irSensorList[6] = {0, }; // IR Sensor의 ADC 값 저장 배열 선언하기.
+bool isStart = false;
 
 int main(void) {
 
 	Initializing();
 	
 	while (1) {
-		// Detecting: IR Sensor.
-		Detecting();	
-		Motor_Control();
-		_delay_ms(100);
-		lcdClear();
+		if(isStart == true){
+			// Detecting: IR Sensor.
+			Detecting();
+			Motor_Control();
+			_delay_ms(100);
+			lcdClear();
+		}
 	}
+}
+
+ISR(INT0_vect){
+	isStart = true;
 }
 
 void Initializing(void){
