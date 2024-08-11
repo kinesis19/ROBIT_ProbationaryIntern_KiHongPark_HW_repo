@@ -46,18 +46,35 @@ int main(void) {
 			while(ADCSRA & (1 << ADSC)); // ADC가 return 될 때 까지 대기하기. Info) ADC 변환이 진행되면 ADSC는 1, 변환이 완료되면 0이 return되면서 while문을 탈출함.
 			
 			irSensorList[i] = ADC;
+			
+			//char label[4];
+			//sprintf(label, "IR%d", i); // label에 몇 번째 IR Sensor인지 형식에 맞춰 저장하기.
+			//lcdString(0, 0, label);
+			//lcdNumber(1, 0, irSensorList[i]);
+			//_delay_ms(500);
+			lcdClear();
+			
 			idx++;
 		}
 		
+		lcdNumber(0, 0, irSensorList[0]);
+		lcdNumber(0, 4, irSensorList[1]);
+		lcdNumber(0, 8, irSensorList[2]);
+		lcdNumber(1, 0, irSensorList[3]);
+		lcdNumber(1, 4, irSensorList[4]);
+		lcdNumber(1, 8, irSensorList[5]);
+		_delay_ms(100);
+		
+		
 		// 저장된 IR Sensor0부터 ~ 5까지의 ADC값 출력하기
-		for(int j = 0; j < 6; j++){
-			char label[4];
-			sprintf(label, "IR%d", j); // label에 몇 번째 IR Sensor인지 형식에 맞춰 저장하기.
-			lcdString(0, 0, label);
-			lcdNumber(1, 0, irSensorList[j]);
-			_delay_ms(500);
-			lcdClear();
-		}
+		//for(int j = 0; j < 6; j++){
+			//char label[4];
+			//sprintf(label, "IR%d", j); // label에 몇 번째 IR Sensor인지 형식에 맞춰 저장하기.
+			//lcdString(0, 0, label);
+			//lcdNumber(1, 0, irSensorList[j]);
+			//_delay_ms(500);
+			//lcdClear();
+		//}
 		
 	}
 		
