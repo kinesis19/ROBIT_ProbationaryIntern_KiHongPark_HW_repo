@@ -208,6 +208,55 @@ void Motor_Control_Mode1(void){
 // 주행 실험 모드
 void Motor_Control_Mode2(void){
 	
+	// stage-1
+	if(stageFlag == 1){
+		unsigned int cnt = 0;
+		for(int i = 0; i < 6; i++){
+			if(irSensorListNormalization[i] == 0){
+				cnt++;
+			}
+		}
+		if(cnt == 5){
+			Motor_Moving_Forward();
+		}
+	}else if(stageFlag == 2){
+		if(irSensorListNormalization[3] < 50 && irSensorListNormalization[4] < 50){
+			Motor_Turning_Left();
+		}
+	}
+	
+	
+	// 공통 기능
+	// 직진 주행
+	if((irSensorListNormalization[0] < 50 && irSensorListNormalization[5] < 50)){
+		if((irSensorListNormalization[3] < 50 && irSensorListNormalization[4] < 50)){
+			PORTA = 0b11110000;
+			Motor_Turning_Right();
+		}else if((irSensorListNormalization[1] < 50 && irSensorListNormalization[2] < 50)){
+			PORTA = 0b00001111;
+			Motor_Turning_Left();
+		}else{
+			PORTA = 0x00;
+			Motor_Moving_Forward();	
+			if(stageFlag == 1){
+				stageFlag = 2;
+			}
+		}
+	}
+	PORTA = 0xFF;
+		
+	// 보조 주행
+	if((irSensorListNormalization[2] > 50 && irSensorListNormalization[1] > 50) && !(irSensorListNormalization[3] > 50 && irSensorListNormalization[4] > 50)){
+		Motor_Turning_Right();
+	}else if(!(irSensorListNormalization[2] > 50 && irSensorListNormalization[1] > 50) && (irSensorListNormalization[3] > 50 && irSensorListNormalization[4] > 50)){
+		Motor_Turning_Left();
+	}
+	
+}
+
+
+void Motor_Control_Mode3(void){
+	
 	unsigned int cnt = 0;
 	for(int i = 0; i < 6; i++){
 		if(irSensorListNormalization[i] == 0){
@@ -231,6 +280,7 @@ void Motor_Control_Mode2(void){
 				Motor_Moving_Forward();	
 			}
 		}
+		PORTA = 0xFF;
 		
 		// 보조 주행
 		if((irSensorListNormalization[2] > 50 && irSensorListNormalization[1] > 50) && !(irSensorListNormalization[3] > 50 && irSensorListNormalization[4] > 50)){
@@ -239,12 +289,6 @@ void Motor_Control_Mode2(void){
 			Motor_Turning_Left();
 		}
 	}
-	
-}
-
-
-void Motor_Control_Mode3(void){
-	
 	
 }
 
