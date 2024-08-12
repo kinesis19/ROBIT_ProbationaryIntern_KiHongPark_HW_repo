@@ -35,6 +35,10 @@ unsigned int stageFlag = 0; // 현재 stage를 나타내는 변수임. (1 ~ 10)
 bool isStart = false;
 int modeSelect = 0;
 
+// -----[Stage 관련 Variables]-----
+unsigned int stage2Cnt = 0; // stage2 예외처리 위한 변수(Motor Control 관련)
+
+
 int main(void) {
 
 	Initializing();
@@ -208,6 +212,10 @@ void Motor_Control_Mode1(void){
 // 주행 실험 모드
 void Motor_Control_Mode2(void){
 	
+}
+
+
+void Motor_Control_Mode3(void){
 	// stage-1
 	if(stageFlag == 1){
 		unsigned int cnt = 0;
@@ -220,26 +228,52 @@ void Motor_Control_Mode2(void){
 			Motor_Moving_Forward();
 		}
 	}else if(stageFlag == 2){
-		if(irSensorListNormalization[3] < 50 && irSensorListNormalization[4] < 50){
-			Motor_Turning_Left();
+		// 예외 처리 1 : 아래 'O'에서 위에 'O'로 가기 위한 예외 처리.
+		if((irSensorListNormalization[5] < 50 && irSensorListNormalization[4] < 50)){
+			if(stage2Cnt == 0){
+				PORTA = 0b11111110;
+				Motor_Moving_Backward();
+				Motor_Moving_Backward();
+				Motor_Moving_Backward();
+				Motor_Turning_Left();
+				stage2Cnt = 1;
+			}
+		}
+		if((irSensorListNormalization[4] < 50 && irSensorListNormalization[1] < 50)){
+			// 8자 통과 이후 'ㅅ' 부분으로 가기 위한 예외 처리.
+			if(stage2Cnt == 1){
+				PORTA = 0b11111100;
+				Motor_Turning_Right();
+				stage2Cnt = 2;
+			}
+		}
+		
+		if(((irSensorListNormalization[3] < 50 && irSensorListNormalization[5] < 50) || (irSensorListNormalization[4] < 50 && irSensorListNormalization[5] < 50))){
+			if(stage2Cnt == 2){
+				PORTA = 0b11111000;
+				Motor_Turning_Right();
+				Motor_Turning_Right();
+			}
 		}
 	}
 	
 	
 	// 공통 기능
 	// 직진 주행
-	if((irSensorListNormalization[0] < 50 && irSensorListNormalization[5] < 50)){
-		if((irSensorListNormalization[3] < 50 && irSensorListNormalization[4] < 50)){
+	if((irSensorListNormalization[0] < 50 && irSensorListNormalization[5] < 50)){ // 직진 감지
+		if((irSensorListNormalization[3] < 50 && irSensorListNormalization[4] < 50)){ // 직진 중 우회전 감지
 			PORTA = 0b11110000;
 			Motor_Turning_Right();
-		}else if((irSensorListNormalization[1] < 50 && irSensorListNormalization[2] < 50)){
+		}else if((irSensorListNormalization[1] < 50 && irSensorListNormalization[2] < 50)){ // 직진 중 좌회전 감지
 			PORTA = 0b00001111;
 			Motor_Turning_Left();
-		}else{
+		}else{ // 직진 처리
 			PORTA = 0x00;
 			Motor_Moving_Forward();	
-			if(stageFlag == 1){
+			if(stageFlag == 1){ // stage1-S자 탈출 이후 바로 stageFlag2-8자로 설정.
 				stageFlag = 2;
+			}else if(stageFlag == 2){
+				
 			}
 		}
 	}
@@ -250,44 +284,6 @@ void Motor_Control_Mode2(void){
 		Motor_Turning_Right();
 	}else if(!(irSensorListNormalization[2] > 50 && irSensorListNormalization[1] > 50) && (irSensorListNormalization[3] > 50 && irSensorListNormalization[4] > 50)){
 		Motor_Turning_Left();
-	}
-	
-}
-
-
-void Motor_Control_Mode3(void){
-	
-	unsigned int cnt = 0;
-	for(int i = 0; i < 6; i++){
-		if(irSensorListNormalization[i] == 0){
-			cnt++;
-		}
-	} 
-	if(cnt == 5){
-		Motor_Moving_Forward();
-	}else{
-		
-		// 직진 주행
-		if((irSensorListNormalization[0] < 50 && irSensorListNormalization[5] < 50)){
-			if((irSensorListNormalization[3] < 50 && irSensorListNormalization[4] < 50)){
-				PORTA = 0b11110000;
-				Motor_Turning_Right();
-			}else if((irSensorListNormalization[1] < 50 && irSensorListNormalization[2] < 50)){
-				PORTA = 0b00001111;
-				Motor_Turning_Left();
-			}else{
-				PORTA = 0x00;
-				Motor_Moving_Forward();	
-			}
-		}
-		PORTA = 0xFF;
-		
-		// 보조 주행
-		if((irSensorListNormalization[2] > 50 && irSensorListNormalization[1] > 50) && !(irSensorListNormalization[3] > 50 && irSensorListNormalization[4] > 50)){
-			Motor_Turning_Right();
-		}else if(!(irSensorListNormalization[2] > 50 && irSensorListNormalization[1] > 50) && (irSensorListNormalization[3] > 50 && irSensorListNormalization[4] > 50)){
-			Motor_Turning_Left();
-		}
 	}
 	
 }
