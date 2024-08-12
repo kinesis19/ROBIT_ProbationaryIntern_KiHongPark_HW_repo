@@ -17,7 +17,8 @@
 
 void Initializing(void);
 void Detecting(void);
-void Motor_Control(void);
+void Motor_Control(void); // Basic 주행 모드.
+void Motor_Control_Mode2(void); // 오른쪽으로만 주행하는 모드.
 void Motor_Moving_Forward(void);
 void Motor_Moving_Backward(void);
 void Motor_Turning_Left(void);
@@ -28,6 +29,7 @@ unsigned int irSensorListMax[6] = {0, };
 unsigned int irSensorListMin[6] = {1023, 1023, 1023, 1023, 1023, 1023};
 double irSensorListNormalization[6] = {0, };
 bool isStart = false;
+int modeSelect = 0;
 
 int main(void) {
 
@@ -37,7 +39,11 @@ int main(void) {
 		if(isStart == true){
 			// Detecting: IR Sensor.
 			Detecting();
-			Motor_Control();
+			if(modeSelect == 1){
+				Motor_Control();
+			}else if(modeSelect == 2){
+				Motor_Control_Mode2();
+			}
 			lcdClear();
 		}
 	}
@@ -45,6 +51,12 @@ int main(void) {
 
 ISR(INT0_vect){
 	isStart = true;
+	modeSelect = 1;
+}
+
+ISR(INT1_vect){
+	isStart = true;
+	modeSelect = 2;
 }
 
 void Initializing(void){
@@ -130,6 +142,39 @@ void Motor_Control(void){
 	}
 	
 }
+
+
+void Motor_Control_Mode2(void){
+	
+	unsigned int cnt = 0;
+	unsigned int cnt2 = 0;
+	for(int i = 0; i < 6; i++){
+		if(irSensorListNormalization[i] == 0){
+			cnt++;
+		}
+	}
+	if(cnt == 5){
+		Motor_Moving_Forward();
+	}else{
+		
+		for(int i = 0; i < 6; i++){
+			if(irSensorListNormalization[i] > 50){
+				cnt++;
+			}
+		}
+		if(cnt2 == 5){
+			Motor_Turning_Right();
+		}else if((irSensorListNormalization[3] > 50 && irSensorListNormalization[4] > 50) && irSensorListNormalization[5] > 50){
+			Motor_Turning_Left();
+		}else{
+			Motor_Turning_Right();
+		}
+		
+	}
+	
+}
+
+
 
 void Motor_Moving_Forward(void){
 	PORTB = (PORTB & 0xF0) | 0x05;
