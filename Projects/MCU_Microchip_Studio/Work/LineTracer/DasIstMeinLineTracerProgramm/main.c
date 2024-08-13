@@ -146,20 +146,48 @@ void Detecting(void){
 }
 // 완성된 모드 기능
 void Motor_Control_Mode1(void){
+	// 현재는 테스트
+	
+	
+	// 모드 테스트 필요. 테스트 완료 시 체크(v)하기 :
+	
+	// -----[주행 기능]-----
+	// -----[메인 주행 기능]-----
+	// IR2, IR3를 기준으로 두 개가 검은 색에 있으면 좌회전, 그렇지 않으면 우회전.
+	if(irSensorListNormalization[0] < 50 || irSensorListNormalization[5] < 50){
+		Motor_Turning_Left();
+	}else if(irSensorListNormalization[0] > 50 || irSensorListNormalization[5] > 50){
+		Motor_Turning_Right();
+	}
+	
+	if((irSensorListNormalization[0] < 50 && irSensorListNormalization[1] < 50) && ((irSensorListNormalization[2] < 50 && irSensorListNormalization[3] < 50) && (irSensorListNormalization[4] < 50 && irSensorListNormalization[5] < 50))){
+		PORTA = 0b11000011;
+	}else if((irSensorListNormalization[0] > 50 && irSensorListNormalization[1] > 50) && ((irSensorListNormalization[2] > 50 && irSensorListNormalization[3] > 50) && (irSensorListNormalization[4] > 50 && irSensorListNormalization[5] > 50))){
+		PORTA = 0b00111100;
+	}
+	
 	
 }
 
 // 주행 실험 모드
-void Motor_Control_Mode2(void){
-		
+void Motor_Control_Mode2(void){		
+	
+	// 모드 테스트 필요. 테스트 완료 시 체크(v)하기 : 
+	
+	// -----[주행 기능]-----
+	// -----[메인 주행 기능]-----
+	// IR2, IR3를 기준으로 두 개가 검은 색에 있으면 좌회전, 그렇지 않으면 우회전.
+	if(irSensorListNormalization[0] < 50 || irSensorListNormalization[5] < 50){
+		Motor_Turning_Left();
+		}else if(irSensorListNormalization[0] > 50 || irSensorListNormalization[5] > 50){
+		Motor_Turning_Right();
+	}
 }
 
 
-void Motor_Control_Mode3(void){	
+void Motor_Control_Mode3(void){
 	// -----[주행 기능]-----
-		
 	// -----[메인 주행 기능]-----
-	
 	// IR2, IR3를 기준으로 두 개가 검은 색에 있으면 좌회전, 그렇지 않으면 우회전.
 	if(irSensorListNormalization[0] < 50 && irSensorListNormalization[5] < 50){
 		Motor_Turning_Left();
@@ -187,22 +215,26 @@ void Motor_Moving_Forward(void){
 	PORTB = (PORTB & 0xF0) | 0x05;
 	OCR1A = ICR1 * 0.75;
 	OCR1B = ICR1 * 0.75;
+	PORTA = 0b00000000;
 }
 
 void Motor_Moving_Backward(void){
 	PORTB = (PORTB & 0xF0) | 0x0A;
 	OCR1A = ICR1 * 0.75;
 	OCR1B = ICR1 * 0.75;
+	PORTA = 0b11111111;
 }
 
 void Motor_Turning_Left(void){
 	PORTB = (PORTB & 0xF0) | 0x05;
 	OCR1A = ICR1 * 0.75;
 	OCR1B = ICR1 * 0;
+	PORTA = 0b00111111;
 }
 
 void Motor_Turning_Right(void){
 	PORTB = (PORTB & 0xF0) | 0x05;
 	OCR1A = ICR1 * 0;
 	OCR1B = ICR1 * 0.75;
+	PORTA = 0b11111100;
 }
