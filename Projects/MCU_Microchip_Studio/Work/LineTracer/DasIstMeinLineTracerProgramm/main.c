@@ -38,12 +38,14 @@ int modeSelect = 0;
 
 // -----[Stage 관련 Variables]-----
 int nowStageLevel = 0; // 현재 Stage Value를 나타냄.
+int systemMode = 0; // 현재 mode를 나타냄. 0 : 초기 mode / 1 : 바코드 통과 및 Map2(stage-4 이전의 검정 구간 및 흰색 선)에 도착
 
 
 int main(void) {
 
 	Initializing();
 	stageFlag = 1;
+	systemMode = 0;
 	while (1) {
 		if(isStart == true){
 			// Detecting: IR Sensor.
@@ -147,7 +149,8 @@ void Detecting(void){
 }
 // 완성된 모드 기능
 void Motor_Control_Mode1(void){
-	// 현재는 테스트
+	
+	
 	// -----[주행 기능]-----
 	// -----[메인 주행 기능]-----
 	if(irSensorListNormalization[3] < 50){
@@ -156,42 +159,7 @@ void Motor_Control_Mode1(void){
 		Motor_Turning_Right();
 	}
 	
-	if(irSensorListNormalization[2] < 50 && irSensorListNormalization[1] < 50){
-		PORTA = 0b01111111;
-		Motor_Turning_Left();
-	}
-	
-	
-	// 바코드에서 마지막 전체 흰 줄
-	if(irSensorListNormalization[1] < 50 && irSensorListNormalization[2] < 50){
-		PORTA = 0b01111111;
-		for(int i = 0; i < 3; i++){
-			Motor_Turning_Left();
-		}
-	}
-	
-	
-	if((irSensorListNormalization[0] < 50 && irSensorListNormalization[1] < 50) && ((irSensorListNormalization[2] < 50 && irSensorListNormalization[3] < 50) && (irSensorListNormalization[4] < 50 && irSensorListNormalization[5] < 50))){
-		PORTA = 0b11000011;
-	}else if((irSensorListNormalization[0] > 50 && irSensorListNormalization[1] > 50) && ((irSensorListNormalization[2] > 50 && irSensorListNormalization[3] > 50) && (irSensorListNormalization[4] > 50 && irSensorListNormalization[5] > 50))){
-		PORTA = 0b00111100;
-	}
-}
-
-// 주행 실험 모드
-void Motor_Control_Mode2(void){		
-	
-	// 모드 테스트 필요. 테스트 완료 시 체크(v)하기 : 
-	// 현재는 테스트
-	// -----[주행 기능]-----
-	// -----[메인 주행 기능]-----
-	if(irSensorListNormalization[3] < 50){
-		Motor_Turning_Left();
-	}else if(irSensorListNormalization[3] > 50){
-		Motor_Turning_Right();
-	}
-	
-	
+	// -----[바코드 예외처리]-----
 	if(irSensorListNormalization[0] < 50){
 		PORTA = 0b01111111;
 		Motor_Turning_Left();
@@ -199,40 +167,64 @@ void Motor_Control_Mode2(void){
 	// 바코드에서 마지막 전체 흰 줄
 	if(irSensorListNormalization[1] < 50 && irSensorListNormalization[2] < 50){
 		PORTA = 0b01111111;
-		for(int i = 0; i < 3; i++){
+		for(int i = 0; i < 6; i++){
 			Motor_Turning_Left();
 		}
 	}
-	
-	
-	if((irSensorListNormalization[0] < 50 && irSensorListNormalization[1] < 50) && ((irSensorListNormalization[2] < 50 && irSensorListNormalization[3] < 50) && (irSensorListNormalization[4] < 50 && irSensorListNormalization[5] < 50))){
-		PORTA = 0b11000011;
-	}else if((irSensorListNormalization[0] > 50 && irSensorListNormalization[1] > 50) && ((irSensorListNormalization[2] > 50 && irSensorListNormalization[3] > 50) && (irSensorListNormalization[4] > 50 && irSensorListNormalization[5] > 50))){
-		PORTA = 0b00111100;
-	}
-	
 }
 
-
-void Motor_Control_Mode3(void){
+// 주행 실험 모드
+void Motor_Control_Mode2(void){		
+	
+	
+	// -----[주행 기능]-----
+	// -----[메인 주행 기능]-----
 	if(irSensorListNormalization[3] < 50){
 		Motor_Turning_Left();
 	}else if(irSensorListNormalization[3] > 50){
 		Motor_Turning_Right();
 	}
 	
-	
-	if((irSensorListNormalization[0] < 50 && irSensorListNormalization[1] > 50) && (irSensorListNormalization[2] > 50 && irSensorListNormalization[5] > 50)){
+	// -----[바코드 예외처리]-----
+	if(irSensorListNormalization[0] < 50){
 		PORTA = 0b01111111;
 		Motor_Turning_Left();
 	}
-	
-	
-	if((irSensorListNormalization[0] < 50 && irSensorListNormalization[1] < 50) && ((irSensorListNormalization[2] < 50 && irSensorListNormalization[3] < 50) && (irSensorListNormalization[4] < 50 && irSensorListNormalization[5] < 50))){
-		PORTA = 0b11000011;
-	}else if((irSensorListNormalization[0] > 50 && irSensorListNormalization[1] > 50) && ((irSensorListNormalization[2] > 50 && irSensorListNormalization[3] > 50) && (irSensorListNormalization[4] > 50 && irSensorListNormalization[5] > 50))){
-		PORTA = 0b00111100;
+	// 바코드에서 마지막 전체 흰 줄
+	if(irSensorListNormalization[1] < 50 && irSensorListNormalization[2] < 50){
+		PORTA = 0b01111111;
+		for(int i = 0; i < 6; i++){
+			Motor_Turning_Left();
+		}
 	}
+	
+}
+
+
+void Motor_Control_Mode3(void){
+	
+	
+	// -----[주행 기능]-----
+	// -----[메인 주행 기능]-----
+	if(irSensorListNormalization[3] < 50){
+		Motor_Turning_Left();
+	}else if(irSensorListNormalization[3] > 50){
+		Motor_Turning_Right();
+	}
+	
+	// -----[바코드 예외처리]-----
+	if(irSensorListNormalization[0] < 50){
+		PORTA = 0b01111111;
+		Motor_Turning_Left();
+	}
+	// 바코드에서 마지막 전체 흰 줄
+	if(irSensorListNormalization[1] < 50 && irSensorListNormalization[2] < 50){
+		PORTA = 0b01111111;
+		for(int i = 0; i < 6; i++){
+			Motor_Turning_Left();
+		}
+	}
+	
 }
 
 // IR Sensor Normalization Value 찾기 모드.
