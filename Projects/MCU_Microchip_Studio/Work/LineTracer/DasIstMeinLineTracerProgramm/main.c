@@ -25,6 +25,7 @@ void Motor_Moving_Forward(void);
 void Motor_Moving_Backward(void);
 void Motor_Turning_Left(void);
 void Motor_Turning_Right(void);
+void Motor_Moving_Stop(void);
 void Motor_Adjusting_Center(void); // 중심 조정하는 함수.
 
 unsigned int irSensorList[6] = {0, }; // IR Sensor의 ADC 값 저장 배열 선언하기.
@@ -36,7 +37,7 @@ bool isStart = false;
 int modeSelect = 0;
 
 // -----[Stage 관련 Variables]-----
-
+int nowStageLevel = 0; // 현재 Stage Value를 나타냄.
 
 
 int main(void) {
@@ -154,11 +155,13 @@ void Motor_Control_Mode1(void){
 	// -----[주행 기능]-----
 	// -----[메인 주행 기능]-----
 	// IR2, IR3를 기준으로 두 개가 검은 색에 있으면 좌회전, 그렇지 않으면 우회전.
-	if(irSensorListNormalization[0] < 50 || irSensorListNormalization[5] < 50){
+	
+	if(irSensorListNormalization[0] < 50){
 		Motor_Turning_Left();
-	}else if(irSensorListNormalization[0] > 50 || irSensorListNormalization[5] > 50){
+	}else if(irSensorListNormalization[0] > 50){
 		Motor_Turning_Right();
 	}
+	
 	
 	if((irSensorListNormalization[0] < 50 && irSensorListNormalization[1] < 50) && ((irSensorListNormalization[2] < 50 && irSensorListNormalization[3] < 50) && (irSensorListNormalization[4] < 50 && irSensorListNormalization[5] < 50))){
 		PORTA = 0b11000011;
@@ -177,22 +180,45 @@ void Motor_Control_Mode2(void){
 	// -----[주행 기능]-----
 	// -----[메인 주행 기능]-----
 	// IR2, IR3를 기준으로 두 개가 검은 색에 있으면 좌회전, 그렇지 않으면 우회전.
+	
+	
 	if(irSensorListNormalization[0] < 50 || irSensorListNormalization[5] < 50){
 		Motor_Turning_Left();
-		}else if(irSensorListNormalization[0] > 50 || irSensorListNormalization[5] > 50){
+	}else if(irSensorListNormalization[0] > 50 || irSensorListNormalization[5] > 50){
 		Motor_Turning_Right();
+	}
+	
+	
+	// 작동 되면서 모든 센서가 50 미만이 되는 경우가 많이 발생함. 50 미만으로 감지하는 예외처리는 제외해야 할 듯.
+	
+	if((irSensorListNormalization[0] < 50 && irSensorListNormalization[1] < 50) && ((irSensorListNormalization[2] < 50 && irSensorListNormalization[3] < 50) && (irSensorListNormalization[4] < 50 && irSensorListNormalization[5] < 50))){
+		PORTA = 0b11000011;
+	}else if((irSensorListNormalization[0] > 50 && irSensorListNormalization[1] > 50) && ((irSensorListNormalization[2] > 50 && irSensorListNormalization[3] > 50) && (irSensorListNormalization[4] > 50 && irSensorListNormalization[5] > 50))){
+		PORTA = 0b00111100;
 	}
 }
 
 
 void Motor_Control_Mode3(void){
+	
+	// 모드 테스트 필요. 테스트 완료 시 체크(v)하기 :
+	
 	// -----[주행 기능]-----
 	// -----[메인 주행 기능]-----
 	// IR2, IR3를 기준으로 두 개가 검은 색에 있으면 좌회전, 그렇지 않으면 우회전.
-	if(irSensorListNormalization[0] < 50 && irSensorListNormalization[5] < 50){
+	
+	if(irSensorListNormalization[5] < 50){
 		Motor_Turning_Left();
-	}else if(irSensorListNormalization[0] > 50 && irSensorListNormalization[5] > 50){
+	}else if(irSensorListNormalization[5] > 50){
 		Motor_Turning_Right();
+	}
+	
+	
+	
+	if((irSensorListNormalization[0] < 50 && irSensorListNormalization[1] < 50) && ((irSensorListNormalization[2] < 50 && irSensorListNormalization[3] < 50) && (irSensorListNormalization[4] < 50 && irSensorListNormalization[5] < 50))){
+		PORTA = 0b11000011;
+	}else if((irSensorListNormalization[0] > 50 && irSensorListNormalization[1] > 50) && ((irSensorListNormalization[2] > 50 && irSensorListNormalization[3] > 50) && (irSensorListNormalization[4] > 50 && irSensorListNormalization[5] > 50))){
+		PORTA = 0b00111100;
 	}
 }
 
@@ -237,4 +263,11 @@ void Motor_Turning_Right(void){
 	OCR1A = ICR1 * 0;
 	OCR1B = ICR1 * 0.75;
 	PORTA = 0b11111100;
+}
+
+void Motor_Moving_Stop(void){
+	PORTB = (PORTB & 0xF0) | 0x05;
+	OCR1A = ICR1 * 0;
+	OCR1B = ICR1 * 0;
+	PORTA = 0b01011010;
 }
