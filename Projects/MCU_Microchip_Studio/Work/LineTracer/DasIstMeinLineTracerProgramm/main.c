@@ -171,16 +171,13 @@ void Motor_Control_Mode3(void){
 // IR Sensor Normalization Value 찾기 모드.
 void Motor_Control_Mode4(void){
 	
-	
-	lcdNumber(0, 0, stageFlag);
-	lcdNumber(0, 4, stage2Cnt);
-	lcdNumber(1, 0, turnRightCnt);
-	//lcdNumber(0, 0, irSensorListNormalization[0]); // PF2 - IR2
-	//lcdNumber(0, 4, irSensorListNormalization[1]); // PF3 - IR1
-	//lcdNumber(0, 8, irSensorListNormalization[2]); // PF4 - IR0
-	//lcdNumber(1, 0, irSensorListNormalization[3]); // PF5 - IR5
-	//lcdNumber(1, 4, irSensorListNormalization[4]); // PF6 - IR4
-	//lcdNumber(1, 8, irSensorListNormalization[5]); // PF7 - IR3
+	lcdNumber(0, 0, irSensorListNormalization[0]); // PF2 - IR2
+	lcdNumber(0, 4, irSensorListNormalization[1]); // PF3 - IR1
+	lcdNumber(0, 8, irSensorListNormalization[2]); // PF4 - IR0
+	lcdNumber(1, 0, irSensorListNormalization[3]); // PF5 - IR5
+	lcdNumber(1, 4, irSensorListNormalization[4]); // PF6 - IR4
+	lcdNumber(1, 8, irSensorListNormalization[5]); // PF7 - IR3
+	_delay_ms(100);
 	
 	lcdClear();
 	
