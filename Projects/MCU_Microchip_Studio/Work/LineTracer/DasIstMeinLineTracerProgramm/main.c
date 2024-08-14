@@ -187,23 +187,24 @@ void Motor_Control_Mode3(void){
 			Motor_Turning_Right();
 		}
 		
-		// -----[바코드 예외처리]-----
+		// -----[stage-3(바코드) Exception Handling]-----
 		if(irSensorListNormalization[0] < 50){ // IR2가 검은색에 가까울  때
 			PORTA = 0b01111111;
 			Motor_Turning_Left();
 		}
-		// 바코드에서 마지막 전체 흰 줄
+		// 바코드에서 마지막 전체 흰 줄일 때,
 		if(irSensorListNormalization[1] < 50 && irSensorListNormalization[2] < 50){
 			PORTA = 0b01111111;
 			for(int i = 0; i < 6; i++){
 				PORTA = 0b10101010;
 				Motor_Turning_Left();
-				if((psdSnesorList[0] < 70 && 250 < psdSnesorList[1]) && IRSensorCheckerAllBlack() == 1){
-					systemMode = 1;
+				// Map2 입구 도착 여부 체크하기
+				if((psdSnesorList[0] < 70 && 250 < psdSnesorList[1]) && IRSensorCheckerAllBlack() == 1){ // Map2 입구 도착 조건에 충족 할 때,
+					systemMode = 1; // systemMode를 Map2에 알맞게 설정하기.
 				}
 			}
 		}
-	}else if(systemMode == 1){
+	}else if(systemMode == 1){ // Map2에서의 systemMode
 		Motor_Moving_Forward();
 	}
 	
