@@ -160,7 +160,11 @@ void Motor_Control_Mode1(void){
 		}else if(irSensorListNormalization[3] > 50){
 			Motor_Turning_Right();
 		}
-	
+		// -----[Map2 진입 예외처리]-----
+		if(((irSensorListNormalization[2] < 50 && irSensorListNormalization[1] < 50) && (irSensorListNormalization[0] > 50 && irSensorListNormalization[5] > 50)) && (irSensorListNormalization[4] < 50 && irSensorListNormalization[3] < 50)){
+			systemMode = 1;
+		}
+		
 		// -----[바코드 예외처리]-----
 		if(irSensorListNormalization[0] < 50){
 			PORTA = 0b01111111;
@@ -172,20 +176,50 @@ void Motor_Control_Mode1(void){
 			for(int i = 0; i < 6; i++){
 				Motor_Turning_Left();
 			}
-			
-			if(((irSensorListNormalization[2] < 50 && irSensorListNormalization[1] < 50) && (irSensorListNormalization[0] < 50 && irSensorListNormalization[5] > 50)) && (irSensorListNormalization[3] < 50 && irSensorListNormalization[4] <50)){
-				systemMode = 1;
-			}
 		}
 	}else if(systemMode == 1){
 		Motor_Moving_Backward();
 	}
+	
 }
 
 // 주행 실험 모드
 void Motor_Control_Mode2(void){		
 	
-	
+	if(systemMode == 0){
+		// -----[주행 기능]-----
+		// -----[메인 주행 기능]-----
+		if(irSensorListNormalization[3] < 50){
+			Motor_Turning_Left();
+		}else if(irSensorListNormalization[3] > 50){
+			Motor_Turning_Right();
+		}
+		// -----[Map2 진입 예외처리]-----
+		//if(((irSensorListNormalization[2] < 50 && irSensorListNormalization[1] < 50) && (irSensorListNormalization[0] < 50 && irSensorListNormalization[5] < 50)) && (irSensorListNormalization[4] <50 && irSensorListNormalization[3] > 50)){
+			//systemMode = 1;
+		//}
+		
+		
+		// -----[Map2 진입 예외처리]-----
+		if(((irSensorListNormalization[2] < 50 && irSensorListNormalization[1] < 50) && (irSensorListNormalization[0] < 50 && irSensorListNormalization[5] > 50)) && (irSensorListNormalization[4] < 50 && irSensorListNormalization[3] < 50)){
+			systemMode = 1;
+		}
+		
+		// -----[바코드 예외처리]-----
+		if(irSensorListNormalization[0] < 50){
+			PORTA = 0b01111111;
+			Motor_Turning_Left();
+		}
+		// 바코드에서 마지막 전체 흰 줄
+		if(irSensorListNormalization[1] < 50 && irSensorListNormalization[2] < 50){
+			PORTA = 0b01111111;
+			for(int i = 0; i < 6; i++){
+				Motor_Turning_Left();
+			}
+		}
+	}else if(systemMode == 1){
+		Motor_Moving_Backward();
+	}
 	
 }
 
