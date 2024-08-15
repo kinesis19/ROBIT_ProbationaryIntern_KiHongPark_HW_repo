@@ -49,6 +49,9 @@ int systemMode = 0; // 현재 mode를 나타냄. 0 : 초기 mode / 1 : 바코드
 bool isStage4End = false;
 bool isBarCodeOn = false;
 
+// -----[Stage-4 관련 Variables]-----
+bool isStagePSDTurn = false;
+
 
 int main(void) {
 
@@ -169,7 +172,45 @@ void Detecting(void){
 // 완성된 모드 기능
 void Motor_Control_Mode1(void){
 	
-	Motor_Moving_Forward();
+	if(systemMode == 0){
+		// -----[주행 기능]-----
+		// -----[메인 주행 기능]-----
+		if(irSensorListNormalization[3] < 50){
+			Motor_Turning_Left();
+			PORTA = 0b00111111;
+		}else if(irSensorListNormalization[3] > 50){
+			PORTA = 0b11111100;
+			Motor_Turning_Right();
+		}
+		
+		// -----[stage-3(바코드) Exception Handling]-----
+		if(irSensorListNormalization[0] < 50){ // IR2가 검은색에 가까울  때
+			PORTA = 0b01111111;
+			Motor_Turning_Left();
+		}
+		// 바코드에서 마지막 전체 흰 줄일 때,
+		if(irSensorListNormalization[1] < 50 && irSensorListNormalization[2] < 50){
+			PORTA = 0b01111111;
+			for(int i = 0; i < 6; i++){
+				PORTA = 0b11000011;
+				Motor_Turning_Left();
+			}
+			Motor_Moving_Forward();
+			Motor_Moving_Forward();
+			// Map2 입구 도착 여부 체크하기
+			if((psdSnesorList[0] < 70 && 250 < psdSnesorList[1]) && IRSensorCheckerAllBlack() == 1){ // Map2 입구 도착 조건에 충족 할 때,
+				PORTA = 0b01000010;
+				systemMode = 1; // systemMode를 Map2에 알맞게 설정하기.
+			}
+		}
+	}else if(systemMode == 1){ // Map2에서의 systemMode
+		Motor_Moving_Stop();
+		//if(psdSnesorList[1] < 250){
+			//Motor_Turning_Right();
+		//}else if(psdSnesorList[1] > 250){
+			//Motor_Turning_Left();
+		//}
+	}
 	
 }
 
@@ -220,6 +261,7 @@ void Motor_Control_Mode2(void){
 
 void Motor_Control_Mode3(void){
 	
+	
 	if(systemMode == 0){
 		// -----[주행 기능]-----
 		// -----[메인 주행 기능]-----
@@ -240,24 +282,28 @@ void Motor_Control_Mode3(void){
 		if(irSensorListNormalization[1] < 50 && irSensorListNormalization[2] < 50){
 			PORTA = 0b01111111;
 			for(int i = 0; i < 6; i++){
-				PORTA = 0b11000011;
+				PORTA = 0b10101010;
 				Motor_Turning_Left();
 			}
 			
 			// Map2 입구 도착 여부 체크하기
 			if((psdSnesorList[0] < 70 && 250 < psdSnesorList[1]) && IRSensorCheckerAllBlack() == 1){ // Map2 입구 도착 조건에 충족 할 때,
-				PORTA = 0b01000010;
 				systemMode = 1; // systemMode를 Map2에 알맞게 설정하기.
 			}
 		}
 	}else if(systemMode == 1){ // Map2에서의 systemMode
 		
 		if(psdSnesorList[1] < 250){
+			Motor_Moving_Forward();
 			Motor_Turning_Right();
 		}else if(psdSnesorList[1] > 250){
+			Motor_Moving_Forward();
 			Motor_Turning_Left();
 		}
+		
+		
 	}
+	
 }
 
 // IR Sensor Normalization Value 찾기 모드.
