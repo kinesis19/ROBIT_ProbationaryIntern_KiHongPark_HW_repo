@@ -169,38 +169,8 @@ void Detecting(void){
 // 완성된 모드 기능
 void Motor_Control_Mode1(void){
 	
-	if(systemMode == 0){
-		// -----[주행 기능]-----
-		// -----[메인 주행 기능]-----
-		if(irSensorListNormalization[3] < 50){
-			Motor_Turning_Left();
-			PORTA = 0b00111111;
-		}else if(irSensorListNormalization[3] > 50){
-			PORTA = 0b11111100;
-			Motor_Turning_Right();
-		}
-		
-		// -----[stage-3(바코드) Exception Handling]-----
-		if(irSensorListNormalization[0] < 50){ // IR2가 검은색에 가까울  때
-			PORTA = 0b01111111;
-			Motor_Turning_Left();
-		}
-		// 바코드에서 마지막 전체 흰 줄일 때,
-		if(irSensorListNormalization[1] < 50 && irSensorListNormalization[2] < 50){
-			PORTA = 0b01111111;
-			for(int i = 0; i < 5; i++){
-				PORTA = 0b10101010;
-				Motor_Turning_Left();
-			}
-			
-			// Map2 입구 도착 여부 체크하기
-			if((psdSnesorList[0] < 70 && 250 < psdSnesorList[1]) && ((irSensorListNormalization[2] < 50 && irSensorListNormalization[1] < 50) && (irSensorListNormalization[0] > 50 && irSensorListNormalization[5] > 50)) && (irSensorListNormalization[4] < 50 && irSensorListNormalization[3] > 50)){ // Map2 입구 도착 조건에 충족 할 때,
-				systemMode = 1; // systemMode를 Map2에 알맞게 설정하기.
-			}
-		}
-	}else if(systemMode == 1){ // Map2에서의 systemMode
-		Motor_Moving_Stop();
-	}
+	Motor_Moving_Forward();
+	
 }
 
 // 주행 실험 모드
@@ -236,7 +206,14 @@ void Motor_Control_Mode2(void){
 			}
 		}
 	}else if(systemMode == 1){ // Map2에서의 systemMode
-		Motor_Moving_Stop();
+		
+		if(psdSnesorList[1] < 250){
+			Motor_Moving_Forward();
+			Motor_Turning_Right();
+		}else if(psdSnesorList[1] > 250){
+			Motor_Moving_Forward();
+			Motor_Turning_Left();
+		}
 	}
 }
 
@@ -263,99 +240,39 @@ void Motor_Control_Mode3(void){
 		if(irSensorListNormalization[1] < 50 && irSensorListNormalization[2] < 50){
 			PORTA = 0b01111111;
 			for(int i = 0; i < 6; i++){
-				PORTA = 0b10101010;
+				PORTA = 0b11000011;
 				Motor_Turning_Left();
 			}
 			
 			// Map2 입구 도착 여부 체크하기
-			if(IRSensorCheckerAllBlack() == 1){
-				
-				// psdSensor0에 대한 filtering - 저장
-				for(int i = 0; i < 10; i++){
-					ADMUX = (ADMUX & 0xF0) | 0;
-					ADCSRA |= (1 << ADSC);
-					
-					while(!(ADCSRA & (1 << ADIF)));
-					psdSensorMAF0[i] = ADC;
-				}
-				// psdSensor1에 대한 filtering - 저장
-				for(int i = 0; i < 10; i++){
-					ADMUX = (ADMUX & 0xF0) | 1;
-					ADCSRA |= (1 << ADSC);
-					
-					while(!(ADCSRA & (1 << ADIF)));
-					psdSensorMAF1[i] = ADC;
-				}
-				// psdSensor0, psdSensor1에 대한 filtering - 계산
-				
-				for(int i = 0; i < 10; i++){
-					sumPsd0 = sumPsd0 + psdSensorMAF0[i];
-					sumPsd1 = sumPsd1 + psdSensorMAF1[i];
-				}
-				avgPsd0 = sumPsd0 / 10;
-				avgPsd1 = sumPsd1 / 10;
-					
-				if((avgPsd0 < 70 && 250 < avgPsd1)){ // Map2 입구 도착 조건에 충족 할 때,
-					systemMode = 1; // systemMode를 Map2에 알맞게 설정하기.
-				}
-				
+			if((psdSnesorList[0] < 70 && 250 < psdSnesorList[1]) && IRSensorCheckerAllBlack() == 1){ // Map2 입구 도착 조건에 충족 할 때,
+				PORTA = 0b01000010;
+				systemMode = 1; // systemMode를 Map2에 알맞게 설정하기.
 			}
-			
-			
-			//if((psdSnesorList[0] < 70 && 250 < psdSnesorList[1]) && IRSensorCheckerAllBlack() == 1){ // Map2 입구 도착 조건에 충족 할 때,
-				//systemMode = 1; // systemMode를 Map2에 알맞게 설정하기.
-			//}
 		}
 	}else if(systemMode == 1){ // Map2에서의 systemMode
-		Motor_Moving_Stop();
+		
+		if(psdSnesorList[1] < 250){
+			Motor_Turning_Right();
+		}else if(psdSnesorList[1] > 250){
+			Motor_Turning_Left();
+		}
 	}
 }
 
 // IR Sensor Normalization Value 찾기 모드.
 void Motor_Control_Mode4(void){
 	
-	// Map2 입구 도착 여부 체크하기
-	if(IRSensorCheckerAllBlack() == 1){
-				
-		// psdSensor0에 대한 filtering - 저장
-		for(int i = 0; i < 10; i++){
-			ADMUX = (ADMUX & 0xF0) | 0;
-			ADCSRA |= (1 << ADSC);
-					
-			while(!(ADCSRA & (1 << ADIF)));
-			psdSensorMAF0[i] = ADC;
-		}
-		// psdSensor1에 대한 filtering - 저장
-		for(int i = 0; i < 10; i++){
-			ADMUX = (ADMUX & 0xF0) | 1;
-			ADCSRA |= (1 << ADSC);
-					
-			while(!(ADCSRA & (1 << ADIF)));
-			psdSensorMAF1[i] = ADC;
-		}
-		// psdSensor0, psdSensor1에 대한 filtering - 계산
-				
-		for(int i = 0; i < 10; i++){
-			sumPsd0 = sumPsd0 + psdSensorMAF0[i];
-			sumPsd1 = sumPsd1 + psdSensorMAF1[i];
-		}
-		avgPsd0 = sumPsd0 / 10;
-		avgPsd1 = sumPsd1 / 10;
-	}
-	
-	//lcdNumber(0, 0, irSensorListNormalization[0]); // PF2 - IR2
-	//lcdNumber(0, 4, irSensorListNormalization[1]); // PF3 - IR1
-	//lcdNumber(0, 8, irSensorListNormalization[2]); // PF4 - IR0
-	//lcdNumber(1, 0, irSensorListNormalization[3]); // PF5 - IR5
-	//lcdNumber(1, 4, irSensorListNormalization[4]); // PF6 - IR4
-	//lcdNumber(1, 8, irSensorListNormalization[5]); // PF7 - IR3
+	lcdNumber(0, 0, irSensorListNormalization[0]); // PF2 - IR2
+	lcdNumber(0, 4, irSensorListNormalization[1]); // PF3 - IR1
+	lcdNumber(0, 8, irSensorListNormalization[2]); // PF4 - IR0
+	lcdNumber(1, 0, irSensorListNormalization[3]); // PF5 - IR5
+	lcdNumber(1, 4, irSensorListNormalization[4]); // PF6 - IR4
+	lcdNumber(1, 8, irSensorListNormalization[5]); // PF7 - IR3
 	
 	// PSD
 	lcdNumber(0, 12, psdSnesorList[0]);
 	lcdNumber(1, 12, psdSnesorList[1]);
-	// PSD Filtering result 출력하기
-	lcdNumber(0, 8, avgPsd0);
-	lcdNumber(1, 8, avgPsd1);
 	
 	_delay_ms(100);
 	
@@ -366,7 +283,7 @@ void Motor_Control_Mode4(void){
 void Motor_Moving_Forward(void){
 	PORTB = (PORTB & 0xF0) | 0x05;
 	OCR1A = ICR1 * 0.75;
-	OCR1B = ICR1 * 0.75;
+	OCR1B = ICR1 * 0.725;
 	//PORTA = 0b00000000;
 }
 
