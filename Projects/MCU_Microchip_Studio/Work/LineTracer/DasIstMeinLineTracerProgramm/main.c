@@ -68,6 +68,8 @@ int main(void) {
 				Motor_Control_Mode3();
 			}else if(modeSelect == 4){
 				Motor_Control_Mode4();
+			}else if(modeSelect == 4){
+				Motor_Moving_Stop();
 			}
 		}
 	}
@@ -170,18 +172,49 @@ void Detecting(void){
 // 완성된 모드 기능
 void Motor_Control_Mode1(void){
 		
-	if(irSensorListNormalization[3] > 50){
-		PORTA = 0b11111100;
-		Motor_Turning_Right();
-	}else if(irSensorListNormalization[3] < 50){
-		PORTA = 0b00111111;
-		Motor_Turning_Left();
+	if(systemMode == 0){
+			
+		if(irSensorListNormalization[3] > 50){
+			PORTA = 0b11111100;
+			if(irSensorListNormalization[1] < 50){
+				PORTA = 0xFF;
+				Motor_Turning_Left();
+			}
+			if(irSensorListNormalization[1] < 50){
+				PORTA = 0xFF;
+				Motor_Turning_Left();
+			
+				// -----[Exception Handling]-----
+				if(((irSensorListNormalization[2] < 50 && irSensorListNormalization[1] < 50) && (irSensorListNormalization[0] < 50 && irSensorListNormalization[5] < 50)) && (irSensorListNormalization[4] < 50 && irSensorListNormalization[3] > 50)){
+					Motor_Moving_Stop();
+					systemMode = 1;
+				}
+			}else{
+				Motor_Turning_Right();
+			}
+		}else if(irSensorListNormalization[3] < 50){
+			PORTA = 0b00111111;
+			Motor_Turning_Left();
+		}
+	}else if(systemMode == 1){
+		if(psdSnesorList[1] > 180){
+			Motor_Turning_Left();
+		}else if(psdSnesorList[1] > 180){
+			Motor_Turning_Right();
+		}
 	}
 	
 }
 
 // 주행 실험 모드
 void Motor_Control_Mode2(void){
+	
+	
+	// -----[Exception Handling]-----
+	if(((irSensorListNormalization[2] < 50 && irSensorListNormalization[1] < 50) && (irSensorListNormalization[0] < 50 && irSensorListNormalization[5] < 50)) && (irSensorListNormalization[4] < 50 && irSensorListNormalization[3] < 50)){
+		Motor_Moving_Stop();
+		modeSelect = 5;
+	}
 	
 	if(irSensorListNormalization[3] > 50){
 		PORTA = 0b11111100;
@@ -201,19 +234,6 @@ void Motor_Control_Mode2(void){
 
 void Motor_Control_Mode3(void){
 	
-	if(irSensorListNormalization[3] > 50){
-		PORTA = 0b11111100;
-		if(irSensorListNormalization[1] < 50){
-			for(int i = 0; i < 3; i++){
-				Motor_Turning_Left();
-			}
-		}else{
-			Motor_Turning_Right();
-		}
-	}else if(irSensorListNormalization[3] < 50){
-		PORTA = 0b00111111;
-		Motor_Turning_Left();
-	}
 }
 
 // IR Sensor Normalization Value 찾기 모드.
@@ -222,10 +242,18 @@ void Motor_Control_Mode4(void){
 	if(irSensorListNormalization[3] > 50){
 		PORTA = 0b11111100;
 		if(irSensorListNormalization[1] < 50){
+			PORTA = 0xFF;
 			Motor_Turning_Left();
 		}
 		if(irSensorListNormalization[1] < 50){
+			PORTA = 0xFF;
 			Motor_Turning_Left();
+			
+			// -----[Exception Handling]-----
+			if(((irSensorListNormalization[2] < 50 && irSensorListNormalization[1] < 50) && (irSensorListNormalization[0] < 50 && irSensorListNormalization[5] < 50)) && (irSensorListNormalization[4] < 50 && irSensorListNormalization[3] > 50)){
+				Motor_Moving_Stop();
+				modeSelect = 5;
+			}
 		}else{
 			Motor_Turning_Right();
 		}
