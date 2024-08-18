@@ -64,6 +64,10 @@ bool isStage5Clear = false;
 bool isStage5Start = false;
 
 
+// -----[Stage6 관련 Variables]-----
+bool isStage6Clear = false;
+bool isStage6Start = false;
+
 
 
 int main(void) {
@@ -245,12 +249,13 @@ void Motor_Control_Mode1(void){
 				isStage5Start = true;
 			}
 			
-		}else if(isStage5Start == true){
+		}else if(isStage5Start == true && isStage5Clear == false){
 			if(psdSnesorList[0] > 500){
 				Motor_Moving_Stop();
 				_delay_ms(3000);
 			}else if(psdSnesorList[0] < 150){
 				Motor_Moving_Forward_Fast();
+				isStage5Clear = true;
 			}
 		}
 		
@@ -260,64 +265,6 @@ void Motor_Control_Mode1(void){
 
 // 주행 실험 모드2
 void Motor_Control_Mode2(void){
-	
-	
-	// -----[Map1일 때]-----
-	if(systemMode == 0){
-		if((irSensorListNormalization[0] < 50 && irSensorListNormalization[2] < 50)){
-			// -----[Stage3 to Stage4 Exception Handling ('ㄱ'자, Map 변경 처리)]-----
-			if(psdSnesorList[1] > 200){ // stage-4의 벽이 가까이 있을 때
-				Motor_Moving_Stop();
-				_delay_ms(1000);
-				Motor_Moving_Forward();
-				_delay_ms(100);
-				Motor_Turning_Left();
-				_delay_ms(2000);
-				Motor_Moving_Forward();
-				_delay_ms(1500);
-				systemMode = 1;
-			}
-		}
-		// -----[기본 주행 모드]-----
-		if(irSensorListNormalization[0] > 50){
-			PORTA = 0b11111100;
-			Motor_Turning_Right();
-		}else if(irSensorListNormalization[0] < 50){
-			PORTA = 0b00111111;
-			Motor_Turning_Left();
-		}
-	}else if(systemMode == 1){ // -----[Map2일 때]-----
-		
-		if(isStage4Clear == false){
-			// -----[Stage4 Feature (벽 감지하기)]-----
-			if(psdSnesorList[1] > 450){
-				PORTA = 0b00001111;
-				Motor_Turning_Left();
-			}else if(psdSnesorList[1] < 450){
-				PORTA = 0b11110000;
-				Motor_Turning_Right();
-			}
-			// -----[Stage4 Exception Handling]-----
-			// stage4에서 벽 감지하여 이동 중, 기다란 흰 막대를 만났을 때
-			// Map2에서 흰색 : 20 이상, 검정 : 20 미만
-			
-			// Stage4-Case #1: 전체 센서가 감지하기
-			if(((irSensorListNormalization[2] > 20 && irSensorListNormalization[1] > 20) && (irSensorListNormalization[0] > 20 && irSensorListNormalization[5] > 20)) && (irSensorListNormalization[4] > 20 && irSensorListNormalization[3] > 20)){
-				isStage4Clear = true;
-			}
-		}else if(isStage4Clear == true){
-			
-			// Stage4-Case #2: 단일 센서가 감지하기 -> Stage5로 가기 위한 로직
-			if(irSensorListNormalization[0] > 20){
-				Motor_Turning_Left();
-			}else if(irSensorListNormalization[0] < 20){
-				Motor_Turning_Right();
-			}
-			
-		}
-		
-	}
-	
 	
 }
 
@@ -373,19 +320,24 @@ void Motor_Control_Mode3(void){
 			}else if(irSensorListNormalization[0] < 20){
 				Motor_Turning_Right();
 			}
-			if(psdSnesorList[0] > 500){
+			if(psdSnesorList[0] > 500){ // 차단바 최초 감지하기.
 				Motor_Moving_Stop();
 				_delay_ms(3000);
 				isStage5Start = true;
 			}
 			
-		}else if(isStage5Start == true){
-			if(psdSnesorList[0] > 500){
+		}else if(isStage5Start == true && isStage6Start == false){
+			if(psdSnesorList[0] > 500){ // Stage6: 주차 공간 벽면 과의 거리 측정하여 멈추기.
 				Motor_Moving_Stop();
-				_delay_ms(3000);
-			}else if(psdSnesorList[0] < 150){
+				_delay_ms(7000); // 7초 정차하기 (안전빵)
+				isStage5Clear = true;
+				isStage6Start = true;
+			}else if(psdSnesorList[0] < 250){ // 차단바가 올라가 있는 상태일 때,
 				Motor_Moving_Forward_Fast();
 			}
+		}else if(isStage6Start == true){
+			Motor_Turning_Left();
+			_delay_ms(5000);
 		}
 		
 	}
