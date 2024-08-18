@@ -22,6 +22,7 @@ void Motor_Control_Mode2(void); //
 void Motor_Control_Mode3(void); //
 void Motor_Control_Mode4(void); //
 void Motor_Moving_Forward(void);
+void Motor_Moving_Forward_Fast(void);
 void Motor_Moving_Backward(void);
 void Motor_Turning_Left(void);
 void Motor_Turning_Right(void);
@@ -60,6 +61,10 @@ bool isStage4Clear = false;
 
 // -----[Stage5 관련 Variables]-----
 bool isStage5Clear = false;
+bool isStage5Start = false;
+
+
+
 
 int main(void) {
 
@@ -193,11 +198,85 @@ void Motor_Control_Mode1(void){
 				Motor_Moving_Forward();
 				_delay_ms(100);
 				Motor_Turning_Left();
-				_delay_ms(3000);
+				_delay_ms(2000);
 				Motor_Moving_Forward();
 				_delay_ms(1500);
 				systemMode = 1;
 			}	
+		}
+		// -----[기본 주행 모드]-----
+		if(irSensorListNormalization[0] > 50){
+			PORTA = 0b11111100;
+			Motor_Turning_Right();
+		}else if(irSensorListNormalization[0] < 50){
+			PORTA = 0b00111111;
+			Motor_Turning_Left();
+		}
+	}else if(systemMode == 1){ // -----[Map2일 때]-----
+		
+		if(isStage4Clear == false){
+			// -----[Stage4 Feature (벽 감지하기)]-----
+			if(psdSnesorList[1] > 450){
+				PORTA = 0b00001111;
+				Motor_Turning_Left();
+			}else if(psdSnesorList[1] < 450){
+				PORTA = 0b11110000;
+				Motor_Turning_Right();
+			}
+			// -----[Stage4 Exception Handling]-----
+			// stage4에서 벽 감지하여 이동 중, 기다란 흰 막대를 만났을 때
+			// Map2에서 흰색 : 20 이상, 검정 : 20 미만
+			
+			// Stage4-Case #1: 전체 센서가 감지하기
+			if(((irSensorListNormalization[2] > 20 && irSensorListNormalization[1] > 20) && (irSensorListNormalization[0] > 20 && irSensorListNormalization[5] > 20)) && (irSensorListNormalization[4] > 20 && irSensorListNormalization[3] > 20)){
+				isStage4Clear = true;
+			}
+		}else if(isStage4Clear == true && isStage5Start == false){
+			
+			// Stage4-Case #2: 단일 센서가 감지하기 -> Stage5로 가기 위한 로직
+			if(irSensorListNormalization[0] > 20){
+				Motor_Turning_Left();
+			}else if(irSensorListNormalization[0] < 20){
+				Motor_Turning_Right();
+			}
+			if(psdSnesorList[0] > 500){
+				Motor_Moving_Stop();
+				_delay_ms(3000);
+				isStage5Start = true;
+			}
+			
+		}else if(isStage5Start == true){
+			if(psdSnesorList[0] > 500){
+				Motor_Moving_Stop();
+				_delay_ms(3000);
+			}else if(psdSnesorList[0] < 150){
+				Motor_Moving_Forward_Fast();
+			}
+		}
+		
+	}
+	
+}
+
+// 주행 실험 모드2
+void Motor_Control_Mode2(void){
+	
+	
+	// -----[Map1일 때]-----
+	if(systemMode == 0){
+		if((irSensorListNormalization[0] < 50 && irSensorListNormalization[2] < 50)){
+			// -----[Stage3 to Stage4 Exception Handling ('ㄱ'자, Map 변경 처리)]-----
+			if(psdSnesorList[1] > 200){ // stage-4의 벽이 가까이 있을 때
+				Motor_Moving_Stop();
+				_delay_ms(1000);
+				Motor_Moving_Forward();
+				_delay_ms(100);
+				Motor_Turning_Left();
+				_delay_ms(2000);
+				Motor_Moving_Forward();
+				_delay_ms(1500);
+				systemMode = 1;
+			}
 		}
 		// -----[기본 주행 모드]-----
 		if(irSensorListNormalization[0] > 50){
@@ -234,19 +313,82 @@ void Motor_Control_Mode1(void){
 			}else if(irSensorListNormalization[0] < 20){
 				Motor_Turning_Right();
 			}
+			
 		}
 		
 	}
 	
-}
-
-// 주행 실험 모드2
-void Motor_Control_Mode2(void){
 	
 }
 
 // 주행 실험 모드3
 void Motor_Control_Mode3(void){
+	
+	// -----[Map1일 때]-----
+	if(systemMode == 0){
+		if((irSensorListNormalization[2] < 50 && irSensorListNormalization[1] < 50) && (irSensorListNormalization[0] < 50 && irSensorListNormalization[5] < 50) && (irSensorListNormalization[4] < 50 && irSensorListNormalization[3] > 50)){
+			// -----[Stage3 to Stage4 Exception Handling ('ㄱ'자, Map 변경 처리)]-----
+			Motor_Moving_Stop();
+			_delay_ms(1000);
+			Motor_Moving_Forward();
+			_delay_ms(1500);
+			Motor_Turning_Left();
+			_delay_ms(2500);
+			Motor_Moving_Forward();
+			_delay_ms(2500);
+			systemMode = 1;
+		}
+		// -----[기본 주행 모드]-----
+		if(irSensorListNormalization[0] > 50){
+			PORTA = 0b11111100;
+			Motor_Turning_Right();
+		}else if(irSensorListNormalization[0] < 50){
+			PORTA = 0b00111111;
+			Motor_Turning_Left();
+		}
+	}else if(systemMode == 1){ // -----[Map2일 때]-----
+		
+		if(isStage4Clear == false){
+			// -----[Stage4 Feature (벽 감지하기)]-----
+			if(psdSnesorList[1] > 450){
+				PORTA = 0b00001111;
+				Motor_Turning_Left();
+			}else if(psdSnesorList[1] < 450){
+				PORTA = 0b11110000;
+				Motor_Turning_Right();
+			}
+			// -----[Stage4 Exception Handling]-----
+			// stage4에서 벽 감지하여 이동 중, 기다란 흰 막대를 만났을 때
+			// Map2에서 흰색 : 20 이상, 검정 : 20 미만
+			
+			// Stage4-Case #1: 전체 센서가 감지하기
+			if(((irSensorListNormalization[2] > 20 && irSensorListNormalization[1] > 20) && (irSensorListNormalization[0] > 20 && irSensorListNormalization[5] > 20)) && (irSensorListNormalization[4] > 20 && irSensorListNormalization[3] > 20)){
+				isStage4Clear = true;
+			}
+		}else if(isStage4Clear == true && isStage5Start == false){
+			
+			// Stage4-Case #2: 단일 센서가 감지하기 -> Stage5로 가기 위한 로직
+			if(irSensorListNormalization[0] > 20){
+				Motor_Turning_Left();
+			}else if(irSensorListNormalization[0] < 20){
+				Motor_Turning_Right();
+			}
+			if(psdSnesorList[0] > 500){
+				Motor_Moving_Stop();
+				_delay_ms(3000);
+				isStage5Start = true;
+			}
+			
+		}else if(isStage5Start == true){
+			if(psdSnesorList[0] > 500){
+				Motor_Moving_Stop();
+				_delay_ms(3000);
+			}else if(psdSnesorList[0] < 150){
+				Motor_Moving_Forward_Fast();
+			}
+		}
+		
+	}
 	
 }
 
@@ -276,6 +418,12 @@ void Motor_Moving_Forward(void){
 	OCR1A = ICR1 * 0.9;
 	OCR1B = ICR1 * 0.875;
 	//PORTA = 0b00000000;
+}
+
+void Motor_Moving_Forward_Fast(void){
+	PORTB = (PORTB & 0xF0) | 0x05;
+	OCR1A = ICR1 * 1.2;
+	OCR1B = ICR1 * 1.2;
 }
 
 void Motor_Moving_Backward(void){
