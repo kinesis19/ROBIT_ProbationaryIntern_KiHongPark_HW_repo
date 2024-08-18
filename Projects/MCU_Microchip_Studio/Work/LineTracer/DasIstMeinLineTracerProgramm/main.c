@@ -27,6 +27,8 @@ void Motor_Moving_Backward(void);
 void Motor_Turning_Left(void);
 void Motor_Turning_Right(void);
 void Motor_Moving_Stop(void);
+void Motor_Turning_Return1(void); // 제자리 회전1 (왼쪽 앞으로)
+void Motor_Turning_Return2(void); // 제자리 회전2 (오른쪽 뒤로)
 void Motor_Adjusting_Center(void); // 중심 조정하는 함수.
 int IRSensorCheckerAllBlack(void); // 모든 IR Sensor가 검은색인지 판별하여 return하는 함수.
 int IRSensorCheckerAllWhite(void); // 모든 IR Sensor가 검은색인지 판별하여 return하는 함수.
@@ -62,6 +64,8 @@ bool isStage4Clear = false;
 // -----[Stage5 관련 Variables]-----
 bool isStage5Clear = false;
 bool isStage5Start = false;
+bool isStage5AbleToBloack = false;
+bool isStage5CanGoToStage6 = false;
 
 
 // -----[Stage6 관련 Variables]-----
@@ -192,80 +196,13 @@ void Detecting(void){
 
 // 완성된 모드
 void Motor_Control_Mode1(void){
-	// -----[Map1일 때]-----
-	if(systemMode == 0){
-		if(irSensorListNormalization[0] < 50 && irSensorListNormalization[2] < 50){
-			// -----[Stage3 to Stage4 Exception Handling ('ㄱ'자, Map 변경 처리)]-----
-			if(psdSnesorList[1] > 200){ // stage-4의 벽이 가까이 있을 때
-				Motor_Moving_Stop();
-				_delay_ms(1000);
-				Motor_Moving_Forward();
-				_delay_ms(100);
-				Motor_Turning_Left();
-				_delay_ms(2000);
-				Motor_Moving_Forward();
-				_delay_ms(1500);
-				systemMode = 1;
-			}	
-		}
-		// -----[기본 주행 모드]-----
-		if(irSensorListNormalization[0] > 50){
-			PORTA = 0b11111100;
-			Motor_Turning_Right();
-		}else if(irSensorListNormalization[0] < 50){
-			PORTA = 0b00111111;
-			Motor_Turning_Left();
-		}
-	}else if(systemMode == 1){ // -----[Map2일 때]-----
-		
-		if(isStage4Clear == false){
-			// -----[Stage4 Feature (벽 감지하기)]-----
-			if(psdSnesorList[1] > 450){
-				PORTA = 0b00001111;
-				Motor_Turning_Left();
-			}else if(psdSnesorList[1] < 450){
-				PORTA = 0b11110000;
-				Motor_Turning_Right();
-			}
-			// -----[Stage4 Exception Handling]-----
-			// stage4에서 벽 감지하여 이동 중, 기다란 흰 막대를 만났을 때
-			// Map2에서 흰색 : 20 이상, 검정 : 20 미만
-			
-			// Stage4-Case #1: 전체 센서가 감지하기
-			if(((irSensorListNormalization[2] > 20 && irSensorListNormalization[1] > 20) && (irSensorListNormalization[0] > 20 && irSensorListNormalization[5] > 20)) && (irSensorListNormalization[4] > 20 && irSensorListNormalization[3] > 20)){
-				isStage4Clear = true;
-			}
-		}else if(isStage4Clear == true && isStage5Start == false){
-			
-			// Stage4-Case #2: 단일 센서가 감지하기 -> Stage5로 가기 위한 로직
-			if(irSensorListNormalization[0] > 20){
-				Motor_Turning_Left();
-			}else if(irSensorListNormalization[0] < 20){
-				Motor_Turning_Right();
-			}
-			if(psdSnesorList[0] > 500){
-				Motor_Moving_Stop();
-				_delay_ms(3000);
-				isStage5Start = true;
-			}
-			
-		}else if(isStage5Start == true && isStage5Clear == false){
-			if(psdSnesorList[0] > 500){
-				Motor_Moving_Stop();
-				_delay_ms(3000);
-			}else if(psdSnesorList[0] < 150){
-				Motor_Moving_Forward_Fast();
-				isStage5Clear = true;
-			}
-		}
-		
-	}
 	
 }
 
 // 주행 실험 모드2
 void Motor_Control_Mode2(void){
-	
+	systemMode = 1;
+	modeSelect = 3;
 }
 
 // 주행 실험 모드3
@@ -314,30 +251,46 @@ void Motor_Control_Mode3(void){
 			}
 		}else if(isStage4Clear == true && isStage5Start == false){
 			
-			// Stage4-Case #2: 단일 센서가 감지하기 -> Stage5로 가기 위한 로직
+			// Stage4-Case #2: 단일 센서가 감지하기 -> Stage4이후, Stage5로 가기 위한 로직
 			if(irSensorListNormalization[0] > 20){
-				Motor_Turning_Left();
-			}else if(irSensorListNormalization[0] < 20){
 				Motor_Turning_Right();
+			}else if(irSensorListNormalization[0] < 20){
+				Motor_Turning_Left();
 			}
-			if(psdSnesorList[0] > 500){ // 차단바 최초 감지하기.
-				Motor_Moving_Stop();
-				_delay_ms(3000);
-				isStage5Start = true;
+			// Stage4 이후 모서리 감지하기 -> Stage5의 차단바 감지를 위함임.
+			if(((irSensorListNormalization[2] > 20 && irSensorListNormalization[1] > 20) && (irSensorListNormalization[0] > 20 && irSensorListNormalization[5] < 20)) && (irSensorListNormalization[4] < 20 && irSensorListNormalization[3] < 20)){
+				isStage5AbleToBloack = true;
 			}
 			
-		}else if(isStage5Start == true && isStage6Start == false){
+			// 차단바 앞에서 차단바 감지하기.
+			if(((irSensorListNormalization[2] > 20 && irSensorListNormalization[1] > 20) && (irSensorListNormalization[0] > 20 && irSensorListNormalization[5] > 20)) && (irSensorListNormalization[4] > 20 && irSensorListNormalization[3] > 20)){
+				if(isStage5AbleToBloack == true){
+					Motor_Moving_Stop();
+					if(psdSnesorList[0] > 400){ // Stage5: 차단바 최초 감지하기.
+						isStage5CanGoToStage6 = true;
+					}else if(psdSnesorList[0] < 200 && isStage5CanGoToStage6 == true){
+						isStage5Start = true; // Stage5: 입장.
+						isStage5AbleToBloack = false;
+					}
+				}
+			}
+			
+		}else if(isStage5Start == true && isStage6Start == false){ // Stage5: 진행.
 			if(psdSnesorList[0] > 500){ // Stage6: 주차 공간 벽면 과의 거리 측정하여 멈추기.
 				Motor_Moving_Stop();
 				_delay_ms(7000); // 7초 정차하기 (안전빵)
-				isStage5Clear = true;
-				isStage6Start = true;
-			}else if(psdSnesorList[0] < 250){ // 차단바가 올라가 있는 상태일 때,
+				isStage5Clear = true; // Stage5: 클리어.
+				isStage6Start = true; // Stage6: 입장.
+			}else if(psdSnesorList[0] < 250){ // Stage5: 차단바가 올라가 있는 상태일 때,
 				Motor_Moving_Forward_Fast();
 			}
-		}else if(isStage6Start == true){
-			Motor_Turning_Left();
-			_delay_ms(5000);
+		}else if(isStage6Start == true){ // Stage6: 진행.
+			for(int i = 0; i < 4; i++){
+				Motor_Turning_Return1();
+				_delay_ms(500);
+				Motor_Turning_Return2();
+				_delay_ms(500);
+			}
 		}
 		
 	}
@@ -374,7 +327,7 @@ void Motor_Moving_Forward(void){
 
 void Motor_Moving_Forward_Fast(void){
 	PORTB = (PORTB & 0xF0) | 0x05;
-	OCR1A = ICR1 * 1.2;
+	OCR1A = ICR1 * 1.15;
 	OCR1B = ICR1 * 1.2;
 }
 
@@ -389,8 +342,8 @@ void Motor_Turning_Left(void){
 	PORTB = (PORTB & 0xF0) | 0x05;
 	//OCR1A = ICR1 * 0.75;
 	//OCR1B = ICR1 * 0;
-	OCR1A = ICR1 * 0.9;
-	OCR1B = ICR1 * 0;
+	OCR1A = ICR1 * 0.9; // 오른쪽 모터
+	OCR1B = ICR1 * 0; // 왼쪽 모터
 	
 	//PORTA = 0b00111111;
 }
@@ -409,6 +362,18 @@ void Motor_Moving_Stop(void){
 	OCR1A = ICR1 * 0;
 	OCR1B = ICR1 * 0;
 	//PORTA = 0b01011010;
+}
+
+void Motor_Turning_Return1(void){ // 왼쪽 앞으로
+	PORTB = (PORTB & 0xF0) | 0x05;
+	OCR1A = ICR1 * 0.9;
+	OCR1B = ICR1 * 0;
+}
+
+void Motor_Turning_Return2(void){ // 오른쪽 뒤로
+	PORTB = (PORTB & 0xF0) | 0x0A;
+	OCR1A = ICR1 * 0;
+	OCR1B = ICR1 * 0.9;
 }
 
 int IRSensorCheckerAllBlack(void){
