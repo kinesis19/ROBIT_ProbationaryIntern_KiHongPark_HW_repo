@@ -180,7 +180,8 @@ void Detecting(void){
 	//lcdNumber(1, 4, irSensorListNormalization[4]); // PF6 - IR4
 	//lcdNumber(1, 8, irSensorListNormalization[5]); // PF7 - IR3
 }
-// 완성된 모드 기능
+
+// 완성된 모드
 void Motor_Control_Mode1(void){
 	// -----[Map1일 때]-----
 	if(systemMode == 0){
@@ -221,42 +222,30 @@ void Motor_Control_Mode1(void){
 			// stage4에서 벽 감지하여 이동 중, 기다란 흰 막대를 만났을 때
 			// Map2에서 흰색 : 20 이상, 검정 : 20 미만
 			
-			// Case #1: 전체 센서가 감지하기
+			// Stage4-Case #1: 전체 센서가 감지하기
 			if(((irSensorListNormalization[2] > 20 && irSensorListNormalization[1] > 20) && (irSensorListNormalization[0] > 20 && irSensorListNormalization[5] > 20)) && (irSensorListNormalization[4] > 20 && irSensorListNormalization[3] > 20)){
 				isStage4Clear = true;
 			}
 		}else if(isStage4Clear == true){
 			
-			// Case #2: 단일 센서가 감지하기
+			// Stage4-Case #2: 단일 센서가 감지하기 -> Stage5로 가기 위한 로직
 			if(irSensorListNormalization[0] > 20){
 				Motor_Turning_Left();
 			}else if(irSensorListNormalization[0] < 20){
 				Motor_Turning_Right();
 			}
-			//if(irSensorListNormalization[0] > 20 && irSensorListNormalization[1] > 20){
-				//PORTA = 0b00011111;
-				//Motor_Turning_Left();
-				//_delay_ms(1000);
-			//}
-			//if(irSensorListNormalization[0] > 20){
-				//PORTA = 0x00;
-				//Motor_Moving_Stop();
-				//_delay_ms(1000);
-				//Motor_Moving_Forward();
-				//_delay_ms(1000);
-			//}
 		}
 		
 	}
 	
 }
 
-// 주행 실험 모드
+// 주행 실험 모드2
 void Motor_Control_Mode2(void){
 	
 }
 
-
+// 주행 실험 모드3
 void Motor_Control_Mode3(void){
 	
 }
